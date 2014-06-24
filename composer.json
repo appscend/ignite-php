@@ -1,0 +1,18 @@
+{
+	"name": "appscend/ignite-php",
+    "require": {
+        "silex/silex": "~1.2",
+        "monolog/monolog": ">=1.8",
+        "graylog2/gelf-php": "dev-master",
+        "yosymfony/config-serviceprovider": "1.0.*@dev",
+		"filp/whoops": "1"
+    },
+    "autoload": {
+        "psr-0": { 
+        	"Ignite\\": "src/"
+        },
+        "psr-4": {
+	        "Ignite\\Modules\\": "modules/"
+        }
+    }
+}
