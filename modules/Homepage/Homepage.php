@@ -4,7 +4,6 @@ use Ignite\Module;
 use Ignite\Application;
 use Ignite\View;
 use Ignite\Action;
-use Ignite\Registry;
 
 class Homepage extends Module
 {

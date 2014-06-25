@@ -1,0 +1,187 @@
+{
+
+		"title": {
+			"tag": "title",
+			"type": "string"
+		},
+		"activity_indicator_image_load": {
+			"tag": "ia",
+			"type": "boolean",
+			"default": "true"
+		},
+		"fade_in_image_load": {
+			"tag": "ifi",
+			"type": "boolean"
+		},
+		"background_color": {
+			"tag": "bc",
+			"type": "string",
+			"default": "FFFFFF"
+		},
+		"background_image": {
+			"tag": "bi",
+			"type": "string"
+		},
+		"background_image_mode": {
+			"tag": "bim",
+			"type": "string",
+			"default": "afl"
+		},
+		"background_image_landscape": {
+			"tag": "bil",
+			"type": "string"
+		},
+		"background_image_landscape_mode": {
+			"tag": "bilm",
+			"type": "string",
+			"default": "afl"
+		},
+		"background_video": {
+			"tag": "bv",
+			"type": "string"
+		},
+		"navigation_bar": {
+			"tag": "nbv",
+			"type": "boolean",
+			"default": "true"
+		},
+		"navigation_bar_landscape": {
+			"tag": "lnbv",
+			"type": "boolean",
+			"default": "true"
+		},
+		"navigation_bar_image": {
+			"tag": "nbi",
+			"type": "string"
+		},
+		"navigation_bar_image_cap_w": {
+			"tag": "nbic",
+			"type": "integer",
+			"default": 0,
+			"min": 0
+		},
+		"navigation_bar_image_landscape": {
+			"tag": "nbil",
+			"type": "string"
+		},
+		"navigation_bar_image_cap_w_landscape": {
+			"tag": "nbilc",
+			"type": "integer",
+			"default": 0,
+			"min": 0
+		},
+		"navigation_bar_tint": {
+			"tag": "nbt",
+			"type": "string"
+		},
+		"navigation_bar_transluscent": {
+			"tag": "nbtl",
+			"type": "boolean"
+		},
+		"navigation_bar_image_logo": {
+			"tag": "nbl",
+			"type": "string"
+		},
+		"navigation_bar_image_logo_x": {
+			"tag": "nblx",
+			"type": "integer",
+			"default": 0,
+			"min": 0
+		},
+		"navigation_bar_image_logo_width": {
+			"tag": "nblw",
+			"type": "integer"
+		},
+		"navigation_bar_image_logo_mode": {
+			"tag": "nblcm",
+			"type": "string",
+			"default": "aft"
+		},
+		"navigation_bar_text_align": {
+			"tag": "nba",
+			"type": "enum",
+			"enum": ["l", "c", "r"],
+			"default": "c"
+		},
+		"navigation_bar_text_font": {
+			"tag": "nbf",
+			"type": "string",
+			"default": "Helvetica"
+		},
+		"navigation_bar_text_size": {
+			"tag": "nbs",
+			"type": "integer",
+			"default": 16
+		},
+		"navigation_bar_text_color": {
+			"tag": "nbc",
+			"type": "string",
+			"default": "FFFFFF"
+		},
+		"tabbar_display": {
+			"tag": "tbv",
+			"type": "boolean",
+			"default": "true"
+		},
+		"toolbar_display": {
+			"tag": "tlv",
+			"type": "boolean",
+			"default": "true"
+		},
+		"toolbar_tint": {
+			"tag": "tlt",
+			"type": "ref",
+			"default": "navigation_bar_tint"
+		},
+		"toolbar_bg_image": {
+			"tag": "tli",
+			"type": "string"
+		},
+		"ads_display": {
+			"tag": "ad",
+			"type": "boolean",
+			"default": "false"
+		},
+		"ad_position": {
+			"tag": "adp",
+			"type": "enum",
+			"enum": ["top", "bottom"],
+			"default": "bottom"
+		},
+		"ad_provider": {
+			"tag": "adn",
+			"type": "enum",
+			"enum": ["admob", "mobclix", "millennial", "iad", "inmobi", "jumptap", "flurry", "none"],
+			"default": "none"
+		},
+		"ad_provider_key": {
+			"tag": "adk",
+			"type": "string"
+		},
+		"ad_banner_size": {
+			"tag": "ads",
+			"type": "integer",
+			"default": 1,
+			"min": 1,
+			"max": 5
+		},
+		"ad_space": {
+			"tag": "adspace",
+			"type": "string"
+		},
+		"ad_refresh_rate": {
+			"tag": "adr",
+			"type": "integer",
+			"default": 30
+		},
+		"refresh_cache_timeout": {
+			"tag": "roa",
+			"type": "boolean",
+			"default": "false"
+		},
+		"cache_timeout": {
+			"tag": "ct",
+			"type": "integer",
+			"default": 10
+		}
+}

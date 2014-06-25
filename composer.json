@@ -5,7 +5,8 @@
         "monolog/monolog": ">=1.8",
         "graylog2/gelf-php": "dev-master",
         "yosymfony/config-serviceprovider": "1.0.*@dev",
-		"filp/whoops": "1"
+		"filp/whoops": "1",
+		"symfony/serializer": "v2.5.0"
     },
     "autoload": {
         "psr-0": { 

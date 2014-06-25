@@ -4,14 +4,19 @@ namespace Ignite;
 
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Serializer as Serializer;
 
 class View extends Registry implements ConfigurationInterface {
+
+	const CONFIG_PATH 				= '/src/Ignite/Config';
+	const GENERIC_CONFIG_FILE_SPEC 	= 'generic.json';
 
 	public $config;
 	public $elementRepresentation;
 	
 	protected $addons;
+	protected $configFileName 	= null;
+	protected $configSpec 		= null;
 	
 	function __construct() {
 		parent::__construct('par');
@@ -24,6 +29,8 @@ class View extends Registry implements ConfigurationInterface {
 			'ets' => array()
 		);
 		$this->actionContainer = array();
+
+		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
 	}
 	
 	public function __get($name) {
@@ -44,22 +51,16 @@ class View extends Registry implements ConfigurationInterface {
 			throw new \InvalidArgumentException('Element must extend Registry');
 	}
 	
-	private function configurationFields() {
-		return [
-			'background_color' => ['tag' => 'bc', 'type' => 'string']
-		];
-	}
-	
 	public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root(0);
         
         $node = $rootNode->children()->arrayNode('cfg')->ignoreExtraKeys();
-        foreach ($this->configurationFields() as $fieldName => $fieldData)
+        foreach ($this->configSpec as $fieldName => $fieldData)
         	$node->fixXmlConfig($fieldName, $fieldData['tag']);
         $node = $node->children();
-        foreach ($this->configurationFields() as $fieldName => $fieldData) {
+        foreach ($this->configSpec as $fieldName => $fieldData) {
         	$node->scalarNode($fieldData['tag'])->beforeNormalization()->ifArray()->then(function($v) {return $v[0];})->end()->end();
         }
         $node->end()->end()->end();
