@@ -11,6 +11,7 @@ use Ignite\View;
 use Ignite\Application;
 use Ignite\Registry;
 use Ignite\Action;
+use Ignite\Helpers\XmlDomConstruct;
 
 class ViewToResponseListener implements EventSubscriberInterface
 {
@@ -58,10 +59,14 @@ class ViewToResponseListener implements EventSubscriberInterface
         	
 			$objectData = (new Processor())->processConfiguration($response, [$response->config->varsToArray()]);
 			
-			$finalConfig = array_merge($configData['cfg']?:array(), $tabletConfigData['cfg']?:array(), $androidConfigData['cfg']?:array(), $androidTabletConfigData['cfg']?:array(), $tallDeviceConfigData['cfg']?:array(), $objectData['cfg']);
+			$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:array(), isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:array(), isset($androidConfigData['cfg'])?$androidConfigData['cfg']:array(), isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:array(), isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:array(), $objectData['cfg']);
         	$response->config->setVars($finalConfig);
-        	
-            $event->setResponse(new Response(var_dump($response->render())));
+
+			$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
+			$xmlConstruct->fromMixed($response->render());
+			$responseContent = $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG);
+
+            $event->setResponse(new Response($responseContent, Response::HTTP_OK, array('Content-type' => 'text/xml')));
         }
     }
 

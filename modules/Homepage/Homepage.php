@@ -18,14 +18,15 @@ class Homepage extends Module
         
         $controllers->get('bye', function (Application $app) {
             $view = new View();
-            //$view->config->background_color = "0000ff";
-            $view->sayHi = function() use ($view) {
-            	$action = new Action();
-				$action->name = "alert:";
-				$action->parameters = "Salut";
-            };
-            
-            $view->addElement(new Registry());
+            //$view->config->background_color = "A000ff";
+           	/*$view->sayHi = function() use ($view) {
+
+            };*/
+
+			$action = new Action();
+			$action->name = "alert:s";
+			$action->parameters = "Salut<test></test>";
+            $view->addElement($action);
             
             return $view;
         })->bind("endpage");
@@ -33,4 +34,3 @@ class Homepage extends Module
         return $controllers;
     }
 }
-?>
