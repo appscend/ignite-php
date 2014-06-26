@@ -72,5 +72,3 @@ class Application extends SilexApp implements ConfigurationInterface {
         return $treeBuilder;
     }
 }
-
-?>

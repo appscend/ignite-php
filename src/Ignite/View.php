@@ -31,6 +31,7 @@ class View extends Registry implements ConfigurationInterface {
 		$this->actionContainer = array();
 
 		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
+
 	}
 	
 	public function __get($name) {
@@ -50,24 +51,61 @@ class View extends Registry implements ConfigurationInterface {
 		else
 			throw new \InvalidArgumentException('Element must extend Registry');
 	}
+
+	public function translateTags() {
+		$translated = [];
+		foreach($this->configSpec as $k => $v) {
+			$translated[$k] = $v['tag'];
+		}
+
+		return $translated;
+	}
 	
-	public function getConfigTreeBuilder()
-    {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root(0);
-        
-        $node = $rootNode->children()->arrayNode('cfg')->ignoreExtraKeys();
-        foreach ($this->configSpec as $fieldName => $fieldData)
-        	$node->fixXmlConfig($fieldName, $fieldData['tag']);
-        $node = $node->children();
-        foreach ($this->configSpec as $fieldName => $fieldData) {
-        	$node->scalarNode($fieldData['tag'])->beforeNormalization()->ifArray()->then(function($v) {return $v[0];})->end()->end();
-        }
-        $node->end()->end()->end();
-        	
+	public function getConfigTreeBuilder() {
+		$methods = [
+			'string' => 'scalarNode',
+			'boolean' => 'enumNode',
+			'integer' => 'integerNode',
+			'enum' => 'enumNode'
+		];
+
+		$treeBuilder = new TreeBuilder();
+		$root = $treeBuilder->root(0);
+
+		$cfgNode = $root->children()->arrayNode('cfg')->ignoreExtraKeys()->isRequired();
+		$node = $cfgNode->children();
+
+		foreach ($this->configSpec as $fieldName => $field) {
+			if ($field['type'] !== 'ref') {
+				$node = call_user_func_array([$node, $methods[$field['type']]], [$fieldName]);
+
+				if (isset($field['min']))
+					$node = $node->min($field['min']);
+				if (isset($field['max']))
+					$node = $node->max($field['max']);
+				if (isset($field['enum']))
+					$node = $node->values($field['enum']);
+
+			} else {
+				$node = call_user_func_array([$node, $methods[$this->configSpec[$field['ref']]['type']]], [$field['ref']]);
+
+				if (isset($this->configSpec[$field['ref']]['min']))
+					$node = $node->min($this->configSpec[$field['ref']]['min']);
+				if (isset($this->configSpec[$field['ref']]['max']))
+					$node = $node->max($this->configSpec[$field['ref']]['max']);
+				if (isset($this->configSpec[$field['ref']]['enum']))
+					$node = $node->values($this->configSpec[$field['ref']]['enum']);
+			}
+
+			if ($field['type'] === 'boolean')
+				$node = $node->values(['yes', 'no']);
+
+			$node = $node->end();
+		}
+
+		$node->end()->end();
+
         return $treeBuilder;
     }
     
 }
-
-?>

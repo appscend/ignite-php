@@ -32,46 +32,56 @@ class ViewToResponseListener implements EventSubscriberInterface
 		
 		return $result;
     }
-	
+
+	private function translateConfigTags($translate, $config) {
+		$translation = ['cfg' => []];
+
+		foreach($config['cfg'] as $k => $v) {
+			$translation['cfg'][$translate[$k]] = $v;
+		}
+
+		return $translation;
+	}
+
     public function onKernelView(GetResponseForControllerResultEvent $event)
     {
         $response = $event->getControllerResult();
 		
         if ($response instanceof View) {
         	$viewId = $event->getRequest()->get("_route");
-        	
-        	$configData = $tabletConfigData = $androidConfigData = $androidTabletConfigData = $tallDeviceConfigData = array();
-        	try {$configData = $this->_app->scan($viewId.".toml")->validateWith($response);}
+			$translatedTags = $response->translateTags();
+
+        	$configData = $tabletConfigData = $androidConfigData = $androidTabletConfigData = $tallDeviceConfigData = [];
+        	try {$configData 				= $this->translateConfigTags($translatedTags, $this->_app->scan($viewId.".toml")->validateWith($response));}
 			catch(\InvalidArgumentException $ex) {}
-			try {$tabletConfigData = $this->_app->scan($viewId."-tablet.toml")->validateWith($response);}
+			try {$tabletConfigData 			= $this->translateConfigTags($translatedTags, $this->_app->scan($viewId."-tablet.toml")->validateWith($response));}
 			catch(\InvalidArgumentException $ex) {}
-			try {$androidConfigData = $this->_app->scan($viewId."-android.toml")->validateWith($response);}
+			try {$androidConfigData 		= $this->translateConfigTags($translatedTags, $this->_app->scan($viewId."-android.toml")->validateWith($response));}
 			catch(\InvalidArgumentException $ex) {}
-			try {$androidTabletConfigData = $this->_app->scan($viewId."-android-tablet.toml")->validateWith($response);}
+			try {$androidTabletConfigData 	= $this->translateConfigTags($translatedTags, $this->_app->scan($viewId."-android-tablet.toml")->validateWith($response));}
 			catch(\InvalidArgumentException $ex) {}
-			try {$tallDeviceConfigData = $this->_app->scan($viewId."-tall.toml")->validateWith($response);}
+			try {$tallDeviceConfigData 		= $this->translateConfigTags($translatedTags, $this->_app->scan($viewId."-tall.toml")->validateWith($response));}
 			catch(\InvalidArgumentException $ex) {}
-			
-			$tabletConfigData = $this->prefixArrayKeys($tabletConfigData, 'pad');
-			$androidConfigData = $this->prefixArrayKeys($androidConfigData, 'and');
-			$androidTabletConfigData = $this->prefixArrayKeys($androidTabletConfigData, 'andpad');
-			$tallDeviceConfigData = $this->prefixArrayKeys($tallDeviceConfigData, 'ff5');
-        	
+
+			$tabletConfigData 			= $this->prefixArrayKeys($tabletConfigData, 'pad');
+			$androidConfigData 			= $this->prefixArrayKeys($androidConfigData, 'and');
+			$androidTabletConfigData 	= $this->prefixArrayKeys($androidTabletConfigData, 'andpad');
+			$tallDeviceConfigData 		= $this->prefixArrayKeys($tallDeviceConfigData, 'ff5');
+
 			$objectData = (new Processor())->processConfiguration($response, [$response->config->varsToArray()]);
 			
-			$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:array(), isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:array(), isset($androidConfigData['cfg'])?$androidConfigData['cfg']:array(), isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:array(), isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:array(), $objectData['cfg']);
+			$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:[], isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:[], isset($androidConfigData['cfg'])?$androidConfigData['cfg']:[], isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:[], isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:[], $objectData['cfg']);
         	$response->config->setVars($finalConfig);
 
 			$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
 			$xmlConstruct->fromMixed($response->render());
 			$responseContent = $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG);
 
-            $event->setResponse(new Response($responseContent, Response::HTTP_OK, array('Content-type' => 'text/xml')));
+            $event->setResponse(new Response($responseContent, Response::HTTP_OK, ['Content-type' => 'text/xml']));
         }
     }
 
-    public static function getSubscribedEvents()
-    {
+    public static function getSubscribedEvents() {
         return array(
             KernelEvents::VIEW => array('onKernelView', -10),
         );

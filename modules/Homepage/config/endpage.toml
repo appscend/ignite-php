@@ -1,2 +1,4 @@
 [cfg]
-background-color = "ff0000"
+title = "asasd"
+activity_indicator_image_load = "no"
+navigation_bar_text_size = 10
