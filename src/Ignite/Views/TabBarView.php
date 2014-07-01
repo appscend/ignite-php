@@ -8,8 +8,8 @@ class TabBarView extends View {
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'TabBar/elements.json';
 
-	public function __construct() {
-		parent::__construct('t');
+	public function __construct($app, $viewID) {
+		parent::__construct($app, $viewID);
 		$this->configFileName = 'TabBar/config.json';
 		$this->loadSpecFile();
 		$this->addElement(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE));

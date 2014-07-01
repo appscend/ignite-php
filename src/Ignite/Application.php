@@ -3,6 +3,7 @@
 namespace Ignite;
 
 define("ROOT_DIR", dirname(dirname(__DIR__)));
+define("MODULES_DIR", ROOT_DIR.'/modules');
 
 use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
@@ -54,8 +55,7 @@ class Application extends SilexApp implements ConfigurationInterface {
 		$this['config'] = $appConfigData;
 	}
 	
-	public function getConfigTreeBuilder()
-    {
+	public function getConfigTreeBuilder() {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root(0);
         

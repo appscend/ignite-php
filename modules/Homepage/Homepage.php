@@ -5,10 +5,9 @@ use Ignite\Application;
 use Ignite\Views;
 use Ignite\Action;
 
-class Homepage extends Module
-{
-    function views(Application $app)
-    {
+class Homepage extends Module {
+
+	public function views(Application $app) {
         $controllers = $app['controllers_factory'];
 
         $controllers->get('hello/{name}', function (Application $app, $name) {
@@ -16,7 +15,7 @@ class Homepage extends Module
         })->bind("homepage");
         
         $controllers->get('bye', function (Application $app) {
-            $view = new Views\TabBarView();
+            $view = new Views\TabBarView($app, "endpage");
 
 			$view->addTab([
 				"title" => "Gogoși cu zmoală",
@@ -31,16 +30,6 @@ class Homepage extends Module
 				"target_view_type" => "t",
 				"data" => "test data"
 			]);
-
-            //$view->config->background_color = "A000ff";
-           	/*$view->sayHi = function() use ($view) {
-
-            };*/
-
-			/*$action = new Action();
-			$action->name = "alert:s";
-			$action->parameters = "Salut<test></test>";
-            $view->addElement($action);*/
             
             return $view;
         })->bind("endpage");

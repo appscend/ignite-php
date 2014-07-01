@@ -6,6 +6,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Serializer as Serializer;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 abstract class View extends Registry implements ConfigurationInterface {
 
@@ -15,11 +17,20 @@ abstract class View extends Registry implements ConfigurationInterface {
 	protected $configFileName 	= null;
 	protected $configSpec 		= null;
 	protected $contents			= ['config' => [], 'elements' => []];
+
+	/**
+	 * @var Application
+	 */
+	private $app;
+
+	private $viewID;
 	
-	function __construct() {
+	public function __construct($app, $viewID) {
 		parent::__construct('par');
 		$this->contents['config'] = new Registry('cfg');
 		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
+		$this->app = $app;
+		$this->viewID = $viewID;
 	}
 	
 	public function __get($name) {
@@ -41,7 +52,25 @@ abstract class View extends Registry implements ConfigurationInterface {
 
 	}
 
-	public function translateTags(array $array) {
+	protected function loadSpecFile() {
+		if (!is_readable(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName))
+			throw new FileNotFoundException("Configuration file '{$this->configFileName}' not found or not readable.");
+
+		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName), true));
+	}
+
+	private function prefixArrayKeys($array, $prefix) {
+		$result = array();
+		foreach ($array as $area=>$configs) {
+			array_walk($configs, function ($value,$key) use (&$result, $prefix, $area) {
+				$result[$area][$prefix.$key] = $value;
+			});
+		}
+
+		return $result;
+	}
+
+	private function translateTags(array $array) {
 		$translated = [];
 		foreach($array as $k => $v) {
 			$translated[$k] = $v['tag'];
@@ -50,17 +79,49 @@ abstract class View extends Registry implements ConfigurationInterface {
 		return $translated;
 	}
 
-	public function getConfigSpec() {
-		return $this->configSpec;
+	private function translateConfigTags($translate, $config) {
+		$translation = ['cfg' => []];
+
+		foreach($config['cfg'] as $k => $v) {
+			$translation['cfg'][$translate[$k]] = $v;
+		}
+
+		return $translation;
 	}
 
-	protected function loadSpecFile() {
-		if (!is_readable(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName))
-			throw new FileNotFoundException("Configuration file '{$this->configFileName}' not found or not readable.");
+	public function render() {
+		$translatedTags = $this->translateTags($this->configSpec);
 
-		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName), true));
+		$configData = $tabletConfigData = $androidConfigData = $androidTabletConfigData = $tallDeviceConfigData = [];
+		try {$configData 				= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID.".toml")->validateWith($this));}
+		catch(\InvalidArgumentException $ex) {}
+		try {$tabletConfigData 			= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-tablet.toml")->validateWith($this));}
+		catch(\InvalidArgumentException $ex) {}
+		try {$androidConfigData 		= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-android.toml")->validateWith($this));}
+		catch(\InvalidArgumentException $ex) {}
+		try {$androidTabletConfigData 	= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-android-tablet.toml")->validateWith($this));}
+		catch(\InvalidArgumentException $ex) {}
+		try {$tallDeviceConfigData 		= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-tall.toml")->validateWith($this));}
+		catch(\InvalidArgumentException $ex) {}
+
+		$tabletConfigData 			= $this->prefixArrayKeys($tabletConfigData, 'pad');
+		$androidConfigData 			= $this->prefixArrayKeys($androidConfigData, 'and');
+		$androidTabletConfigData 	= $this->prefixArrayKeys($androidTabletConfigData, 'andpad');
+		$tallDeviceConfigData 		= $this->prefixArrayKeys($tallDeviceConfigData, 'ff5');
+
+		$objectData = (new Processor())->processConfiguration($this, [$this->config->varsToArray()]);
+		$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:[], isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:[], isset($androidConfigData['cfg'])?$androidConfigData['cfg']:[], isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:[], isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:[], $objectData['cfg']);
+
+		(new Processor())->processConfiguration($this->elements, [$this->elements->varsToArray()]);
+
+		if (!isset($finalConfig['vt']))
+			throw new InvalidConfigurationException("'view_type' variable is not configured.");
+
+		$this->config->setVars($finalConfig);
+
+		return parent::render();
 	}
-	
+
 	public function getConfigTreeBuilder() {
 		$methods = [
 			'string' => 'scalarNode',
