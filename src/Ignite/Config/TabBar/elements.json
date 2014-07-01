@@ -1,0 +1,25 @@
+{
+	"tab": {
+		"title": {
+			"tag": "n",
+			"type": "string"
+		},
+		"image": {
+			"tag": "i",
+			"type": "string"
+		},
+		"target_view_type": {
+			"tag": "vt",
+			"type": "string"
+		},
+		"target_xml": {
+			"tag": "px",
+			"type": "string"
+		},
+		"data": {
+			"tag": "data",
+			"type": "string"
+		}
+	}
+
+}

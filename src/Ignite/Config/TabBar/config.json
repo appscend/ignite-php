@@ -1,0 +1,27 @@
+{
+	"tint_color": {
+		"tag": "tbc",
+		"type": "string"
+	},
+	"tint_selected_color": {
+		"tag": "stbc",
+		"type": "string"
+	},
+	"more_title": {
+		"tag": "mtitle",
+		"type": "string"
+	},
+	"element_title_color": {
+		"tag": "nc",
+		"type": "string"
+	},
+	"cell_bg_color": {
+		"tag": "cc",
+		"type": "string"
+	},
+	"alternate_cell_bg_color": {
+		"tag": "acc",
+		"type": "string"
+	}
+
+}

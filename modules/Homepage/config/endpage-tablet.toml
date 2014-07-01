@@ -1,2 +1,7 @@
 [cfg]
-background_color = "00ff00"
+view_type = "t"
+view_id = "testID"
+title = "asasd"
+activity_indicator_image_load = "no"
+navigation_bar_text_size = 10
+more_title = "More... title"

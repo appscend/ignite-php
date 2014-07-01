@@ -4,61 +4,61 @@ namespace Ignite;
 
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Serializer as Serializer;
 
-class View extends Registry implements ConfigurationInterface {
+abstract class View extends Registry implements ConfigurationInterface {
 
 	const CONFIG_PATH 				= '/src/Ignite/Config';
 	const GENERIC_CONFIG_FILE_SPEC 	= 'generic.json';
 
-	public $config;
-	public $elementRepresentation;
-	
-	protected $addons;
 	protected $configFileName 	= null;
 	protected $configSpec 		= null;
+	protected $contents			= ['config' => [], 'elements' => []];
 	
 	function __construct() {
 		parent::__construct('par');
-		$this->config = new Registry('cfg');
-		$this->elementRepresentation = new Registry('ef');
-		$this->addons = array(
-			'es' => array(),
-			'bs' => array(),
-			'mes' => array(),
-			'ets' => array()
-		);
-		$this->actionContainer = array();
-
+		$this->contents['config'] = new Registry('cfg');
 		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
-
 	}
 	
 	public function __get($name) {
 		switch ($name) {
-			case "elements": return $this->addons['es'];
-			case "buttons": return $this->addons['bs'];
-			case "menus": return $this->addons['mes'];
-			case "templates": return $this->addons['ets'];
+			case "elements": return $this->contents['elements'];
+			case "config": return $this->contents['config'];
 		}
 	}
 	
-	public function addElement($element) {
+	protected function addElement(Registry $element) {
 		if ($element instanceof Registry) {
-			$element->actionContainer = $this->actionContainer;
-			$this->addons['es'][] = $element;
+			$this->contents['elements'] = $element;
 		}
 		else
 			throw new \InvalidArgumentException('Element must extend Registry');
 	}
 
-	public function translateTags() {
+	public function addAction(Action $action) {
+
+	}
+
+	public function translateTags(array $array) {
 		$translated = [];
-		foreach($this->configSpec as $k => $v) {
+		foreach($array as $k => $v) {
 			$translated[$k] = $v['tag'];
 		}
 
 		return $translated;
+	}
+
+	public function getConfigSpec() {
+		return $this->configSpec;
+	}
+
+	protected function loadSpecFile() {
+		if (!is_readable(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName))
+			throw new FileNotFoundException("Configuration file '{$this->configFileName}' not found or not readable.");
+
+		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName), true));
 	}
 	
 	public function getConfigTreeBuilder() {

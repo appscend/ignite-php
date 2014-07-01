@@ -2,8 +2,7 @@
 
 namespace Ignite;
 
-Class Registry 
-{
+class Registry  {
     protected $_vars;
     protected $_actions;
     protected $_closures;
@@ -31,46 +30,40 @@ Class Registry
     }
     
     public function setVars($array) {
-	    $this->_vars = $array;
+	    $this->_vars = array_merge($this->_vars, $array);
     }
 
     public function __get($key) {
         if (isset($this->_vars[$key]))
             return $this->_vars[$key];
     }
-    
+
     public function load() {
-	    
+
     }
     
     public function render() {
     	$this->load();
 	    $vars = get_object_vars($this);	
 	    $result = array_merge(array(), $this->_vars);
-	    
+
 	    unset($vars['_vars']);
 	    unset($vars['_actions']);
 	    unset($vars['wrapperTag']);
-	    
-	    foreach ($vars as $varName => $var) {
-	    	if ($var instanceof Registry) {
-	    		$subresult = $var->render();
-	    		if ($subresult !== null)
-		    		$result = array_merge($result, $subresult);
-	    	}
-	    	else if (is_array($var)) {
-		    	foreach ($var as $containerName=>$value) {
-		    		$objects = array();
-			    	if (is_array($value))
-			    		foreach ($value as $object)
-			    			if ($object instanceof Registry) {
-			    				(null !== $rendered = $object->render())?$objects[] = $rendered:null;
-			    			}
-			    	if (count($objects))
-		    			$result = array_merge($result, [$containerName => [substr($containerName, 0, -1) => $objects]]);
-		    	}
-	    	}
-	    }
+
+		foreach ($vars as $varName => $var) {
+			if ($var instanceof Registry) {
+				$subResult = $var->render();
+				if ($subResult !== null)
+					$result = array_merge($result, $subResult);
+			} else if (is_array($var)) {
+				foreach($var as $val) {
+					if ($val instanceof Registry)
+						$result = array_merge($result, $val->render());
+				}
+
+			}
+		}
 	    
 	    foreach ($this->_actions as $prefix => $action) {
 		    $action->prefix = $prefix;
@@ -78,15 +71,15 @@ Class Registry
 		    if ($renderedAction !== null)
 		    	$result = array_merge($result, $renderedAction);
 	    }
-	    
+
 	    if (count($result)) {
 		    if ($this->wrapperTag !== null)
 	        	return [$this->wrapperTag => $result];
-	        else 
-	        	return $result;
+
+	        return $result;
         }
-        else
-        	return null;
+
+        return null;
     }
 
     public function varsToArray() {

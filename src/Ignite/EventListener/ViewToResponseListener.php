@@ -2,6 +2,7 @@
 
 namespace Ignite\EventListener;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -9,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Config\Definition\Processor;
 use Ignite\View;
 use Ignite\Application;
-use Ignite\Registry;
-use Ignite\Action;
 use Ignite\Helpers\XmlDomConstruct;
 
 class ViewToResponseListener implements EventSubscriberInterface
@@ -49,7 +48,7 @@ class ViewToResponseListener implements EventSubscriberInterface
 		
         if ($response instanceof View) {
         	$viewId = $event->getRequest()->get("_route");
-			$translatedTags = $response->translateTags();
+			$translatedTags = $response->translateTags($response->getConfigSpec());
 
         	$configData = $tabletConfigData = $androidConfigData = $androidTabletConfigData = $tallDeviceConfigData = [];
         	try {$configData 				= $this->translateConfigTags($translatedTags, $this->_app->scan($viewId.".toml")->validateWith($response));}
@@ -71,7 +70,13 @@ class ViewToResponseListener implements EventSubscriberInterface
 			$objectData = (new Processor())->processConfiguration($response, [$response->config->varsToArray()]);
 			
 			$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:[], isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:[], isset($androidConfigData['cfg'])?$androidConfigData['cfg']:[], isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:[], isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:[], $objectData['cfg']);
-        	$response->config->setVars($finalConfig);
+
+			(new Processor())->processConfiguration($response->elements, [$response->elements->varsToArray()]);
+
+			if (!isset($finalConfig['vt']))
+				throw new InvalidConfigurationException("'view_type' variable is not configured.");
+
+			$response->config->setVars($finalConfig);
 
 			$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
 			$xmlConstruct->fromMixed($response->render());

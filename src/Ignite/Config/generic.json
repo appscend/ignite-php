@@ -1,163 +1,173 @@
 {
-		"title": {
-			"tag": "title",
-			"type": "string"
-		},
-		"activity_indicator_image_load": {
-			"tag": "ia",
-			"type": "boolean"
-		},
-		"fade_in_image_load": {
-			"tag": "ifi",
-			"type": "boolean"
-		},
-		"background_color": {
-			"tag": "bc",
-			"type": "string"
-		},
-		"background_image": {
-			"tag": "bi",
-			"type": "string"
-		},
-		"background_image_mode": {
-			"tag": "bim",
-			"type": "string"
-		},
-		"background_image_landscape": {
-			"tag": "bil",
-			"type": "string"
-		},
-		"background_image_landscape_mode": {
-			"tag": "bilm",
-			"type": "string"
-		},
-		"background_video": {
-			"tag": "bv",
-			"type": "string"
-		},
-		"navigation_bar": {
-			"tag": "nbv",
-			"type": "boolean"
-		},
-		"navigation_bar_landscape": {
-			"tag": "lnbv",
-			"type": "boolean"
-		},
-		"navigation_bar_image": {
-			"tag": "nbi",
-			"type": "string"
-		},
-		"navigation_bar_image_cap_w": {
-			"tag": "nbic",
-			"type": "integer",
-			"min": 0
-		},
-		"navigation_bar_image_landscape": {
-			"tag": "nbil",
-			"type": "string"
-		},
-		"navigation_bar_image_cap_w_landscape": {
-			"tag": "nbilc",
-			"type": "integer",
-			"min": 0
-		},
-		"navigation_bar_tint": {
-			"tag": "nbt",
-			"type": "string"
-		},
-		"navigation_bar_transluscent": {
-			"tag": "nbtl",
-			"type": "boolean"
-		},
-		"navigation_bar_image_logo": {
-			"tag": "nbl",
-			"type": "string"
-		},
-		"navigation_bar_image_logo_x": {
-			"tag": "nblx",
-			"type": "integer",
-			"min": 0
-		},
-		"navigation_bar_image_logo_width": {
-			"tag": "nblw",
-			"type": "integer"
-		},
-		"navigation_bar_image_logo_mode": {
-			"tag": "nblcm",
-			"type": "string"
-		},
-		"navigation_bar_text_align": {
-			"tag": "nba",
-			"type": "enum",
-			"enum": ["l", "c", "r"]
-		},
-		"navigation_bar_text_font": {
-			"tag": "nbf",
-			"type": "string"
-		},
-		"navigation_bar_text_size": {
-			"tag": "nbs",
-			"type": "integer"
-		},
-		"navigation_bar_text_color": {
-			"tag": "nbc",
-			"type": "string"
-		},
-		"tabbar_display": {
-			"tag": "tbv",
-			"type": "boolean"
-		},
-		"toolbar_display": {
-			"tag": "tlv",
-			"type": "boolean"
-		},
-		"toolbar_tint": {
-			"tag": "tlt",
-			"type": "ref",
-			"ref": "navigation_bar_tint"
-		},
-		"toolbar_bg_image": {
-			"tag": "tli",
-			"type": "string"
-		},
-		"ads_display": {
-			"tag": "ad",
-			"type": "boolean"
-		},
-		"ad_position": {
-			"tag": "adp",
-			"type": "enum",
-			"enum": ["top", "bottom"]
-		},
-		"ad_provider": {
-			"tag": "adn",
-			"type": "enum",
-			"enum": ["admob", "mobclix", "millennial", "iad", "inmobi", "jumptap", "flurry", "none"]
-		},
-		"ad_provider_key": {
-			"tag": "adk",
-			"type": "string"
-		},
-		"ad_banner_size": {
-			"tag": "ads",
-			"type": "integer",
-			"min": 1,
-			"max": 5
-		},
-		"ad_space": {
-			"tag": "adspace",
-			"type": "string"
-		},
-		"ad_refresh_rate": {
-			"tag": "adr",
-			"type": "integer"
-		},
-		"refresh_cache_timeout": {
-			"tag": "roa",
-			"type": "boolean"
-		},
-		"cache_timeout": {
-			"tag": "ct",
-			"type": "integer"
-		}
+	"view_id": {
+		"tag": "avi",
+		"type": "string"
+	},
+
+	"view_type": {
+		"tag": "vt",
+		"type": "string"
+	},
+
+	"title": {
+		"tag": "title",
+		"type": "string"
+	},
+	"activity_indicator_image_load": {
+		"tag": "ia",
+		"type": "boolean"
+	},
+	"fade_in_image_load": {
+		"tag": "ifi",
+		"type": "boolean"
+	},
+	"background_color": {
+		"tag": "bc",
+		"type": "string"
+	},
+	"background_image": {
+		"tag": "bi",
+		"type": "string"
+	},
+	"background_image_mode": {
+		"tag": "bim",
+		"type": "string"
+	},
+	"background_image_landscape": {
+		"tag": "bil",
+		"type": "string"
+	},
+	"background_image_landscape_mode": {
+		"tag": "bilm",
+		"type": "string"
+	},
+	"background_video": {
+		"tag": "bv",
+		"type": "string"
+	},
+	"navigation_bar": {
+		"tag": "nbv",
+		"type": "boolean"
+	},
+	"navigation_bar_landscape": {
+		"tag": "lnbv",
+		"type": "boolean"
+	},
+	"navigation_bar_image": {
+		"tag": "nbi",
+		"type": "string"
+	},
+	"navigation_bar_image_cap_w": {
+		"tag": "nbic",
+		"type": "integer",
+		"min": 0
+	},
+	"navigation_bar_image_landscape": {
+		"tag": "nbil",
+		"type": "string"
+	},
+	"navigation_bar_image_cap_w_landscape": {
+		"tag": "nbilc",
+		"type": "integer",
+		"min": 0
+	},
+	"navigation_bar_tint": {
+		"tag": "nbt",
+		"type": "string"
+	},
+	"navigation_bar_transluscent": {
+		"tag": "nbtl",
+		"type": "boolean"
+	},
+	"navigation_bar_image_logo": {
+		"tag": "nbl",
+		"type": "string"
+	},
+	"navigation_bar_image_logo_x": {
+		"tag": "nblx",
+		"type": "integer",
+		"min": 0
+	},
+	"navigation_bar_image_logo_width": {
+		"tag": "nblw",
+		"type": "integer"
+	},
+	"navigation_bar_image_logo_mode": {
+		"tag": "nblcm",
+		"type": "string"
+	},
+	"navigation_bar_text_align": {
+		"tag": "nba",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"navigation_bar_text_font": {
+		"tag": "nbf",
+		"type": "string"
+	},
+	"navigation_bar_text_size": {
+		"tag": "nbs",
+		"type": "integer"
+	},
+	"navigation_bar_text_color": {
+		"tag": "nbc",
+		"type": "string"
+	},
+	"tabbar_display": {
+		"tag": "tbv",
+		"type": "boolean"
+	},
+	"toolbar_display": {
+		"tag": "tlv",
+		"type": "boolean"
+	},
+	"toolbar_tint": {
+		"tag": "tlt",
+		"type": "ref",
+		"ref": "navigation_bar_tint"
+	},
+	"toolbar_bg_image": {
+		"tag": "tli",
+		"type": "string"
+	},
+	"ads_display": {
+		"tag": "ad",
+		"type": "boolean"
+	},
+	"ad_position": {
+		"tag": "adp",
+		"type": "enum",
+		"enum": ["top", "bottom"]
+	},
+	"ad_provider": {
+		"tag": "adn",
+		"type": "enum",
+		"enum": ["admob", "mobclix", "millennial", "iad", "inmobi", "jumptap", "flurry", "none"]
+	},
+	"ad_provider_key": {
+		"tag": "adk",
+		"type": "string"
+	},
+	"ad_banner_size": {
+		"tag": "ads",
+		"type": "integer",
+		"min": 1,
+		"max": 5
+	},
+	"ad_space": {
+		"tag": "adspace",
+		"type": "string"
+	},
+	"ad_refresh_rate": {
+		"tag": "adr",
+		"type": "integer"
+	},
+	"refresh_cache_timeout": {
+		"tag": "roa",
+		"type": "boolean"
+	},
+	"cache_timeout": {
+		"tag": "ct",
+		"type": "integer"
+	}
 }
