@@ -16,7 +16,7 @@
 			"tag": "px",
 			"type": "string"
 		},
-		"data": {
+		"post_data": {
 			"tag": "data",
 			"type": "string"
 		}

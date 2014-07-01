@@ -8,10 +8,39 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class ViewElementsContainer extends Registry implements ConfigurationInterface{
 
 	private $elemConfigSpec;
+	private $translationTags = [];
+	private $translatedTags = [];
 
 	public function __construct($fileSpecPath) {
 		parent::__construct();
 		$this->elemConfigSpec = json_decode(file_get_contents(ROOT_DIR.'/'.View::CONFIG_PATH.'/'.$fileSpecPath), true);
+	}
+
+	private function getTranslation($arr) {
+		foreach($arr as $k => $v) {
+			if (!isset($v['tag'])) {
+				$this->getTranslation($v);
+				return ;
+			}
+
+			$this->translationTags[$k] = $v['tag'];
+		}
+	}
+
+	private function translateTags(array $arr, array &$where = null) {
+		foreach ($arr as $k => $v) {
+			$key = isset($this->translationTags[$k]) ? $this->translationTags[$k] : $k;
+
+			if ($where !== null)
+				$where[$key] = $v;
+
+			if (isset($where[$k]) && isset($this->translationTags[$k]))
+				unset($where[$k]);
+
+			if (is_array($v) && !isset($v['tag']))
+				$this->translateTags($v, $where[$key]);
+		}
+
 	}
 
 	private function configTreeArray($node, $arr, $fieldName) {
@@ -59,6 +88,14 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 		}
 
 		return $node->end()->end()->end();
+	}
+
+	public function render() {
+		$this->getTranslation($this->elemConfigSpec);
+		$this->translateTags($this->varsToArray(), $this->translatedTags);
+		$this->setVars($this->translatedTags);
+
+		return parent::render();
 	}
 
 	public function getConfigTreeBuilder() {

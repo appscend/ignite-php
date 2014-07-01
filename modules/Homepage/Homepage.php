@@ -21,14 +21,14 @@ class Homepage extends Module {
 				"title" => "Gogoși cu zmoală",
 				"image" => "img.png",
 				"target_view_type" => "t",
-				"data" => "test data"
+				"post_data" => "test data"
 			]);
 
 			$view->addTab([
 				"title" => "Gogoși cu zmoală",
 				"image" => "img.png",
 				"target_view_type" => "t",
-				"data" => "test data"
+				"post_data" => "test data"
 			]);
             
             return $view;

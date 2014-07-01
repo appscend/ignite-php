@@ -117,6 +117,7 @@ abstract class View extends Registry implements ConfigurationInterface {
 		if (!isset($finalConfig['vt']))
 			throw new InvalidConfigurationException("'view_type' variable is not configured.");
 
+		//$this->elements->setVars($this->translateTags());
 		$this->config->setVars($finalConfig);
 
 		return parent::render();
