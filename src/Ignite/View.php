@@ -21,9 +21,9 @@ abstract class View extends Registry implements ConfigurationInterface {
 	/**
 	 * @var Application
 	 */
-	private $app;
+	protected $app;
 
-	private $viewID;
+	protected $viewID;
 	
 	public function __construct($app, $viewID) {
 		parent::__construct('par');
@@ -109,10 +109,10 @@ abstract class View extends Registry implements ConfigurationInterface {
 		$androidTabletConfigData 	= $this->prefixArrayKeys($androidTabletConfigData, 'andpad');
 		$tallDeviceConfigData 		= $this->prefixArrayKeys($tallDeviceConfigData, 'ff5');
 
-		$objectData = (new Processor())->processConfiguration($this, [$this->config->varsToArray()]);
+		$objectData = (new Processor())->processConfiguration($this, [$this->config->getVars()]);
 		$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:[], isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:[], isset($androidConfigData['cfg'])?$androidConfigData['cfg']:[], isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:[], isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:[], $objectData['cfg']);
 
-		(new Processor())->processConfiguration($this->elements, [$this->elements->varsToArray()]);
+		(new Processor())->processConfiguration($this->elements, [$this->elements->getVars()]);
 
 		if (!isset($finalConfig['vt']))
 			throw new InvalidConfigurationException("'view_type' variable is not configured.");
@@ -128,7 +128,8 @@ abstract class View extends Registry implements ConfigurationInterface {
 			'string' => 'scalarNode',
 			'boolean' => 'enumNode',
 			'integer' => 'integerNode',
-			'enum' => 'enumNode'
+			'enum' => 'enumNode',
+			'float' => 'floatNode'
 		];
 
 		$treeBuilder = new TreeBuilder();

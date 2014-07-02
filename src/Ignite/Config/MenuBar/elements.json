@@ -1,0 +1,30 @@
+{
+	"es": {
+		"e": {
+			"title": {
+				"tag": "n",
+				"type": "string"
+			},
+			"target_view_type": {
+				"tag": "vt",
+				"type": "string"
+			},
+			"target_xml": {
+				"tag": "px",
+				"type": "string"
+			},
+			"post_data": {
+				"tag": "data",
+				"type": "string"
+			},
+			"attach_location": {
+				"tag": "loc",
+				"type": "boolean"
+			},
+			"location_accuracy": {
+				"tag": "loca",
+				"type": "string"
+			}
+		}
+	}
+}

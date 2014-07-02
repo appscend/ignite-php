@@ -15,18 +15,18 @@ class Homepage extends Module {
         })->bind("homepage");
         
         $controllers->get('bye', function (Application $app) {
-            $view = new Views\TabBarView($app, "endpage");
+            $view = new Views\MenuBarView($app, "endpage");
 
-			$view->addTab([
+			$view->addMenu([
 				"title" => "Gogoși cu zmoală",
-				"image" => "img.png",
+				"attach_location" => "yes",
 				"target_view_type" => "t",
 				"post_data" => "test data"
 			]);
 
-			$view->addTab([
+			$view->addMenu([
 				"title" => "Gogoși cu zmoală",
-				"image" => "img.png",
+				"attach_location" => "yes",
 				"target_view_type" => "t",
 				"post_data" => "test data"
 			]);

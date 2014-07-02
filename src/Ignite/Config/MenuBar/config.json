@@ -1,0 +1,76 @@
+{
+	"height": {
+		"tag": "mbh",
+		"type": "integer"
+	},
+	"background_color": {
+		"tag": "mbbc",
+		"type": "string"
+	},
+	"background_image": {
+		"tag": "mbbi",
+		"type": "string"
+	},
+	"selected_element_color": {
+		"tag": "mbsc",
+		"type": "string"
+	},
+	"selected_element_shadow_color": {
+		"tag": "mbssc",
+		"type": "string"
+	},
+	"selected_element_bg_image": {
+		"tag": "mbsi",
+		"type": "string"
+	},
+	"selected_element_bg_image_left_cap": {
+		"tag": "mbsilc",
+		"type": "integer"
+	},
+	"selected_element_bg_image_force_height": {
+		"tag": "mbssc",
+		"type": "float",
+		"min": 0
+	},
+	"unselected_element_color": {
+		"tag": "mbuc",
+		"type": "string"
+	},
+	"unselected_element_shadow_color": {
+		"tag": "mbusc",
+		"type": "string"
+	},
+	"unselected_element_bg_image": {
+		"tag": "mbui",
+		"type": "string"
+	},
+	"unselected_element_bg_image_left_cap": {
+		"tag": "mbuilc",
+		"type": "integer"
+	},
+	"unselected_element_bg_image_force_height": {
+		"tag": "mbuifh",
+		"type": "float",
+		"min": 0
+	},
+	"element_font": {
+		"tag": "mbf",
+		"type": "string"
+	},
+	"element_font_size": {
+		"tag": "mbfs",
+		"type": "integer"
+	},
+	"left_scroll_image": {
+		"tag": "lsi",
+		"type": "string"
+	},
+	"right_scroll_image": {
+		"tag": "rsi",
+		"type": "string"
+	},
+	"button_left_right_padding": {
+		"tag": "bp",
+		"type": "integer"
+	}
+}

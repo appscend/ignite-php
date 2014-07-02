@@ -11,8 +11,8 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 	private $translationTags = [];
 	private $translatedTags = [];
 
-	public function __construct($fileSpecPath) {
-		parent::__construct();
+	public function __construct($fileSpecPath, $wrapper = null) {
+		parent::__construct($wrapper);
 		$this->elemConfigSpec = json_decode(file_get_contents(ROOT_DIR.'/'.View::CONFIG_PATH.'/'.$fileSpecPath), true);
 	}
 
@@ -47,40 +47,42 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 		$node = $node->arrayNode($fieldName)->prototype('array')->children();
 		foreach ($arr as $fn => $f) {
 			//this array contains elements which are arrays, otherwise we should always have a tag property present
-			if (!isset($f['tag']))
+			if (!isset($f['tag'])) {
 				$node = $this->configTreeArray($node, $f, $fn);
+			} else {
+				switch ($f['type']) {
+					case 'string': {
+						$node = $node->scalarNode($fn);
 
-			switch ($f['type']) {
-				case 'string': {
-					$node = $node->scalarNode($fn);
+						break;
+					}
 
-					break;
-				}
+					case 'float':
+					case 'integer': {
+						$node = $node->node($fn, $f['type']);
 
-				case 'integer': {
-					$node = $node->integerNode($fn);
+						if (isset($f['min']))
+							$node = $node->min($f['min']);
 
-					if (isset($f['min']))
-						$node = $node->min($f['min']);
+						if (isset($f['max']))
+							$node = $node->max($f['max']);
 
-					if (isset($f['max']))
-						$node = $node->max($f['max']);
+						break;
+					}
 
-					break;
-				}
+					case 'enum': {
+						$node = $node->enumNode($fn);
+						$node = $node->values($f['enum']);
 
-				case 'enum': {
-					$node = $node->enumNode($fn);
-					$node = $node->values($f['enum']);
+						break;
+					}
 
-					break;
-				}
+					case 'boolean': {
+						$node = $node->enumNode($fn);
+						$node = $node->values(['yes', 'no']);
 
-				case 'boolean': {
-					$node = $node->enumNode($fn);
-					$node = $node->values(['true', 'false']);
-
-					break;
+						break;
+					}
 				}
 			}
 
@@ -91,9 +93,15 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 	}
 
 	public function render() {
-		$this->getTranslation($this->elemConfigSpec);
-		$this->translateTags($this->varsToArray(), $this->translatedTags);
-		$this->setVars($this->translatedTags);
+		if ($this->wrapperTag) {
+			$this->getTranslation($this->elemConfigSpec[$this->wrapperTag]);
+		}
+		else {
+			$this->getTranslation($this->elemConfigSpec);
+		}
+
+		$this->translateTags($this->_vars, $this->translatedTags);
+		$this->_vars = $this->translatedTags;
 
 		return parent::render();
 	}
@@ -116,8 +124,9 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 						break;
 					}
 
+					case 'float':
 					case 'integer': {
-						$node = $node->integerNode($fieldName);
+						$node = $node->node($fieldName, $field['type']);
 
 						if (isset($field['min']))
 							$node = $node->min($field['min']);

@@ -5,45 +5,16 @@ namespace Ignite;
 class Registry  {
     protected $_vars;
     protected $_actions;
-    protected $_closures;
     
     public $wrapperTag = null;
-    public $actionContainer = null;
 
     public function __construct($wrapperTag = null) {
         $this->_vars = array();
         $this->_actions = array();
-        $this->_closures = array();
         $this->wrapperTag = $wrapperTag;
-    }
-
-    public function __set($key, $val) {
-    	if ($val instanceof Action) {
-    		$this->_actions[substr($key, 0, -1)] = $val;
-    	}
-    	else if ($val instanceof \Closure) {
-    		$this->_closures[$key] = $val;
-    	}
-        else {
-        	$this->_vars[$key] = $val;
-        }
-    }
-    
-    public function setVars($array) {
-	    $this->_vars = array_merge($this->_vars, $array);
-    }
-
-    public function __get($key) {
-        if (isset($this->_vars[$key]))
-            return $this->_vars[$key];
-    }
-
-    public function load() {
-
     }
     
     public function render() {
-    	$this->load();
 	    $vars = get_object_vars($this);	
 	    $result = array_merge(array(), $this->_vars);
 
@@ -82,14 +53,25 @@ class Registry  {
         return null;
     }
 
-    public function varsToArray() {
-    	if ($this->wrapperTag !== null)
-        	return [$this->wrapperTag => $this->_vars];
-        else 
-        	return $this->_vars;
-    }
-    
-    public function actions() {
-	    return $this->_actions;
-    }
+	public function setVars(array $arr) {
+		$this->_vars = $arr;
+	}
+
+	public function getVars() {
+		return isset($this->wrapperTag) ? [$this->wrapperTag => $this->_vars] : $this->_vars;
+	}
+
+	public function __set($key, $val) {
+		if ($val instanceof Action) {
+			$this->_actions[substr($key, 0, -1)] = $val;
+		} else {
+			$this->_vars[$key] = $val;
+		}
+	}
+
+	public function __get($key) {
+		if (isset($this->_vars[$key]))
+			return $this->_vars[$key];
+	}
+
 }
