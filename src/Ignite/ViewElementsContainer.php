@@ -4,6 +4,7 @@ namespace Ignite;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 class ViewElementsContainer extends Registry implements ConfigurationInterface{
 
@@ -83,10 +84,14 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 
 						break;
 					}
-				}
-			}
 
-			$node = $node->end();
+					default: {
+						throw new InvalidConfigurationException("Type '{$f['type']}' does not exist.");
+					}
+				}
+
+				$node = $node->end();
+			}
 		}
 
 		return $node->end()->end()->end();
@@ -149,6 +154,10 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 						$node = $node->values(['true', 'false']);
 
 						break;
+					}
+
+					default: {
+						throw new InvalidConfigurationException("Type '{$field['type']}' does not exist.");
 					}
 				}
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rbotea
- * Date: 7/1/14
- * Time: 5:18 PM
- */
 
 namespace Ignite\Views;
 use Ignite\View;
@@ -25,7 +19,7 @@ class MenuBarView extends View {
 	public function addMenu(array $content) {
 		$this->contents['elements']->_vars[0]['e'][] = $content;
 
-		return count($this->contents['elements']->_vars[0]['e']);
+		return count($this->contents['elements']->_vars[0]['e'])-1;
 	}
 
 	public function removeMenu($idx) {

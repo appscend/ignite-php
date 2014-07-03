@@ -1,0 +1,553 @@
+{
+	"style": {
+		"tag": "ls",
+		"type": "enum",
+		"enum": ["p", "g"]
+	},
+	"disable_scrolling": {
+		"tag": "lsd",
+		"type": "boolean"
+	},
+	"drag_to_refresh": {
+		"tag": "dr",
+		"type": "boolean"
+	},
+	"drag_to_refresh_bg_color": {
+		"tag": "drbc",
+		"type": "string"
+	},
+	"drag_to_refresh_image": {
+		"tag": "dri",
+		"type": "string"
+	},
+	"drag_to_refresh_image_color": {
+		"tag": "dric",
+		"type": "string"
+	},
+	"drag_to_refresh_name_color": {
+		"tag": "drnc",
+		"type": "string"
+	},
+	"drag_to_refresh_desc_color": {
+		"tag": "drdc",
+		"type": "string"
+	},
+	"table_header_text": {
+		"tag": "tht",
+		"type": "string"
+	},
+	"table_header_image": {
+		"tag": "thi",
+		"type": "string"
+	},
+	"table_header_image_mode": {
+		"tag": "thicm",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"table_header_force_height": {
+		"tag": "thh",
+		"type": "integer"
+	},
+	"table_header_vertical_alignment": {
+		"tag": "thva",
+		"type": "enum",
+		"enum": ["t", "c", "b"]
+	},
+	"table_header_font": {
+		"tag": "thf",
+		"type": "string"
+	},
+	"table_header_font_size": {
+		"tag": "ths",
+		"type": "integer"
+	},
+	"table_header_font_color": {
+		"tag": "thc",
+		"type": "string"
+	},
+	"table_header_background_color": {
+		"tag": "thbc",
+		"type": "string"
+	},
+	"table_header_text_alignment": {
+		"tag": "tha",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"section_name_height": {
+		"tag": "sh",
+		"type": "integer"
+	},
+	"section_name_line_span": {
+		"tag": "sl",
+		"type": "integer",
+		"min": 1
+	},
+	"section_name_font": {
+		"tag": "sf",
+		"type": "string"
+	},
+	"section_name_font_size": {
+		"tag": "ss",
+		"type": "integer"
+	},
+	"section_name_font_color": {
+		"tag": "sc",
+		"type": "string"
+	},
+	"section_name_text_alignment": {
+		"tag": "sa",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"section_name_top_pad": {
+		"tag": "stp",
+		"type": "integer"
+	},
+	"section_background_color": {
+		"tag": "sbc",
+		"type": "string"
+	},
+	"section_display_index": {
+		"tag": "sid",
+		"type": "boolean"
+	},
+	"cell_forced_height": {
+		"tag": "ch",
+		"type": "integer"
+	},
+	"cell_padding": {
+		"tag": "cp",
+		"type": "integer"
+	},
+	"cell_separator_color": {
+		"tag": "csc",
+		"type": "string"
+	},
+	"cell_left_padding": {
+		"tag": "clp",
+		"type": "integer"
+	},
+	"cell_right_padding": {
+		"tag": "crp",
+		"type": "integer"
+	},
+	"cell_left_margin": {
+		"tag": "clm",
+		"type": "integer"
+	},
+	"cell_right_margin": {
+		"tag": "crm",
+		"type": "integer"
+	},
+	"cell_background_color": {
+		"tag": "cc",
+		"type": "string"
+	},
+	"cell_background_image": {
+		"tag": "ci",
+		"type": "string"
+	},
+	"cell_background_image_mode": {
+		"tag": "cicm",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"cell_background_image_left_cap_w": {
+		"tag": "cilcw",
+		"type": "integer"
+	},
+	"cell_background_image_top_cap_w": {
+		"tag": "citcw",
+		"type": "integer"
+	},
+	"cell_selected_background_color": {
+		"tag": "scc",
+		"type": "string"
+	},
+	"cell_selected_background_image": {
+		"tag": "sci",
+		"type": "string"
+	},
+	"cell_selected_background_image_mode": {
+		"tag": "scicm",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"cell_selected_background_image_left_cap_w": {
+		"tag": "scilcw",
+		"type": "integer"
+	},
+	"cell_selected_background_image_top_cap_w": {
+		"tag": "scitcw",
+		"type": "integer"
+	},
+	"cell_alternate_background_color": {
+		"tag": "acc",
+		"type": "string"
+	},
+	"cell_alternate_background_image": {
+		"tag": "aci",
+		"type": "string"
+	},
+	"cell_alternate_background_image_left_cap_w": {
+		"tag": "acilcw",
+		"type": "integer"
+	},
+	"cell_alternate_background_image_top_cap_w": {
+		"tag": "acitcw",
+		"type": "integer"
+	},
+	"cell_selected_alternate_background_image": {
+		"tag": "saci",
+		"type": "string"
+	},
+	"cell_selected_alternate_background_image_mode": {
+		"tag": "sacicm",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"cell_selected_alternate_background_image_left_cap_w": {
+		"tag": "sacilcw",
+		"type": "integer"
+	},
+	"cell_selected_alternate_background_image_top_cap_w": {
+		"tag": "sacitcw",
+		"type": "integer"
+	},
+	"element_image_width": {
+		"tag": "isw",
+		"type": "integer"
+	},
+	"element_image_height": {
+		"tag": "ish",
+		"type": "integer"
+	},
+	"element_image_left_padding": {
+		"tag": "ilp",
+		"type": "integer"
+	},
+	"element_image_top_padding": {
+		"tag": "itp",
+		"type": "integer"
+	},
+	"element_image_corner_radius": {
+		"tag": "icr",
+		"type": "integer"
+	},
+	"element_image_mode": {
+		"tag": "icm",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"element_image_vertical_alignment": {
+		"tag": "iva",
+		"type": "enum",
+		"enum": ["t", "m", "b"]
+	},
+	"element_image_background_color": {
+		"tag": "ibc",
+		"type": "string"
+	},
+	"element_selected_image_width": {
+		"tag": "sisw",
+		"type": "integer"
+	},
+	"element_selected_image_height": {
+		"tag": "sish",
+		"type": "integer"
+	},
+	"element_selected_image_left_padding": {
+		"tag": "silp",
+		"type": "integer"
+	},
+	"element_selected_image_top_padding": {
+		"tag": "sitp",
+		"type": "integer"
+	},
+	"element_selected_image_mode": {
+		"tag": "sicm",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"description_image_lines_span": {
+		"tag": "itl",
+		"type": "integer",
+		"min": 1
+	},
+	"description_image_font": {
+		"tag": "itf",
+		"type": "string"
+	},
+	"description_image_font_size": {
+		"tag": "its",
+		"type": "integer"
+	},
+	"description_image_color": {
+		"tag": "itc",
+		"type": "string"
+	},
+	"description_image_alignment": {
+		"tag": "ita",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"description_image_left_margin": {
+		"tag": "itlm",
+		"type": "integer"
+	},
+	"description_image_top_margin": {
+		"tag": "ittm",
+		"type": "integer"
+	},
+	"description_image_width": {
+		"tag": "itw",
+		"type": "integer"
+	},
+	"description_image_height": {
+		"tag": "ith",
+		"type": "integer"
+	},
+	"description_image_background_color": {
+		"tag": "itbc",
+		"type": "string"
+	},
+	"name_line_span": {
+		"tag": "nl",
+		"type": "integer",
+		"min": 1
+	},
+	"name_font": {
+		"tag": "nf",
+		"type": "string"
+	},
+	"name_font_size": {
+		"tag": "ns",
+		"type": "integer"
+	},
+	"name_font_color": {
+		"tag": "nc",
+		"type": "string"
+	},
+	"name_selected_font_color": {
+		"tag": "snc",
+		"type": "string"
+	},
+	"name_text_alignment": {
+		"tag": "na",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"subtext_line_span": {
+		"tag": "n2l",
+		"type": "integer",
+		"min": 1
+	},
+	"subtext_font": {
+		"tag": "n2f",
+		"type": "string"
+	},
+	"subtext_font_size": {
+		"tag": "n2s",
+		"type": "integer"
+	},
+	"subtext_font_color": {
+		"tag": "n2c",
+		"type": "string"
+	},
+	"subtext_selected_font_color": {
+		"tag": "sn2c",
+		"type": "string"
+	},
+	"subtext_text_alignment": {
+		"tag": "n2a",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"description_line_span": {
+		"tag": "dl",
+		"type": "integer",
+		"min": 1
+	},
+	"description_font": {
+		"tag": "df",
+		"type": "string"
+	},
+	"description_font_size": {
+		"tag": "ds",
+		"type": "integer"
+	},
+	"description_font_color": {
+		"tag": "dc",
+		"type": "string"
+	},
+	"description_selected_font_color": {
+		"tag": "sdc",
+		"type": "string"
+	},
+	"description_text_alignment": {
+		"tag": "da",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"detail_view_background_color": {
+		"tag": "dvbc",
+		"type": "string"
+	},
+	"detail_view_corner_radius": {
+		"tag": "dvr",
+		"type": "integer"
+	},
+	"detail_view_top_padding": {
+		"tag": "dvtp",
+		"type": "integer"
+	},
+	"detail_view_side_padding": {
+		"tag": "dvsp",
+		"type": "integer"
+	},
+	"detail_view_image_width": {
+		"tag": "dvisw",
+		"type": "integer"
+	},
+	"detail_view_image_height": {
+		"tag": "dvish",
+		"type": "integer"
+	},
+	"detail_view_image_top_padding": {
+		"tag": "dvitp",
+		"type": "integer"
+	},
+	"detail_view_image_corner_radius": {
+		"tag": "dvicr",
+		"type": "integer"
+	},
+	"detail_view_image_mode": {
+		"tag": "ls",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"detail_view_name_line_span": {
+		"tag": "dvnl",
+		"type": "integer",
+		"min": 1
+	},
+	"detail_view_name_font": {
+		"tag": "dvnf",
+		"type": "string"
+	},
+	"detail_view_name_font_size": {
+		"tag": "dvns",
+		"type": "integer"
+	},
+	"detail_view_name_font_color": {
+		"tag": "dvnc",
+		"type": "string"
+	},
+	"detail_view_selected_name_font_color": {
+		"tag": "sdvnc",
+		"type": "string"
+	},
+	"detail_view_name_text_alignment": {
+		"tag": "dvna",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"detail_view_description_line_span": {
+		"tag": "dvdl",
+		"type": "integer",
+		"min": 1
+	},
+	"detail_view_description_font": {
+		"tag": "dvdf",
+		"type": "string"
+	},
+	"detail_view_description_font_size": {
+		"tag": "dvds",
+		"type": "integer"
+	},
+	"detail_view_description_font_color": {
+		"tag": "dvdc",
+		"type": "string"
+	},
+	"detail_view_selected_description_font_color": {
+		"tag": "sdvdc",
+		"type": "string"
+	},
+	"detail_view_description_text_alignment": {
+		"tag": "dvda",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"badge_font": {
+		"tag": "bdgf",
+		"type": "string"
+	},
+	"badge_font_size": {
+		"tag": "bdgs",
+		"type": "integer"
+	},
+	"badge_font_color": {
+		"tag": "bdgc",
+		"type": "string"
+	},
+	"badge_background_color": {
+		"tag": "bdgbc",
+		"type": "string"
+	},
+	"accessory_image_url": {
+		"tag": "ai",
+		"type": "string"
+	},
+	"accessory_image_width": {
+		"tag": "aisw",
+		"type": "integer"
+	},
+	"accessory_image_height": {
+		"tag": "aish",
+		"type": "integer"
+	},
+	"accessory_line_span": {
+		"tag": "atl",
+		"type": "integer",
+		"min": 1
+	},
+	"accessory_font": {
+		"tag": "atf",
+		"type": "string"
+	},
+	"accessory_font_size": {
+		"tag": "ats",
+		"type": "integer"
+	},
+	"accessory_font_color": {
+		"tag": "atc",
+		"type": "string"
+	},
+	"accessory_text_alignment": {
+		"tag": "ata",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"accessory_vertical_alignment": {
+		"tag": "avo",
+		"type": "integer"
+	},
+	"accessory_selected_image_url": {
+		"tag": "sai",
+		"type": "string"
+	},
+	"accessory_alternate_image_url": {
+		"tag": "asai",
+		"type": "string"
+	},
+	"accessory_selected_width": {
+		"tag": "saisw",
+		"type": "integer"
+	},
+	"accessory_selected_height": {
+		"tag": "saish",
+		"type": "integer"
+	}
+}

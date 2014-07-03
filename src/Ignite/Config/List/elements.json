@@ -1,0 +1,121 @@
+{
+	"s": {
+		"name": {
+			"tag": "sn",
+			"type": "string"
+		},
+
+		"code": {
+			"tag": "ssc",
+			"type": "string"
+		},
+
+		"es": {
+			"e": {
+				"image_url": {
+					"tag": "i",
+					"type": "string"
+				},
+
+				"image_description": {
+					"tag": "it",
+					"type": "string"
+				},
+
+				"selected_image_url": {
+					"tag": "si",
+					"type": "string"
+				},
+
+				"selected_alternate_image_url": {
+					"tag": "asi",
+					"type": "string"
+				},
+				"name": {
+					"tag": "n",
+					"type": "string"
+				},
+
+				"subtext": {
+					"tag": "n2",
+					"type": "string"
+				},
+
+				"description": {
+					"tag": "d",
+					"type": "string"
+				},
+
+				"detail_view_image_url": {
+					"tag": "dvi",
+					"type": "string"
+				},
+
+				"detail_view_name": {
+					"tag": "dvn",
+					"type": "string"
+				},
+
+				"detail_view_description": {
+					"tag": "dvd",
+					"type": "string"
+				},
+
+				"badge_text": {
+					"tag": "bdg",
+					"type": "string"
+				},
+
+				"accessory_description": {
+					"tag": "at",
+					"type": "string"
+				},
+
+				"element_id": {
+					"tag": "itm",
+					"type": "string"
+				},
+
+				"large_image_url": {
+					"tag": "li",
+					"type": "string"
+				},
+
+				"media_url": {
+					"tag": "m",
+					"type": "string"
+				},
+
+				"itunes_song_url": {
+					"tag": "itms",
+					"type": "string"
+				},
+
+				"item_url": {
+					"tag": "url",
+					"type": "string"
+				},
+
+				"html_content": {
+					"tag": "content",
+					"type": "string"
+				},
+
+				"action": {
+					"tag": "a",
+					"type": "string"
+				},
+
+				"accessory_action": {
+					"tag": "aa",
+					"type": "string"
+				},
+
+				"action_selected": {
+					"tag": "sa",
+					"type": "string"
+				}
+			}
+		}
+	}
+}

@@ -15,9 +15,15 @@ class Homepage extends Module {
         })->bind("homepage");
         
         $controllers->get('bye', function (Application $app) {
-            $view = new Views\MenuBarView($app, "endpage");
+            $view = new Views\ListView($app, "endpage");
 
-			$view->addMenu([
+			$view->addSection(["name" => "Test section", "code" => "xxx"]);
+			$view->addListElement([
+				"subtext" => "asdsjadhsjkdh kashd kajsh dkajshd kjashd kjas dh",
+				"description" => " 239487 329023y4i2h342hg34"
+			], 0);
+
+			/*$view->addMenu([
 				"title" => "Gogoși cu zmoală",
 				"attach_location" => "yes",
 				"target_view_type" => "t",
@@ -29,7 +35,7 @@ class Homepage extends Module {
 				"attach_location" => "yes",
 				"target_view_type" => "t",
 				"post_data" => "test data"
-			]);
+			]);*/
             
             return $view;
         })->bind("endpage");
