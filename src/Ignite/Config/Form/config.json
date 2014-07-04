@@ -1,0 +1,96 @@
+{
+	"id": {
+		"tag": "gid",
+		"type": "string"
+	},
+	"section_height": {
+		"tag": "sh",
+		"type": "integer"
+	},
+	"section_header_font": {
+		"tag": "sf",
+		"type": "string"
+	},
+	"section_header_font_size": {
+		"tag": "ss",
+		"type": "integer"
+	},
+	"section_header_text_alignment": {
+		"tag": "sa",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"section_header_font_color": {
+		"tag": "sc",
+		"type": "string"
+	},
+	"section_header_lateral_padding": {
+		"tag": "slp",
+		"type": "integer"
+	},
+	"section_footer_font": {
+		"tag": "sff",
+		"type": "string"
+	},
+	"section_footer_font_size": {
+		"tag": "sfs",
+		"type": "integer"
+	},
+	"section_footer_text_alignment": {
+		"tag": "sfal",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"section_footer_font_color": {
+		"tag": "sfc",
+		"type": "string"
+	},
+	"section_footer_lateral_padding": {
+		"tag": "sflp",
+		"type": "integer"
+	},
+	"control_cell_background_color": {
+		"tag": "cc",
+		"type": "string"
+	},
+	"control_cell_background_image": {
+		"tag": "ci",
+		"type": "string"
+	},
+	"control_cell_height": {
+		"tag": "ch",
+		"type": "integer"
+	},
+	"control_cell_background_image_left_cap": {
+		"tag": "cilcw",
+		"type": "integer"
+	},
+	"control_cell_background_image_top_cap": {
+		"tag": "citcw",
+		"type": "integer"
+	},
+	"control_cell_name_font": {
+		"tag": "nf",
+		"type": "string"
+	},
+	"control_cell_name_font_size": {
+		"tag": "ns",
+		"type": "integer"
+	},
+	"control_cell_name_font_color": {
+		"tag": "nc",
+		"type": "string"
+	},
+	"control_cell_value_font": {
+		"tag": "nf",
+		"type": "string"
+	},
+	"control_cell_value_font_size": {
+		"tag": "ns",
+		"type": "integer"
+	},
+	"control_cell_value_font_color": {
+		"tag": "nc",
+		"type": "string"
+	}
+}
