@@ -1,0 +1,138 @@
+{
+	"type": {
+		"tag": "mt",
+		"type": "enum",
+		"enum": [0, 1, 2]
+	},
+	"enable_zoom": {
+		"tag": "ze",
+		"type": "boolean"
+	},
+	"enable_scroll": {
+		"tag": "se",
+		"type": "boolean"
+	},
+	"track_location": {
+		"tag": "tu",
+		"type": "boolean"
+	},
+	"map_accuracy": {
+		"tag": "acr",
+		"type": "integer",
+		"min": 0,
+		"max": 5
+	},
+	"show_user_location": {
+		"tag": "ul",
+		"type": "boolean"
+	},
+	"initial_location": {
+		"tag": "il",
+		"type": "string"
+	},
+	"initial_map_span": {
+		"tag": "is",
+		"type": "float"
+	},
+	"fit_elements": {
+		"tag": "fit",
+		"type": "boolean"
+	},
+	"pin_image": {
+		"tag": "pin",
+		"type": "string"
+	},
+	"pin_image_width": {
+		"tag": "pisw",
+		"type": "integer"
+	},
+	"pin_image_height": {
+		"tag": "pish",
+		"type": "integer"
+	},
+	"pin_image_radius": {
+		"tag": "picr",
+		"type": "integer"
+	},
+	"pin_image_mode": {
+		"tag": "picm",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"element_image_width": {
+		"tag": "isw",
+		"type": "integer"
+	},
+	"element_image_height": {
+		"tag": "ish",
+		"type": "integer"
+	},
+	"element_image_radius": {
+		"tag": "icr",
+		"type": "integer"
+	},
+	"show_clusters": {
+		"tag": "cluster",
+		"type": "boolean"
+	},
+	"clustering_granularity": {
+		"tag": "clg",
+		"type": "integer",
+		"min": 0,
+		"max": 320
+	},
+	"caption_background_color": {
+		"tag": "nbc",
+		"type": "string"
+	},
+	"caption_top_padding": {
+		"tag": "np",
+		"type": "integer"
+	},
+	"show_placeholders": {
+		"tag": "splh",
+		"type": "boolean"
+	},
+	"placeholder_image_path": {
+		"tag": "plh",
+		"type": "string"
+	},
+	"horizontal_sync_viewid": {
+		"tag": "syncx",
+		"type": "string"
+	},
+	"page_by_page_scrolling": {
+		"tag": "pg",
+		"type": "boolean"
+	},
+	"page_by_page_flip_action": {
+		"tag": "pga",
+		"type": "string"
+	},
+	"slideshow_page_start": {
+		"tag": "p",
+		"type": "integer",
+		"min": 0
+	},
+	"slideshow_duration": {
+		"tag": "ssd",
+		"type": "integer"
+	},
+	"autohide_bars": {
+		"tag": "ahnb",
+		"type": "boolean"
+	},
+	"transluscent_navbar": {
+		"tag": "nbtl",
+		"type": "boolean"
+	},
+	"auto_title": {
+		"tag": "at",
+		"type": "boolean"
+	},
+	"zoom_image": {
+		"tag": "zoom",
+		"type": "boolean"
+	}
+
+}

@@ -27,7 +27,7 @@ class ImageGridView extends View{
 	}
 
 	public function getImages() {
-		return $this->contents['elements'];
+		return $this->contents['elements']->_vars[0]['e'];
 	}
 
 } 

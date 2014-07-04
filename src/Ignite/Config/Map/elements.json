@@ -1,0 +1,26 @@
+{
+	"es": {
+		"e": {
+			"name": {
+				"tag": "n",
+				"type": "string"
+			},
+			"description": {
+				"tag": "d",
+				"type": "string"
+			},
+			"location": {
+				"tag": "l",
+				"type": "string"
+			},
+			"image": {
+				"tag": "i",
+				"type": "string"
+			},
+			"action": {
+				"tag": "a",
+				"type": "string"
+			}
+		}
+	}
+}

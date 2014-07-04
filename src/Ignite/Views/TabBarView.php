@@ -26,7 +26,7 @@ class TabBarView extends View {
 	}
 
 	public function getTabs() {
-		return $this->contents['elements'];
+		return $this->contents['elements']->_vars['tab'];
 	}
 
 } 
