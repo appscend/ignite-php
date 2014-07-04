@@ -1,0 +1,34 @@
+{
+	"es": {
+		"e": {
+			"url_view": {
+				"tag": "url",
+				"type": "string"
+			},
+			"title_element": {
+				"tag": "title",
+				"type": "string"
+			},
+			"content_html": {
+				"tag": "content",
+				"type": "string"
+			},
+			"title": {
+				"tag": "n",
+				"type": "string"
+			},
+			"description": {
+				"tag": "d",
+				"type": "string"
+			},
+			"image": {
+				"tag": "i",
+				"type": "string"
+			},
+			"large_image": {
+				"tag": "li",
+				"type": "string"
+			}
+		}
+	}
+}
