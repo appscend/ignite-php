@@ -1,0 +1,18 @@
+{
+	"es": {
+		"e": {
+			"image": {
+				"tag": "i",
+				"type": "string"
+			},
+			"name": {
+				"tag": "n",
+				"type": "string"
+			},
+			"action": {
+				"tag": "a",
+				"type": "string"
+			}
+		}
+	}
+}

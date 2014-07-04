@@ -1,0 +1,52 @@
+{
+	"image_width": {
+		"tag": "isw",
+		"type": "integer"
+	},
+	"image_height": {
+		"tag": "ish",
+		"type": "integer"
+	},
+	"image_height_corner_radius": {
+		"tag": "icr",
+		"type": "integer"
+	},
+	"image_mode": {
+		"tag": "tu",
+		"type": "enum",
+		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+	},
+	"image_spacing": {
+		"tag": "cs",
+		"type": "integer"
+	},
+	"image_angle": {
+		"tag": "ca",
+		"type": "float"
+	},
+	"image_reflection": {
+		"tag": "ref",
+		"type": "boolean"
+	},
+	"name_line_span": {
+		"tag": "nl",
+		"type": "integer"
+	},
+	"name_font": {
+		"tag": "nf",
+		"type": "string"
+	},
+	"name_font_size": {
+		"tag": "ns",
+		"type": "integer"
+	},
+	"name_font_color": {
+		"tag": "nc",
+		"type": "string"
+	},
+	"name_top_padding": {
+		"tag": "no",
+		"type": "integer"
+	}
+
+}
