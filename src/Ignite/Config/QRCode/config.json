@@ -1,20 +1,4 @@
 {
-	"layer_name": {
-		"tag": "layer",
-		"type": "string"
-	},
-	"consumer_key": {
-		"tag": "key",
-		"type": "string"
-	},
-	"consumer_secret": {
-		"tag": "secret",
-		"type": "string"
-	},
-	"visibility_range": {
-		"tag": "radius",
-		"type": "int"
-	},
 	"custom_html_info": {
 		"tag": "cv",
 		"type": "boolean"
@@ -29,6 +13,10 @@
 	},
 	"auto_back": {
 		"tag": "ap",
+		"type": "boolean"
+	},
+	"confirmation_prompt": {
+		"tag": "aa",
 		"type": "boolean"
 	}
 }
