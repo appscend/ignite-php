@@ -1,0 +1,11 @@
+{
+	"front_camera": {
+		"tag": "ff",
+		"type": "boolean"
+	},
+	"camera_content_mode": {
+		"tag": "ccm",
+		"type": "enum",
+		"enum": ["stf", "aft"]
+	}
+}
