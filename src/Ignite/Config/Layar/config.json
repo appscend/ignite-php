@@ -1,0 +1,34 @@
+{
+	"layer_name": {
+		"tag": "layer",
+		"type": "string"
+	},
+	"consumer_key": {
+		"tag": "key",
+		"type": "string"
+	},
+	"consumer_secret": {
+		"tag": "secret",
+		"type": "string"
+	},
+	"visibility_range": {
+		"tag": "radius",
+		"type": "int"
+	},
+	"custom_html_info": {
+		"tag": "cv",
+		"type": "boolean"
+	},
+	"html_content": {
+		"tag": "content",
+		"type": "string"
+	},
+	"autostart_camera_display": {
+		"tag": "as",
+		"type": "boolean"
+	},
+	"auto_back": {
+		"tag": "as",
+		"type": "boolean"
+	}
+}
