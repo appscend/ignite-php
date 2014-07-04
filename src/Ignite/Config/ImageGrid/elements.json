@@ -1,0 +1,26 @@
+{
+	"es": {
+		"e": {
+			"image": {
+				"tag": "i",
+				"type": "string"
+			},
+			"html_content": {
+				"tag": "content",
+				"type": "string"
+			},
+			"item_url": {
+				"tag": "url",
+				"type": "string"
+			},
+			"id": {
+				"tag": "itm",
+				"type": "string"
+			},
+			"action": {
+				"tag": "a",
+				"type": "string"
+			}
+		}
+	}
+}
