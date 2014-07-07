@@ -1,0 +1,326 @@
+{
+	"es": {
+		"e": {
+			"X": {
+				"tag": "x",
+				"type": "integer"
+			},
+			"Y": {
+				"tag": "y",
+				"type": "integer"
+			},
+			"width": {
+				"tag": "w",
+				"type": "integer"
+			},
+			"height": {
+				"tag": "h",
+				"type": "integer"
+			},
+			"opacity": {
+				"tag": "alpha",
+				"type": "float",
+				"min": 0,
+				"max": 1
+			},
+			"no_resize": {
+				"tag": "nosize",
+				"type": "boolean"
+			},
+			"draggable": {
+				"tag": "drag",
+				"type": "boolean"
+			},
+			"draggable_x": {
+				"tag": "dragx",
+				"type": "boolean"
+			},
+			"draggable_y": {
+				"tag": "dragy",
+				"type": "boolean"
+			},
+			"snap_x": {
+				"tag": "snapx",
+				"type": "string"
+			},
+			"snap_y": {
+				"tag": "snapy",
+				"type": "string"
+			},
+			"snap_x_landscape": {
+				"tag": "snaplx",
+				"type": "string"
+			},
+			"snap_y_landscape": {
+				"tag": "snaply",
+				"type": "string"
+			},
+			"snap_animation_duration": {
+				"tag": "snapy",
+				"type": "float",
+				"min": 0
+			},
+			"swipeable": {
+				"tag": "swipe",
+				"type": "boolean"
+			},
+			"action_swipe_left": {
+				"tag": "swla",
+				"type": "string"
+			},
+			"action_swipe_right": {
+				"tag": "swra",
+				"type": "string"
+			},
+			"drag_min_x": {
+				"tag": "minx",
+				"type": "integer"
+			},
+			"drag_min_y": {
+				"tag": "miny",
+				"type": "integer"
+			},
+			"drag_max_x": {
+				"tag": "maxx",
+				"type": "integer"
+			},
+			"drag_max_y": {
+				"tag": "maxy",
+				"type": "integer"
+			},
+			"zoomable": {
+				"tag": "zoom",
+				"type": "boolean"
+			},
+			"rotateable": {
+				"tag": "rotate",
+				"type": "boolean"
+			},
+			"angle_rotation": {
+				"tag": "angle",
+				"type": "float"
+			},
+			"disable_touch_events": {
+				"tag": "td",
+				"type": "boolean"
+			},
+			"corner_radius": {
+				"tag": "cr",
+				"type": "integer"
+			},
+			"shadow_cast": {
+				"tag": "shadow",
+				"type": "boolean"
+			},
+			"shadow_x": {
+				"tag": "shadowx",
+				"type": "integer"
+			},
+			"shadow_y": {
+				"tag": "shadowy",
+				"type": "integer"
+			},
+			"shadow_radius": {
+				"tag": "shadowr",
+				"type": "integer"
+			},
+			"shadow_opacity": {
+				"tag": "shadowa",
+				"type": "float",
+				"min": 0,
+				"max": 1
+			},
+			"shadow_color": {
+				"tag": "shadowc",
+				"type": "string"
+			},
+			"border_display": {
+				"tag": "border",
+				"type": "boolean"
+			},
+			"border_color": {
+				"tag": "borderc",
+				"type": "string"
+			},
+			"border_width": {
+				"tag": "borders",
+				"type": "integer"
+			},
+			"clippable": {
+				"tag": "clip",
+				"type": "boolean"
+			},
+			"hide_from_screenshot": {
+				"tag": "hs",
+				"type": "boolean"
+			},
+			"auto_adjust_height": {
+				"tag": "ah",
+				"type": "boolean"
+			},
+			"auto_adjust_y": {
+				"tag": "ahy",
+				"type": "boolean"
+			},
+			"auto_adjust_element_id": {
+				"tag": "ahid",
+				"type": "string"
+			},
+			"reposition_trigger_element_id": {
+				"tag": "ahyrel",
+				"type": "string"
+			},
+			"element_key": {
+				"tag": "key",
+				"type": "string"
+			},
+			"reposition_vertical_spacing": {
+				"tag": "yof",
+				"type": "integer"
+			},
+			"target_view_type": {
+				"tag": "vt",
+				"type": "string"
+			},
+			"target_xml_path": {
+				"tag": "px",
+				"type": "string"
+			},
+			"own_navigation": {
+				"tag": "nav",
+				"type": "boolean"
+			},
+			"own_navigation_id": {
+				"tag": "navz",
+				"type": "string"
+			},
+			"post_data": {
+				"tag": "data",
+				"type": "string"
+			},
+			"attach_location": {
+				"tag": "loc",
+				"type": "boolean"
+			},
+			"location_accuracy": {
+				"tag": "loca",
+				"type": "string"
+			},
+			"view_id": {
+				"tag": "avi",
+				"type": "string"
+			},
+			"background_color": {
+				"tag": "bc",
+				"type": "string"
+			},
+			"alternate_background_color": {
+				"tag": "abc",
+				"type": "string"
+			},
+			"background_image": {
+				"tag": "i",
+				"type": "string"
+			},
+			"alternate_background_image": {
+				"tag": "ai",
+				"type": "string"
+			},
+			"background_image_mode": {
+				"tag": "icm",
+				"type": "enum",
+				"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+			},
+			"background_image_left_cap_width": {
+				"tag": "ilc",
+				"type": "integer"
+			},
+			"background_image_top_cap_width": {
+				"tag": "itc",
+				"type": "integer"
+			},
+			"action": {
+				"tag": "a",
+				"type": "string"
+			},
+			"alternate_action": {
+				"tag": "aa",
+				"type": "string"
+			},
+			"action_double_tap": {
+				"tag": "da",
+				"type": "string"
+			},
+			"use_alternate_favorite": {
+				"tag": "afavcat",
+				"type": "string"
+			},
+			"use_alternate_favorite_item": {
+				"tag": "afavitm",
+				"type": "string"
+			},
+			"use_alternate_favorite_key": {
+				"tag": "afavkey",
+				"type": "string"
+			},
+			"text": {
+				"tag": "n",
+				"type": "string"
+			},
+			"alternate_text": {
+				"tag": "an",
+				"type": "string"
+			},
+			"font": {
+				"tag": "nf",
+				"type": "string"
+			},
+			"font_size": {
+				"tag": "ns",
+				"type": "integer"
+			},
+			"font_color": {
+				"tag": "nc",
+				"type": "string"
+			},
+			"text_alignment": {
+				"tag": "na",
+				"type": "enum",
+				"enum": ["l", "c", "r"]
+			},
+			"left_padding": {
+				"tag": "lnp",
+				"type": "integer"
+			},
+			"right_padding": {
+				"tag": "rnp",
+				"type": "integer"
+			},
+			"top_padding": {
+				"tag": "tnp",
+				"type": "integer"
+			},
+			"bottom_padding": {
+				"tag": "bnp",
+				"type": "integer"
+			},
+			"label_values": {
+				"tag": "np",
+				"type": "string"
+			},
+			"auto_size_width": {
+				"tag": "aw",
+				"type": "boolean"
+			},
+			"auto_size_height": {
+				"tag": "ah",
+				"type": "boolean"
+			},
+			"element_type": {
+				"tag": "type",
+				"type": "enum",
+				"enum": ["label", "image"]
+			}
+		}
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"scrollable_beyond_bounds": {
+		"tag": "bnc",
+		"type": "boolean"
+	},
+	"paged_scrolling": {
+		"tag": "pg",
+		"type": "boolean"
+	},
+	"content_max_width": {
+		"tag": "maxw",
+		"type": "integer"
+	},
+	"content_max_height": {
+		"tag": "maxh",
+		"type": "integer"
+	},
+	"disable_vertical_scroll": {
+		"tag": "dvs",
+		"type": "boolean"
+	},
+	"disable_horizontal_scroll": {
+		"tag": "dhs",
+		"type": "boolean"
+	},
+	"hide_vertical_scrollbar": {
+		"tag": "hvs",
+		"type": "boolean"
+	},
+	"hide_horizontal_scrollbar": {
+		"tag": "hhs",
+		"type": "boolean"
+	},
+	"sync_horizontal_views": {
+		"tag": "syncx",
+		"type": "string"
+	},
+	"sync_vertical_views": {
+		"tag": "syncy",
+		"type": "string"
+	}
+}

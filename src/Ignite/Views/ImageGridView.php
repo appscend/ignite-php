@@ -13,7 +13,7 @@ class ImageGridView extends View{
 		$this->configFileName = 'ImageGrid/config.json';
 		$this->loadSpecFile();
 		$this->addElement(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = [];
+		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
 
 	public function addImage(array $content) {

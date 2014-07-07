@@ -13,7 +13,7 @@ class MenuBarView extends View {
 		$this->configFileName = 'MenuBar/config.json';
 		$this->loadSpecFile();
 		$this->addElement(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = [];
+		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
 
 	public function addMenu(array $content) {

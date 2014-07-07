@@ -13,7 +13,7 @@ class MapView extends View{
 		$this->configFileName = 'Map/config.json';
 		$this->loadSpecFile();
 		$this->addElement(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = [];
+		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
 
 	public function addLocation(array $content) {
