@@ -1,0 +1,100 @@
+{
+	"refreshElement": {
+		"name": "refreshl",
+		"params": {
+			"required": ["view_id"],
+			"optional": []
+		}
+	},
+	"changeOpacity": {
+		"name": "rea",
+		"params": {
+			"required": ["avi", "alpha", "lalpha", "padalpha", "padlalpha"],
+			"optional": ["duration"]
+		}
+	},
+	"changeOpacityByKey": {
+		"name": "reak",
+		"params": {
+			"required": ["key", "alpha", "lalpha", "padalpha", "padlalpha"],
+			"optional": ["duration"]
+		}
+	},
+	"changePositionAndSize": {
+		"name": "ref",
+		"params": {
+			"required": ["avi", "coords"],
+			"optional": ["lcoords", "padcoords", "padlcoords", "duration"]
+		}
+	},
+	"changePositionAndSizeByKey": {
+		"name": "refk",
+		"params": {
+			"required": ["key", "coords"],
+			"optional": ["lcoords", "padcoords", "padlcoords", "duration"]
+		}
+	},
+	"toggleLocations": {
+		"name": "toggle",
+		"params": {
+			"required": ["avi", "direction", "v1", "v2", "duration"],
+			"optional": ["lv1", "padv1", "padlv1", "v2", "lv2", "padv2", "padlv2"]
+		}
+	},
+	"changeProperties": {
+		"name": "rps",
+		"params": {
+			"required": ["avi", "value", "key"],
+			"optional": []
+		}
+	},
+	"changePropertiesByKey": {
+		"name": "rpsk",
+		"params": {
+			"required": ["key", "value", "key"],
+			"optional": []
+		}
+	},
+	"saveScreenshot": {
+		"name": "snap",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"saveScreenshotLocalStorage": {
+		"name": "snapd",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"saveScreenshotToUrl": {
+		"name": "snapto",
+		"params": {
+			"required": ["url"],
+			"optional": []
+		}
+	},
+	"scrollTo": {
+		"name": "scrollx",
+		"params": {
+			"required": ["x", "y"],
+			"optional": []
+		}
+	},
+	"scrollToRelative": {
+		"name": "scrollrx",
+		"params": {
+			"required": ["x", "y"],
+			"optional": []
+		}
+	},
+	"scrollToRelativeView": {
+		"name": "scrollpx",
+		"params": {
+			"required": ["x", "y"],
+			"optional": []
+		}
+	}
+}

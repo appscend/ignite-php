@@ -1,0 +1,37 @@
+{
+	"startSlideshow": {
+		"name": "slideshow",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"flipSlide": {
+		"name": "flipSlide",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"scrollTo": {
+		"name": "scrollx",
+		"params": {
+			"required": ["x", "y"],
+			"optional": []
+		}
+	},
+	"scrollToRelative": {
+		"name": "scrollrx",
+		"params": {
+			"required": ["x", "y"],
+			"optional": []
+		}
+	},
+	"scrollToViewRelative": {
+		"name": "scrollpx",
+		"params": {
+			"required": ["x", "y"],
+			"optional": []
+		}
+	}
+}

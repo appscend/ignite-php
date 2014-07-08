@@ -1,0 +1,37 @@
+{
+	"toggleSelect": {
+		"name": "tsel",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"setSelectable": {
+		"name": "tsel",
+		"params": {
+			"required": ["state"],
+			"optional": []
+		}
+	},
+	"toggleSelectUnique": {
+		"name": "tselu",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"executeActionS": {
+		"name": "execsel",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"executeActionSToggle": {
+		"name": "execasel",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	}
+}

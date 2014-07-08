@@ -1,0 +1,107 @@
+{
+	"refreshPage": {
+		"name": "r",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"goBack": {
+		"name": "b",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"goForward": {
+		"name": "f",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"bookmark": {
+		"name": "fav",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"startSlideshow": {
+		"name": "slideshow",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"increaseFontSize": {
+		"name": "fp",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"dereaseFontSize": {
+		"name": "fm",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"cycleFontSize": {
+		"name": "fa",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"share": {
+		"name": "share",
+		"params": {
+			"required": [],
+			"optional": ["service"]
+		}
+	},
+	"loadNextItem": {
+		"name": "ni",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"loadPreviousItem": {
+		"name": "pi",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"getInfoEvent": {
+		"name": "getinfo",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"triggerJSFunction": {
+		"name": "trigger",
+		"params": {
+			"required": ["fname"],
+			"optional": []
+		}
+	},
+	"getFormEvent": {
+		"name": "getform",
+		"params": {
+			"required": ["gid"],
+			"optional": []
+		}
+	},
+	"getDataEvent": {
+		"name": "getdata",
+		"params": {
+			"required": ["url"],
+			"optional": []
+		}
+	}
+}

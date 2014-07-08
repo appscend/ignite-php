@@ -1,0 +1,470 @@
+{
+	"push": {
+		"name": "p",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation"]
+		}
+	},
+	"pushLocation": {
+		"name": "pl",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy"]
+		}
+	},
+	"modalView": {
+		"name": "m",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy", "modalStyle"]
+		}
+	},
+	"modalViewLocation": {
+		"name": "ml",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy", "modalStyle"]
+		}
+	},
+	"replace": {
+		"name": "r",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation"]
+		}
+	},
+	"replaceLocation": {
+		"name": "rl",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy"]
+		}
+	},
+	"replaceAll": {
+		"name": "ra",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation"]
+		}
+	},
+	"replaceAllLocation": {
+		"name": "rl",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy"]
+		}
+	},
+	"closeModalView": {
+		"name": "closeModal",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"openURL": {
+		"name": "surl",
+		"params": {
+			"required": ["url"],
+			"optional": []
+		}
+	},
+	"slideshow": {
+		"name": "s",
+		"params": {
+			"required": ["paramxml"],
+			"optional": []
+		}
+	},
+	"slideshowPostData": {
+		"name": "s:d",
+		"params": {
+			"required": ["paramxml"],
+			"optional": []
+		}
+	},
+	"refresh": {
+		"name": "refresh",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"back": {
+		"name": "pop",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"home": {
+		"name": "poptr",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"call": {
+		"name": "call",
+		"params": {
+			"required": ["number"],
+			"optional": []
+		}
+	},
+	"sendEmail": {
+		"name": "e",
+		"params": {
+			"required": ["address"],
+			"optional": ["title", "body"]
+		},
+		"additional": ["t", "b"]
+	},
+	"sendSMS": {
+		"name": "sms",
+		"params": {
+			"required": ["number"],
+			"optional": ["text"]
+		},
+		"aditional": ["b"]
+	},
+	"schedulePushNotificationText": {
+		"name": "spn:d:b",
+		"params": {
+			"required": ["text", "date", "before"],
+			"optional": []
+		}
+	},
+	"schedulePushNotification": {
+		"name": "spn",
+		"params": {
+			"required": [],
+			"optional": ["before"]
+		}
+	},
+	"removePushNotification": {
+		"name": "rpn",
+		"params": {
+			"required": ["id"],
+			"optional": []
+		}
+	},
+	"searchBar": {
+		"name": "search",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"socialNetworkShare": {
+		"name": "share:t:u",
+		"params": {
+			"required": ["title", "text", "url"],
+			"optional": ["image", "service"]
+		},
+		"additional": ["i", "s"]
+	},
+	"playlistAppendAll": {
+		"name": "mpaa",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"replacePlaylistSongs": {
+		"name": "mpra",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"replacePlaylistSongsAndPlay": {
+		"name": "mprp",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"playlistAppendAllNoPopup": {
+		"name": "mpaaq",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"replacePlaylistSongsNoPopup": {
+		"name": "mpraq",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"replacePlaylistSongsNoPopupAndPlay": {
+		"name": "mprpq",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"appendItemPlaylist": {
+		"name": "ap",
+		"params": {
+			"required": [],
+			"optional": ["index"]
+		}
+	},
+	"appendItemPlaylistAndPlay": {
+		"name": "anp",
+		"params": {
+			"required": [],
+			"optional": ["index"]
+		}
+	},
+	"appendItemPlaylistNoPopup": {
+		"name": "apq",
+		"params": {
+			"required": [],
+			"optional": ["index"]
+		}
+	},
+	"appendItemPlaylistNoPopupAndPlay": {
+		"name": "anpq",
+		"params": {
+			"required": [],
+			"optional": ["index"]
+		}
+	},
+	"enqueueSong": {
+		"name": "am:d:m:i:l",
+		"params": {
+			"required": ["name", "description", "mediaLink", "image", "shopLink"],
+			"optional": []
+		}
+	},
+	"enqueueSongAndPlay": {
+		"name": "amnp:d:m:i:l",
+		"params": {
+			"required": ["name", "description", "mediaLink", "image", "shopLink"],
+			"optional": []
+		}
+	},
+	"enqueueSongNoPopup": {
+		"name": "amq:d:m:i:l",
+		"params": {
+			"required": ["name", "description", "mediaLink", "image", "shopLink"],
+			"optional": []
+		}
+	},
+	"enqueueSongNoPopupAndPlay": {
+		"name": "amnpq:d:m:i:l",
+		"params": {
+			"required": ["name", "description", "mediaLink", "image", "shopLink"],
+			"optional": []
+		}
+	},
+	"mediaPlayerToggleOverlayVisibility": {
+		"name": "tmp",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"previous": {
+		"name": "prev",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"next": {
+		"name": "next",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"clearPlaylist": {
+		"name": "tmp",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"togglePlay": {
+		"name": "play",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"login": {
+		"name": "login",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"loginAdapter": {
+		"name": "li",
+		"params": {
+			"required": ["adaptername"],
+			"optional": []
+		}
+	},
+	"logoutAdapter": {
+		"name": "lo",
+		"params": {
+			"required": ["adaptername"],
+			"optional": []
+		}
+	},
+	"toggleLoginAdapter": {
+		"name": "tl",
+		"params": {
+			"required": ["adaptername"],
+			"optional": []
+		}
+	},
+	"addPersistentData": {
+		"name": "sud:k",
+		"params": {
+			"required": ["userdata", "key"],
+			"optional": []
+		}
+	},
+	"removePersistentData": {
+		"name": "rudk",
+		"params": {
+			"required": ["key"],
+			"optional": []
+		}
+	},
+	"playVideoModal": {
+		"name": "pv",
+		"params": {
+			"required": ["url"],
+			"optional": []
+		}
+	},
+	"displayMenu": {
+		"name": "menu",
+		"params": {
+			"required": ["menuid"],
+			"optional": []
+		}
+	},
+	"closeMenu": {
+		"name": "cmenu",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"invokeAtionGroup": {
+		"name": "pag",
+		"params": {
+			"required": ["id"],
+			"optional": []
+		}
+	},
+	"callJSFunction": {
+		"name": "func",
+		"params": {
+			"required": ["name", "params"],
+			"optional": []
+		}
+	},
+	"store": {
+		"name": "s:k:gid",
+		"params": {
+			"required": ["data", "key", "form"],
+			"optional": []
+		}
+	},
+	"remove": {
+		"name": "r:gid",
+		"params": {
+			"required": ["key", "form"],
+			"optional": []
+		}
+	},
+	"removeAll": {
+		"name": "rgid",
+		"params": {
+			"required": ["form"],
+			"optional": []
+		}
+	},
+	"secureStore": {
+		"name": "ss:k",
+		"params": {
+			"required": ["data", "key"],
+			"optional": []
+		}
+	},
+	"removeSecure": {
+		"name": "rs",
+		"params": {
+			"required": ["key"],
+			"optional": []
+		}
+	},
+	"setBackgroundImage": {
+		"name": "sbi",
+		"params": {
+			"required": ["image"],
+			"optional": ["duration"]
+		},
+		"additional": ["d"]
+	},
+	"setBackgroundVideo": {
+		"name": "sbv",
+		"params": {
+			"required": ["video"],
+			"optional": []
+		}
+	},
+	"setBackgroundColor": {
+		"name": "sbc",
+		"params": {
+			"required": ["data"],
+			"optional": ["duration"]
+		},
+		"additional": ["d"]
+	},
+	"alert": {
+		"name": "alert",
+		"params": {
+			"required": ["text"],
+			"optional": []
+		}
+	},
+	"removeAds": {
+		"name": "dropads",
+		"params": {
+			"required": ["message"],
+			"optional": []
+		},
+		"additional": ["d"]
+	},
+	"saveImage": {
+		"name": "si",
+		"params": {
+			"required": ["url"],
+			"optional": []
+		}
+	},
+	"mapDirections": {
+		"name": "dirl:l",
+		"params": {
+			"required": ["latitude", "longitude"],
+			"optional": []
+		}
+	},
+	"addToFavorites": {
+		"name": "fav",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	}
+}

@@ -1,0 +1,58 @@
+{
+	"submit": {
+		"name": "pv",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation"]
+		}
+	},
+	"submitLocation": {
+		"name": "plv",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy"]
+		}
+	},
+	"modalView": {
+		"name": "mv",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy", "modalstyle"]
+		}
+	},
+	"modalViewLocation": {
+		"name": "mlv",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy", "modalstyle"]
+		}
+	},
+	"replaceView": {
+		"name": "rv",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation"]
+		}
+	},
+	"replaceViewLocation": {
+		"name": "rlv",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy"]
+		}
+	},
+	"replaceAll": {
+		"name": "rav",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation"]
+		}
+	},
+	"replaceAllLocation": {
+		"name": "ralv",
+		"params": {
+			"required": ["paramxml"],
+			"optional": ["data", "form", "animation", "accuracy"]
+		}
+	}
+}

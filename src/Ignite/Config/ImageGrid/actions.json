@@ -1,0 +1,72 @@
+{
+	"saveImage": {
+		"name": "savePic",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"removeImage": {
+		"name": "removePic",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"shareImage": {
+		"name": "sharePic",
+		"params": {
+			"required": [],
+			"optional": ["service"]
+		}
+	},
+	"editShareImage": {
+		"name": "editShare",
+		"params": {
+			"required": [],
+			"optional": ["service"]
+		}
+	},
+	"startSlideshow": {
+		"name": "slideshow",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"toggleBars": {
+		"name": "tn",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"moveNext": {
+		"name": "nextp",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"movePrevious": {
+		"name": "prevp",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"scrollTo": {
+		"name": "scrollx",
+		"params": {
+			"required": ["x", "y"],
+			"optional": []
+		}
+	},
+	"flipSlide": {
+		"name": "flipSlide",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	}
+}

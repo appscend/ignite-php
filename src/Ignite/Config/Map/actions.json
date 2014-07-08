@@ -1,0 +1,37 @@
+{
+	"showUserLocation": {
+		"name": "sloc",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"trackUserLocation": {
+		"name": "track",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"centerUserLocation": {
+		"name": "center",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"showDirections": {
+		"name": "dir",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	},
+	"searchLocation": {
+		"name": "slideshow",
+		"params": {
+			"required": [],
+			"optional": []
+		}
+	}
+}
