@@ -3,7 +3,6 @@ namespace Ignite\Modules\Homepage;
 use Ignite\Module;
 use Ignite\Application;
 use Ignite\Views;
-use Ignite\Action;
 
 class Homepage extends Module {
 
