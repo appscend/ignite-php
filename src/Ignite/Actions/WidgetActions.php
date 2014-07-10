@@ -10,23 +10,23 @@ class WidgetActions {
 		return new Action('refreshl:', func_get_args());
 	}
 
-	public static function changeElementOpacity($avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration = null) {
+	public static function changeElementOpacity($avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration) {
 		return new Action('rea:', func_get_args());
 	}
 
-	public static function changeGroupOpacity($key, $alpha, $lalpha, $padalpha, $padlalpha, $duration = null) {
+	public static function changeGroupOpacity($key, $alpha, $lalpha, $padalpha, $padlalpha, $duration) {
 		return new Action('reak:', func_get_args());
 	}
 
-	public static function changePositionAndSize($avi, $coords, $lcoords = null, $padcoords = null, $padlcoords = null, $duration = null) {
+	public static function changePositionAndSize($avi, $coords, $lcoords, $padcoords, $padlcoords, $duration) {
 		return new Action('ref:', func_get_args());
 	}
 
-	public static function changeGroupPositionAndSize($key, $coords, $lcoords = null, $padcoords = null, $padlcoords = null, $duration = null) {
+	public static function changeGroupPositionAndSize($key, $coords, $lcoords, $padcoords, $padlcoords, $duration) {
 		return new Action('refk:', func_get_args());
 	}
 
-	public static function swapElementLocation($avi, $direction, $v1, $lv1 = '', $padv1 = '', $padlv1 = '', $v2, $lv2 = '', $padv2, $padlv2 = '', $duration) {
+	public static function swapElementLocation($avi, $direction, $v1, $lv1, $padv1, $padlv1, $v2, $lv2, $padv2, $padlv2, $duration) {
 		return new Action('toggle:', func_get_args());
 	}
 

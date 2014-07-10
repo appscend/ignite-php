@@ -6,10 +6,10 @@ use Ignite\Action;
 
 class DataStorage {
 
-	public static function setBackgroundImage($image, $duration = null) {
+	public static function setBackgroundImage($image, $duration) {
 		$actionName = 'sbi:';
 
-		if (isset($duration))
+		if ($duration === '')
 			$actionName .= 'd:';
 
 		return new Action($actionName, func_get_args());
@@ -19,10 +19,10 @@ class DataStorage {
 		return new Action('sbv:', func_get_args());
 	}
 
-	public static function setBackgroundColor($color, $duration = null) {
+	public static function setBackgroundColor($color, $duration) {
 		$actionName = 'sbc:';
 
-		if (isset($duration))
+		if ($duration === '')
 			$actionName .= 'd:';
 
 		return new Action($actionName, func_get_args());

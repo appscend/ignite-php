@@ -26,37 +26,37 @@ class MediaPlayer {
 		return new Action('mprpq');
 	}
 
-	public static function append($index = null) {
+	public static function append($index) {
 		$actionName = 'ap';
 
-		if (isset($index))
+		if ($index === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());
 	}
 
-	public static function appendAndPlay($index = null) {
+	public static function appendAndPlay($index) {
 		$actionName = 'anp';
 
-		if (isset($index))
+		if ($index === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());
 	}
 
-	public static function appendNoPopup($index = null) {
+	public static function appendNoPopup($index) {
 		$actionName = 'apq';
 
-		if (isset($index))
+		if ($index === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());
 	}
 
-	public static function appendNoPopupAndPlay($index = null) {
+	public static function appendNoPopupAndPlay($index) {
 		$actionName = 'anpq';
 
-		if (isset($index))
+		if ($index === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());

@@ -13,19 +13,19 @@ class ImageGridActions {
 		return new Action('removePic');
 	}
 
-	public static function sharePicture($service = null) {
+	public static function sharePicture($service) {
 		$actionName = 'sharePic';
 
-		if (isset($service))
+		if ($service === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());
 	}
 
-	public static function editAndSharePicture($service = null) {
+	public static function editAndSharePicture($service) {
 		$actionName = 'editShare';
 
-		if (isset($service))
+		if ($service === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());

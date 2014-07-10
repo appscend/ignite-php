@@ -18,19 +18,19 @@ class MapActions {
 		return new Action('center');
 	}
 
-	public static function directionTo($name = null) {
+	public static function directionTo($name) {
 		$actionName = 'dir';
 
-		if (isset($name))
+		if ($name === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());
 	}
 
-	public static function locationSearch($name = null) {
+	public static function locationSearch($name) {
 		$actionName = 'locsearch';
 
-		if (isset($name))
+		if ($name === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());

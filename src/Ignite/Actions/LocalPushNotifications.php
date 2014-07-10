@@ -9,10 +9,10 @@ class LocalPushNotifications {
 		return new Action('spn:d:b:', func_get_args());
 	}
 
-	public static function schedule($before = null) {
+	public static function schedule($before) {
 		$actionName = 'spn';
 
-		if (isset($before))
+		if ($before === '')
 			$actionName .= ':';
 
 		return new Action($actionName, func_get_args());

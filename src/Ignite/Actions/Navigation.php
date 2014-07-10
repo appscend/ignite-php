@@ -6,35 +6,35 @@ use Ignite\Action;
 
 class Navigation {
 
-	public static function push($paramxml, $data = null, $form = null, $animation = null) {
+	public static function push($paramxml, $data, $form, $animation) {
 		return new Action('p:', func_get_args());
 	}
 
-	public static function pushWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+	public static function pushWithLocation($paramxml, $data, $form, $animation, $accuracy) {
 		return new Action('pl:', func_get_args());
 	}
 
-	public static function modalView($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+	public static function modalView($paramxml, $data, $form, $animation, $accuracy, $modalStyle) {
 		return new Action('m:', func_get_args());
 	}
 
-	public static function modalViewWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+	public static function modalViewWithLocation($paramxml, $data, $form, $animation, $accuracy, $modalStyle) {
 		return new Action('ml:', func_get_args());
 	}
 
-	public static function replace($paramxml, $data = null, $form = null, $animation = null) {
+	public static function replace($paramxml, $data, $form, $animation) {
 		return new Action('r:', func_get_args());
 	}
 
-	public static function replaceWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+	public static function replaceWithLocation($paramxml, $data, $form, $animation, $accuracy) {
 		return new Action('rl:', func_get_args());
 	}
 
-	public static function replaceAll($paramxml, $data = null, $form = null, $animation = null) {
+	public static function replaceAll($paramxml, $data, $form, $animation) {
 		return new Action('ra:', func_get_args());
 	}
 
-	public static function replaceAllWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+	public static function replaceAllWithLocation($paramxml, $data, $form, $animation, $accuracy) {
 		return new Action('ral:', func_get_args());
 	}
 

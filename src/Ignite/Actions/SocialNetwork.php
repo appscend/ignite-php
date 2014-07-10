@@ -6,12 +6,12 @@ use Ignite\Action;
 
 class SocialNetwork {
 
-	public static function share($title, $text, $url, $image = null, $service = null) {
+	public static function share($title, $text, $url, $image, $service) {
 		$actionName = 'share:t:u:';
 
-		if (isset($image))
+		if ($image === '')
 			$actionName .= 'i:';
-		if (isset($service))
+		if ($service === '')
 			$actionName .= 's:';
 
 		return new Action($actionName, func_get_args());

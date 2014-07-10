@@ -10,21 +10,21 @@ class Communication {
 		return new Action('call:', func_get_args());
 	}
 
-	public static function email($address, $title = null, $body = null) {
+	public static function email($address, $title, $body) {
 		$actionName = 'e:';
 
-		if (isset($title))
+		if ($title === '')
 			$actionName .= 't:';
-		if (isset($body))
+		if ($body === '')
 			$actionName .= 'b:';
 
 		return new Action($actionName, func_get_args());
 	}
 
-	public static function sms($number, $text = null) {
+	public static function sms($number, $text) {
 		$actionName = 'sms:';
 
-		if (isset($title))
+		if ($text === '')
 			$actionName .= 'b:';
 
 		return new Action($actionName, func_get_args());
