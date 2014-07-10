@@ -24,14 +24,14 @@
 		"name": "dir",
 		"params": {
 			"required": [],
-			"optional": []
+			"optional": ["name"]
 		}
 	},
 	"searchLocation": {
 		"name": "slideshow",
 		"params": {
 			"required": [],
-			"optional": []
+			"optional": ["name"]
 		}
 	}
 }
