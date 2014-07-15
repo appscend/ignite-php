@@ -39,13 +39,20 @@ class Element extends Registry{
 		 * @var $cl \Closure
 		 */
 		$cl = current($this->actionClosure);
+		$name = key($this->actionClosure);
 		$fresult = $cl();
 
 
 		if ($fresult instanceof Action) {
 			$this->action = $fresult;
 		} else if (is_array($fresult)) {
-			$index = $this->view->addActionGroup($fresult);
+
+			if (is_string($name)) {
+				$index = $name;
+				$this->view->addActionGroup($fresult, $index);
+			} else
+				$index = $this->view->addActionGroup($fresult);
+
 			$this->action = new Action('pag:', [$index]);
 		}
 

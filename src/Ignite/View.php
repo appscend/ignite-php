@@ -96,9 +96,12 @@ abstract class View extends Registry implements ConfigurationInterface {
 		return $translation;
 	}
 
-	public function addActionGroup(array $actions) {
+	public function addActionGroup(array $actions, $name = null) {
 		$idx = count($this->contents['actionGroups']->_vars[0]['ag']);
 		$this->contents['actionGroups']->_vars[0]['ag'][$idx] = ['age' => []];
+
+		if (isset($name))
+			$this->contents['actionGroups']->_vars[0]['ag'][$idx]['agn'] = $name;
 
 		foreach ($actions as $a) {
 			$this->contents['actionGroups']->_vars[0]['ag'][$idx]['age'][] = $a;
