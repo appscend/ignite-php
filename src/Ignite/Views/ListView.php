@@ -1,6 +1,7 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\Element;
 use Ignite\View;
 use Ignite\ViewElementsContainer;
 
@@ -16,17 +17,44 @@ class ListView extends View{
 		$this->contents['elements']->_vars['s'] = [];
 	}
 
-	public function addSection(array $content) {
-		$content['es'] = [['e' => []]];
-		$this->contents['elements']->_vars['s'][] = $content;
+	/**
+	 * @param Array|Element $content
+	 * @return int
+	 */
+	public function addSection($content) {
+		if ($content instanceof Element) {
+			$this->contents['elements']->_vars['s'][] = $content;
+		} else {
+			$el = new Element($content);
+			$this->contents['elements']->_vars['s'][] = $el;
+		}
+
+		//$content['es'] = [['e' => []]];
+		//$this->contents['elements']->_vars['s'][] = $content;
 
 		return count($this->contents['elements']->_vars['s'])-1;
 	}
 
-	public function addListElement(array $content, $section) {
-		$this->contents['elements']->_vars['s'][$section]['es'][0]['e'][] = $content;
+	/**
+	 * @param array|Element $content
+	 * @param int|Element $section
+	 * @return int
+	 */
+	public function addListElement($content, $section) {
+		if ($content instanceof Element) {
+			if (!$section instanceof Element)
+				$section = $this->contents['elements']->_vars['s'][$section];
 
-		return count($this->contents['elements']->_vars['s'][$section]['es'][0]['e']);
+			if (!isset($section->_vars['es']))
+				$section->_vars['es'] = ['e' => []];
+
+		} else {
+			$content = new Element($content);
+		}
+
+		$section->_vars['es'][0]['e'][] = $content;
+
+		return count($section->_vars['es'][0]['e']);
 	}
 
 	public function removeSection($idx) {
@@ -41,8 +69,15 @@ class ListView extends View{
 		return $this->contents['elements']->_vars['s'];
 	}
 
+	/**
+	 * @param int|Element $section
+	 * @return Element[]
+	 */
 	public function getListElements($section) {
-		return $this->contents['elements']->_vars['s'][$section]['es'][0]['e'];
+		if (!$section instanceof Element)
+			$section = $this->contents['elements']->_vars['s'][$section];
+
+		return $section->_vars['es'][0]['e'];
 	}
 
 } 

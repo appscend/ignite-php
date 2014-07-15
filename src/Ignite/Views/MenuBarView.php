@@ -1,6 +1,7 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\Element;
 use Ignite\View;
 use Ignite\ViewElementsContainer;
 
@@ -16,10 +17,21 @@ class MenuBarView extends View {
 		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
 
-	public function addMenu(array $content) {
+	/**
+	 * @param array|Element $content
+	 * @return int
+	 */
+	public function addMenu($content) {
+		if (!$content instanceof Element)
+			$content = new Element($content);
+
 		$this->contents['elements']->_vars[0]['e'][] = $content;
 
 		return count($this->contents['elements']->_vars[0]['e'])-1;
+	}
+
+	public function getMenu($idx) {
+		return $this->contents['elements']->_vars[0]['e'][$idx];
 	}
 
 	public function removeMenu($idx) {

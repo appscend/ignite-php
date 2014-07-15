@@ -1,6 +1,7 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\Element;
 use Ignite\View;
 use Ignite\ViewElementsContainer;
 
@@ -17,7 +18,13 @@ class WebView extends View{
 		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
 
-	public function setContent(array $content) {
+	/**
+	 * @param array|Element $content
+	 */
+	public function setContent($content) {
+		if (!$content instanceof Element)
+			$content = new Element($content);
+
 		$this->contents['elements']->_vars[0]['e'] = $content;
 	}
 

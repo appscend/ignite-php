@@ -3,6 +3,7 @@
 namespace Ignite\Views;
 use Ignite\View;
 use Ignite\ViewElementsContainer;
+use Ignite\Element;
 
 class ImageGridView extends View{
 
@@ -16,10 +17,23 @@ class ImageGridView extends View{
 		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
 
-	public function addImage(array $content) {
-		$this->contents['elements']->_vars[0]['e'][] = $content;
+	/**
+	 * @param array|Element $content
+	 * @return int
+	 */
+	public function addImage($content) {
+		if ($content instanceof Element) {
+			$this->contents['elements']->_vars[0]['e'][] = $content;
+		} else {
+			$el = new Element($content);
+			$this->contents['elements']->_vars[0]['e'][] = $el;
+		}
 
 		return count($this->contents['elements']->_vars[0]['e'])-1;
+	}
+
+	public function getImage($idx) {
+		return $this->contents['elements']->_vars[0]['e'][$idx];
 	}
 
 	public function removeImage($idx) {
