@@ -108,7 +108,14 @@ class ViewElementsContainer extends Registry implements ConfigurationInterface{
 		$this->translateTags($this->_vars, $this->translatedTags);
 		$this->_vars = $this->translatedTags;
 
-		return parent::render();
+		$renderedContent = parent::render(true);
+		array_walk_recursive($test, function(&$v) {
+			if ($v instanceof Registry) {
+				$v = $v->render(true);
+			}
+		});
+
+		return $renderedContent;
 	}
 
 	public function getConfigTreeBuilder() {

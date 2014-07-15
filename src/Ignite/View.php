@@ -11,12 +11,17 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 abstract class View extends Registry implements ConfigurationInterface {
 
-	const CONFIG_PATH 				= '/src/Ignite/Config';
-	const GENERIC_CONFIG_FILE_SPEC 	= 'generic.json';
+	const CONFIG_PATH 					= '/src/Ignite/Config';
+	const GENERIC_CONFIG_FILE_SPEC 		= 'generic.json';
+	const ACTION_GROUP_ELEMENTS_SPEC	= 'action_group_elements.json';
 
 	protected $configFileName 	= null;
-	protected $configSpec 		= null;
-	protected $contents			= ['config' => [], 'elements' => []];
+	private $configSpec 		= null;
+	protected $contents			= [
+		'config' => [],
+		'elements' => [],
+		'actionGroups' => []
+	];
 
 	/**
 	 * @var Application
@@ -28,6 +33,8 @@ abstract class View extends Registry implements ConfigurationInterface {
 	public function __construct($app, $viewID) {
 		parent::__construct('par');
 		$this->contents['config'] = new Registry('cfg');
+		$this->contents['actionGroups'] = new ViewElementsContainer(self::ACTION_GROUP_ELEMENTS_SPEC, 'ags');
+		$this->contents['actionGroups']->_vars[0] = ['ag' => []];
 		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
 		$this->app = $app;
 		$this->viewID = $viewID;
@@ -89,6 +96,17 @@ abstract class View extends Registry implements ConfigurationInterface {
 		return $translation;
 	}
 
+	public function addActionGroup(array $actions) {
+		$idx = count($this->contents['actionGroups']->_vars[0]['ag']);
+		$this->contents['actionGroups']->_vars[0]['ag'][$idx] = ['age' => []];
+
+		foreach ($actions as $a) {
+			$this->contents['actionGroups']->_vars[0]['ag'][$idx]['age'][] = $a;
+		}
+
+		return $idx;
+	}
+
 	public function render() {
 		$translatedTags = $this->translateTags($this->configSpec);
 
@@ -112,7 +130,8 @@ abstract class View extends Registry implements ConfigurationInterface {
 		$objectData = (new Processor())->processConfiguration($this, [$this->config->getVars()]);
 		$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:[], isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:[], isset($androidConfigData['cfg'])?$androidConfigData['cfg']:[], isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:[], isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:[], $objectData['cfg']);
 
-		(new Processor())->processConfiguration($this->elements, [$this->elements->getVars()]);
+		/*(new Processor())->processConfiguration($this->elements, [$this->elements->render()]);
+		(new Processor())->processConfiguration($this->actionGroups, [$this->actionGroups->render()]);*/
 
 		if (!isset($finalConfig['vt']))
 			throw new InvalidConfigurationException("'view_type' variable is not configured.");

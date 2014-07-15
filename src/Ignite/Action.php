@@ -14,7 +14,7 @@ class Action extends Registry{
 		$this->render[$prefix.'a'] = $this->actionName = $actionName;
 
 		if (isset($params))
-			$this->render[$prefix.'pr'] = join(":", $params);
+			$this->render[$prefix.'pr'] = join("::", $params);
 	}
 
 	public function requiresLogin($provider = null) {

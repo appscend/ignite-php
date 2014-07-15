@@ -1,5 +1,7 @@
 <?php
 namespace Ignite\Modules\Homepage;
+use Ignite\Actions\ListActions;
+use Ignite\Actions\Navigation;
 use Ignite\Module;
 use Ignite\Application;
 use Ignite\Views;
@@ -14,13 +16,22 @@ class Homepage extends Module {
         })->bind("homepage");
         
         $controllers->get('bye', function (Application $app) {
-            $view = new Views\ListView($app, "endpage");
+            $view = new Views\CoverflowView($app, "endpage");
 
-			$view->addSection(["name" => "Test section", "code" => "xxx"]);
-			$view->addListElement([
-				"subtext" => "asdsjadhsjkdh kashd kajsh dkajshd kjashd kjas dh",
-				"description" => " 239487 329023y4i2h342hg34"
+			$view->addImage(["image" => "Test section", "name" => "xxx"]);
+			$view->addImage([
+				"image" => "asdsjadhsjkdh kashd kajsh dkajshd kjashd kjas dh",
+				"name" => " 239487 329023y4i2h342hg34"
 			], 0);
+
+			$view->getImage(0)->special = function() {return Navigation::refresh();};
+			$view->getImage(1)->doStuff = function() {
+				return [ListActions::executeActionsSelected()->requiresLogin('fb'),
+						ListActions::toggleSelectable(),
+						ListActions::setSelectable(1)->on("test")
+				];
+			};
+
 
 			/*$view->addMenu([
 				"title" => "Gogoși cu zmoală",

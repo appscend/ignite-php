@@ -3,55 +3,70 @@
 namespace Ignite;
 
 class Registry  {
-    protected $_vars;
-    protected $_actions;
+    protected $_vars	= [];
+	protected $renderCache = null;
+
+	/**
+	 * @var View
+	 */
+	protected $view		= null;
     
-    public $wrapperTag = null;
+    public $wrapperTag 	= null;
 
     public function __construct($wrapperTag = null) {
-        $this->_vars = array();
-        $this->_actions = array();
         $this->wrapperTag = $wrapperTag;
     }
     
-    public function render() {
-	    $vars = get_object_vars($this);	
-	    $result = array_merge(array(), $this->_vars);
+    public function render($update = false) {
+	    if ($this->renderCache !== null && $update == false)
+			return $this->renderCache;
+
+		$vars = get_object_vars($this);
+	    $result = array_merge([], $this->_vars);
 
 	    unset($vars['_vars']);
-	    unset($vars['_actions']);
+	    unset($vars['action']);
+		unset($vars['view']);
+		unset($vars['app']);
 	    unset($vars['wrapperTag']);
 
-		foreach ($vars as $varName => $var) {
+		foreach ($vars as $var) {
 			if ($var instanceof Registry) {
 				$subResult = $var->render();
 				if ($subResult !== null)
 					$result = array_merge($result, $subResult);
 			} else if (is_array($var)) {
-				foreach($var as $val) {
-					if ($val instanceof Registry)
-						$result = array_merge($result, $val->render());
-				}
-
+				$result = array_merge($result, $this->renderArray($var, $result));
 			}
 		}
-	    
-	    foreach ($this->_actions as $prefix => $action) {
-		    $action->prefix = $prefix;
-		    $renderedAction = $action->render();
-		    if ($renderedAction !== null)
-		    	$result = array_merge($result, $renderedAction);
-	    }
 
 	    if (count($result)) {
 		    if ($this->wrapperTag !== null)
-	        	return [$this->wrapperTag => $result];
+	        	$result = [$this->wrapperTag => $result];
+
+			$this->renderCache = $result;
 
 	        return $result;
         }
 
         return null;
     }
+
+	protected function renderArray($arr, &$where) {
+		foreach($arr as $key => $val) {
+			if ($val instanceof Registry) {
+				$where = array_merge($where, $val->render());
+			}
+			else if (is_array($val)) {
+				$where[$key] = [];
+				$where = array_merge($where, $this->renderArray($val, $where[$key]));
+			}
+
+
+		}
+
+		return $where;
+	}
 
 	public function setVars(array $arr) {
 		$this->_vars = $arr;
@@ -62,16 +77,14 @@ class Registry  {
 	}
 
 	public function __set($key, $val) {
-		if ($val instanceof Action) {
-			$this->_actions[substr($key, 0, -1)] = $val;
-		} else {
-			$this->_vars[$key] = $val;
-		}
+		$this->_vars[$key] = $val;
 	}
 
 	public function __get($key) {
 		if (isset($this->_vars[$key]))
 			return $this->_vars[$key];
+
+		return null;
 	}
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\Element;
 use Ignite\View;
 use Ignite\ViewElementsContainer;
 
@@ -16,10 +17,33 @@ class CoverflowView extends View {
 		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
 
-	public function addImage(array $content) {
-		$this->contents['elements']->_vars[0]['e'][] = $content;
+	/**
+	 * @param array|Element $content
+	 * @return int
+	 * @throws \InvalidArgumentException
+	 */
+	public function addImage($content) {
+		if ($content instanceof Element) {
+			$this->contents['elements']->_vars[0]['e'][] = $content;
+			$content->setView($this);
+		}
+		else if (is_array($content)) {
+			$el = new Element($content);
+			$el->setView($this);
+			$this->contents['elements']->_vars[0]['e'][] = $el;
+		}
+		else
+			throw new \InvalidArgumentException("Parameter must be instance of \\Ignite\\Element or array.");
 
 		return count($this->contents['elements']->_vars[0]['e'])-1;
+	}
+
+	/**
+	 * @param int $idx
+	 * @return Element
+	 */
+	public function getImage($idx) {
+		return $this->contents['elements']->_vars[0]['e'][$idx];
 	}
 
 	public function removeImage($idx) {

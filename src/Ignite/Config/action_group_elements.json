@@ -1,0 +1,12 @@
+{
+	"ags": {
+		"ag": {
+			"age": {
+				"action": {
+					"tag": "a",
+					"type": "string"
+				}
+			}
+		}
+	}
+}
