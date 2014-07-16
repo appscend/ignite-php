@@ -1,0 +1,26 @@
+{
+	"las": {
+		"la": {
+			"action": {
+				"type": "action",
+				"tag": "a"
+			}
+		}
+	},
+	"vas": {
+		"va": {
+			"action": {
+				"type": "action",
+				"tag": "a"
+			}
+		}
+	},
+	"has": {
+		"ha": {
+			"action": {
+				"type": "action",
+				"tag": "a"
+			}
+		}
+	}
+}

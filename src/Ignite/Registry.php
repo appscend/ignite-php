@@ -55,14 +55,19 @@ class Registry  {
 	protected function renderArray($arr, &$where) {
 		foreach($arr as $key => $val) {
 			if ($val instanceof Registry) {
-				$where = array_merge($where, $val->render());
+				$render = $val->render();
+				if (empty($render)) $render = [];
+
+				if (is_int($key))
+					$where[$key] = $render;
+				else
+					$where = array_merge($where, $render);
+
 			}
 			else if (is_array($val)) {
 				$where[$key] = [];
-				$where = array_merge($where, $this->renderArray($val, $where[$key]));
+				$where = array_merge($where[$key], $this->renderArray($val, $where[$key]));
 			}
-
-
 		}
 
 		return $where;

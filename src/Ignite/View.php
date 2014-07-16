@@ -13,14 +13,22 @@ abstract class View extends Registry implements ConfigurationInterface {
 
 	const CONFIG_PATH 					= '/src/Ignite/Config';
 	const GENERIC_CONFIG_FILE_SPEC 		= 'generic.json';
-	const ACTION_GROUP_ELEMENTS_SPEC	= 'action_group_elements.json';
+	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
+	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
+	const BUTTON_ELEMENTS_SPEC			= 'button_elements.json';
+	const MENU_ELEMENTS_SPEC			= 'menu_elements.json';
 
 	protected $configFileName 	= null;
 	private $configSpec 		= null;
 	protected $contents			= [
-		'config' => [],
-		'elements' => [],
-		'actionGroups' => []
+		'config' 				=> null,
+		'elements' 				=> null,
+		'actionGroups' 			=> null,
+		'launchActions' 		=> null,
+		'visibleLaunchActions' 	=> null,
+		'hiddenLaunchActions'	=> null,
+		'buttons' 				=> null,
+		'menus'					=> null
 	];
 
 	/**
@@ -32,9 +40,18 @@ abstract class View extends Registry implements ConfigurationInterface {
 	
 	public function __construct($app, $viewID) {
 		parent::__construct('par');
-		$this->contents['config'] = new Registry('cfg');
-		$this->contents['actionGroups'] = new ViewElementsContainer(self::ACTION_GROUP_ELEMENTS_SPEC, 'ags');
-		$this->contents['actionGroups']->_vars[0] = ['ag' => []];
+		$this->contents['config'] 				= new Registry('cfg');
+
+		$this->contents['actionGroups'] 		= new ViewElementsContainer(self::ACTION_GROUP_SPEC, 'ags');
+
+		$this->contents['buttons'] 				= new ViewElementsContainer(self::BUTTON_ELEMENTS_SPEC, 'bs');
+
+		$this->contents['launchActions'] 		= new ViewElementsContainer(self::LAUNCH_ACTIONS_SPEC, 'las');
+		$this->contents['visibleLaunchActions'] = new ViewElementsContainer(self::LAUNCH_ACTIONS_SPEC, 'vas');
+		$this->contents['hiddenLaunchActions'] 	= new ViewElementsContainer(self::LAUNCH_ACTIONS_SPEC, 'has');
+
+		$this->contents['menus'] 				= new ViewElementsContainer(self::MENU_ELEMENTS_SPEC, 'ms');
+
 		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
 		$this->app = $app;
 		$this->viewID = $viewID;
@@ -47,16 +64,131 @@ abstract class View extends Registry implements ConfigurationInterface {
 		}
 	}
 	
-	protected function addElement(Registry $element) {
-		if ($element instanceof Registry) {
+	protected function addElementContainer(ViewElementsContainer $element) {
+		if ($element instanceof ViewElementsContainer) {
 			$this->contents['elements'] = $element;
 		}
 		else
-			throw new \InvalidArgumentException('Element must extend Registry');
+			throw new \InvalidArgumentException('Element must be instance of \\Ignite\\ViewElementsContainer');
 	}
 
-	public function addAction(Action $action) {
+	public function addLaunchAction(Action $action, $type = null) {
+		switch($type) {
+			case Action::LAUNCH_ACTION_VISIBLE: {
+				$wrapperTag = 'va';
+				$where = 'visibleLaunchActions';
 
+				break;
+			}
+			case Action::LAUNCH_ACTION_HIDDEN: {
+				$wrapperTag = 'ha';
+				$where = 'hiddenLaunchActions';
+
+				break;
+			}
+			default: {
+				$wrapperTag = 'la';
+				$where = 'launchActions';
+			}
+		}
+
+		if (!isset($this->contents[$where]->_vars[$wrapperTag])) {
+			$this->contents[$where]->_vars[$wrapperTag] = [];
+		}
+
+		$this->contents[$where]->_vars[$wrapperTag][] = $action;
+	}
+
+	public function addMenu(Element $menu = null) {
+		if ($menu == null)
+			$menu = new Element();
+
+		$menu->wrapperTag = 'm';
+
+		$this->contents['menus']->_vars[] = $menu;
+
+		return $menu;
+	}
+
+	/**
+	 * @param array|Element|null $element
+	 * @param Element $menu
+	 * @return Element
+	 */
+	public function addMenuElement($element = null, Element $menu) {
+		if ($element == null)
+			$element = new Element();
+		else if (is_array($element))
+			$element = new Element($element);
+
+		$element->wrapperTag = 'me';
+		$menu->addChild($element);
+
+		return $element;
+	}
+
+
+	/**
+	 * @param Action[] $actions
+	 * @param null|string $name
+	 * @return int
+	 */
+	public function addActionGroup(array $actions, $name = null) {
+		$actionGroup = new Element([], 'ag');
+
+		$this->contents['actionGroups']->_vars[] = $actionGroup;
+
+		$idx = count($this->contents['actionGroups']->_vars);
+		if (isset($name))
+			$actionGroup->_vars['agn'] = $name;
+
+		foreach ($actions as $a) {
+			$a->wrapperTag = 'age';
+
+			$actionGroup->addChild($a);
+		}
+
+		return $idx;
+	}
+
+	/**
+	 * @param array|Element|null $group
+	 * @return Element
+	 */
+	public function addButtonGroup($group = null) {
+		if ($group == null)
+			$group = new Element([], 'bg');
+		else if (!$group instanceof Element)
+			$group = new Element($group, 'bg');
+
+		$group->wrapperTag = 'bg';
+
+		$this->contents['buttons']->_vars[] = $group;
+
+		return $group;
+	}
+
+	/**
+	 * @param array|Element $button
+	 * @param Element|null $group
+	 * @return Element
+	 */
+	public function addButtonElement($button, $group = null) {
+		if (!$button instanceof Element)
+			$button = new Element($button);
+
+		if ($group !== null) {
+			$button->wrapperTag = 'b';
+			$group->addChild($button);
+		} else {
+
+			if (!isset($this->contents['buttons']->_vars['b']))
+				$this->contents['buttons']->_vars['b'] = [];
+
+			$this->contents['buttons']->_vars['b'][] = $button;
+		}
+
+		return $button;
 	}
 
 	protected function loadSpecFile() {
@@ -94,20 +226,6 @@ abstract class View extends Registry implements ConfigurationInterface {
 		}
 
 		return $translation;
-	}
-
-	public function addActionGroup(array $actions, $name = null) {
-		$idx = count($this->contents['actionGroups']->_vars[0]['ag']);
-		$this->contents['actionGroups']->_vars[0]['ag'][$idx] = ['age' => []];
-
-		if (isset($name))
-			$this->contents['actionGroups']->_vars[0]['ag'][$idx]['agn'] = $name;
-
-		foreach ($actions as $a) {
-			$this->contents['actionGroups']->_vars[0]['ag'][$idx]['age'][] = $a;
-		}
-
-		return $idx;
 	}
 
 	public function render() {

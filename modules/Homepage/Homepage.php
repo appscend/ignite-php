@@ -1,5 +1,7 @@
 <?php
 namespace Ignite\Modules\Homepage;
+use Ignite\Action;
+use Ignite\Actions\CoverFlowActions;
 use Ignite\Actions\ListActions;
 use Ignite\Actions\Navigation;
 use Ignite\Module;
@@ -32,20 +34,17 @@ class Homepage extends Module {
 				];
 			};
 
+			$view->addLaunchAction(Navigation::refresh());
+			$view->addLaunchAction(CoverFlowActions::scrollTo(10,10), Action::LAUNCH_ACTION_VISIBLE);
+			$view->addLaunchAction(CoverFlowActions::flip(), Action::LAUNCH_ACTION_VISIBLE);
 
-			/*$view->addMenu([
-				"title" => "Gogoși cu zmoală",
-				"attach_location" => "yes",
-				"target_view_type" => "t",
-				"post_data" => "test data"
-			]);
+			$menu = $view->addMenu();
 
-			$view->addMenu([
-				"title" => "Gogoși cu zmoală",
-				"attach_location" => "yes",
-				"target_view_type" => "t",
-				"post_data" => "test data"
-			]);*/
+			$view->addMenuElement(["text" => "asdadad"], $menu);
+			$view->addMenuElement(["text" => "text 2"], $menu);
+
+			$view->addButtonElement(["text" => "buton fara grup"]);
+			$view->addButtonElement(["text" => "buton in grup"], $view->addButtonGroup(["position" => "rn"]));
             
             return $view;
         })->bind("endpage");

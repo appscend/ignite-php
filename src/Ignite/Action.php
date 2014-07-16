@@ -5,6 +5,9 @@ namespace Ignite;
 
 class Action extends Registry{
 
+	const LAUNCH_ACTION_VISIBLE = 'visible';
+	const LAUNCH_ACTION_HIDDEN = 'hidden';
+
 	private $prefix;
 	private $actionName;
 	private $render = [];
@@ -72,6 +75,9 @@ class Action extends Registry{
 	}
 
 	public function render() {
+		if ($this->wrapperTag)
+			return [$this->wrapperTag => $this->render];
+
 		return $this->render;
 	}
 

@@ -5,18 +5,33 @@ namespace Ignite;
 class Element extends Registry{
 
 	/**
+	 * @var Element[]
+	 */
+	protected $children = [];
+
+	/**
 	 * @var Action
 	 */
 	protected $action	= null;
 
 	/**
-	 * @var array(\Closure)
+	 * @var \Closure[]
 	 */
 	private $actionClosure = [];
 
-	public function __construct($vars, $wrapperTag = null) {
+	public function __construct($vars = [], $wrapperTag = null) {
 		parent::__construct($wrapperTag);
 		$this->_vars = $vars;
+	}
+
+	/**
+	 * @param Element|Action $child
+	 */
+	public function addChild($child) {
+		if (!isset($this->children[$child->wrapperTag]))
+			$this->children[$child->wrapperTag] = [];
+
+		$this->children[$child->wrapperTag][] = $child;
 	}
 
 	public function setView($v) {
@@ -29,6 +44,10 @@ class Element extends Registry{
 		}
 
 		return true;
+	}
+
+	public function setAction(Action $a) {
+		$this->action = $a;
 	}
 
 	public function render() {
