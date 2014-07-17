@@ -2,6 +2,7 @@
 
 namespace Ignite;
 
+use Ignite\Views\ViewConfigContainer;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -11,15 +12,14 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 abstract class View extends Registry implements ConfigurationInterface {
 
-	const CONFIG_PATH 					= '/src/Ignite/Config';
-	const GENERIC_CONFIG_FILE_SPEC 		= 'generic.json';
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
 	const BUTTON_ELEMENTS_SPEC			= 'button_elements.json';
 	const MENU_ELEMENTS_SPEC			= 'menu_elements.json';
 
-	protected $configFileName 	= null;
-	private $configSpec 		= null;
+	/**
+	 * @var ViewElementsContainer[]|ViewConfigContainer[]
+	 */
 	protected $contents			= [
 		'config' 				=> null,
 		'elements' 				=> null,
@@ -40,7 +40,7 @@ abstract class View extends Registry implements ConfigurationInterface {
 	
 	public function __construct($app, $viewID) {
 		parent::__construct('par');
-		$this->contents['config'] 				= new Registry('cfg');
+		$this->contents['config'] 				= new ViewConfigContainer();
 
 		$this->contents['actionGroups'] 		= new ViewElementsContainer(self::ACTION_GROUP_SPEC, 'ags');
 
@@ -52,7 +52,6 @@ abstract class View extends Registry implements ConfigurationInterface {
 
 		$this->contents['menus'] 				= new ViewElementsContainer(self::MENU_ELEMENTS_SPEC, 'ms');
 
-		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
 		$this->app = $app;
 		$this->viewID = $viewID;
 	}
@@ -62,6 +61,8 @@ abstract class View extends Registry implements ConfigurationInterface {
 			case "elements": return $this->contents['elements'];
 			case "config": return $this->contents['config'];
 		}
+
+		return null;
 	}
 	
 	protected function addElementContainer(ViewElementsContainer $element) {
@@ -127,7 +128,6 @@ abstract class View extends Registry implements ConfigurationInterface {
 		return $element;
 	}
 
-
 	/**
 	 * @param Action[] $actions
 	 * @param null|string $name
@@ -191,12 +191,12 @@ abstract class View extends Registry implements ConfigurationInterface {
 		return $button;
 	}
 
-	protected function loadSpecFile() {
+	/*protected function loadSpecFile() {
 		if (!is_readable(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName))
 			throw new FileNotFoundException("Configuration file '{$this->configFileName}' not found or not readable.");
 
 		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName), true));
-	}
+	}*/
 
 	private function prefixArrayKeys($array, $prefix) {
 		$result = array();

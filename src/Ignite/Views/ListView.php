@@ -11,8 +11,7 @@ class ListView extends View{
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
-		$this->configFileName = 'List/config.json';
-		$this->loadSpecFile();
+		$this->contents['config']->appendConfigFile('List/config.json');
 		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE));
 		$this->contents['elements']->_vars['s'] = [];
 	}

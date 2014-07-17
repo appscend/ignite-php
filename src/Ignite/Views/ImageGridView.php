@@ -11,8 +11,7 @@ class ImageGridView extends View{
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
-		$this->configFileName = 'ImageGrid/config.json';
-		$this->loadSpecFile();
+		$this->contents['config']->appendConfigFile('ImageGrid/config.json');
 		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
 		$this->contents['elements']->_vars[0] = ['e' => []];
 	}

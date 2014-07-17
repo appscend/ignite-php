@@ -11,8 +11,7 @@ class TabBarView extends View {
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
-		$this->configFileName = 'TabBar/config.json';
-		$this->loadSpecFile();
+		$this->contents['config']->appendConfigFile('TabBar/config.json');
 		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE));
 		$this->contents['elements']->_vars['tab'] = [];
 	}

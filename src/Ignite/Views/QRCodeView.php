@@ -7,8 +7,7 @@ class QRCodeView extends View{
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
-		$this->configFileName = 'QRCode/config.json';
-		$this->loadSpecFile();
+		$this->contents['config']->appendConfigFile('QRCode/config.json');
 	}
 
 } 

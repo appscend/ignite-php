@@ -11,8 +11,7 @@ class MapView extends View{
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
-		$this->configFileName = 'Map/config.json';
-		$this->loadSpecFile();
+		$this->contents['config']->appendConfigFile('Map/config.json');
 		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
 		$this->contents['elements']->_vars[0] = ['e' => []];
 	}

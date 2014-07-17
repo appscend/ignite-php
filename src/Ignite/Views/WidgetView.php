@@ -11,8 +11,7 @@ class WidgetView extends View{
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
-		$this->configFileName = 'Widget/config.json';
-		$this->loadSpecFile();
+		$this->contents['config']->appendConfigFile('Widget/config.json');
 		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
 		$this->contents['elements']->_vars[0] = ['e' => []];
 	}
