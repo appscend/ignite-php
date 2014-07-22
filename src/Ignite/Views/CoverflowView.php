@@ -2,8 +2,9 @@
 
 namespace Ignite\Views;
 use Ignite\Element;
+use Ignite\ElementContainer;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
+use Ignite\ConfigContainer;
 
 class CoverflowView extends View {
 
@@ -11,9 +12,12 @@ class CoverflowView extends View {
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('CoverFlow/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = ['e' => []];
+		$this->viewID = $viewID;
+
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('CoverFlow/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	/**
@@ -23,18 +27,19 @@ class CoverflowView extends View {
 	 */
 	public function addImage($content) {
 		if ($content instanceof Element) {
-			$this->contents['elements']->_vars[0]['e'][] = $content;
-			$content->setView($this);
+			$this->elementsContainers['elements']->appendChild($content);
+			$content->setTag('e');
+			$content->view = $this;
 		}
 		else if (is_array($content)) {
-			$el = new Element($content);
-			$el->setView($this);
-			$this->contents['elements']->_vars[0]['e'][] = $el;
+			$el = new Element('e', $content);
+			$el->view = $this;
+			$this->elementsContainers['elements']->appendChild($el);
 		}
 		else
 			throw new \InvalidArgumentException("Parameter must be instance of \\Ignite\\Element or array.");
 
-		return count($this->contents['elements']->_vars[0]['e'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	/**
@@ -42,15 +47,15 @@ class CoverflowView extends View {
 	 * @return Element
 	 */
 	public function getImage($idx) {
-		return $this->contents['elements']->_vars[0]['e'][$idx];
+		return $this->elementsContainers['elements']->getChild($idx);
 	}
 
 	public function removeImage($idx) {
-		return array_splice($this->contents['elements']->_vars[0]['e'], $idx, 1);
+		return $this->elementsContainers['elements']->removeChild($idx);
 	}
 
 	public function getImages() {
-		return $this->contents['elements']->_vars[0]['e'];
+		return $this->elementsContainers['elements']->getChildren();
 	}
 
 } 

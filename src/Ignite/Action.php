@@ -1,84 +1,81 @@
 <?php
-
 namespace Ignite;
 
-
-class Action extends Registry{
+class Action extends Registry {
 
 	const LAUNCH_ACTION_VISIBLE = 'visible';
 	const LAUNCH_ACTION_HIDDEN = 'hidden';
+	
+	protected $prefix = '';
+	protected $name = null;
 
-	private $prefix;
-	private $actionName;
-	private $render = [];
-
-	public function __construct($actionName, array $params = null, $prefix = '') {
+	public function __construct($name, array $params = [], $prefix = '') {
+		$this->name = $this[$prefix.'a'] = $name;
 		$this->prefix = $prefix;
-		$this->render[$prefix.'a'] = $this->actionName = $actionName;
-
-		if (isset($params))
-			$this->render[$prefix.'pr'] = join("::", $params);
+		
+		if (!empty($params))
+			$this[$prefix.'pr'] = join("::", $params);
+		
 	}
 
 	public function requiresLogin($provider = null) {
-		$this->render[$this->prefix.'l'] = 'yes';
+		$this[$this->prefix.'l'] = 'yes';
 
 		if (isset($provider))
-			$this->render[$this->prefix.'lp'] = $provider;
+			$this[$this->prefix.'lp'] = $provider;
 
 
 		return $this;
 	}
 
 	public function requiresPurchase($bundleId, Action $notPurchasedAction = null, $displayStoreView = null) {
-		$this->render[$this->prefix.'aprod'] = $bundleId;
+		$this[$this->prefix.'aprod'] = $bundleId;
 
 		if (isset($displayStoreView))
-			$this->render[$this->prefix.'dprod'] = 'yes';
+			$this[$this->prefix.'dprod'] = 'yes';
 
 		if (isset($action))
-			$this->render[$this->prefix.'prod'] = $notPurchasedAction->getName();
+			$this[$this->prefix.'prod'] = $notPurchasedAction->getName();
 
 		return $this;
 	}
 
 	public function requiresSecureKey(Action $securityFailedAction, $value = null) {
-		$this->render[$this->prefix.'rsk'] = 'yes';
-		$this->render[$this->prefix.'rs'] = $securityFailedAction->getName();
+		$this[$this->prefix.'rsk'] = 'yes';
+		$this[$this->prefix.'rs'] = $securityFailedAction->getName();
 
 		if (isset($value))
-			$this->render[$this->prefix.'rsv'] = $value;
+			$this[$this->prefix.'rsv'] = $value;
 
 		return $this;
 	}
 
 	public function confirmation($text) {
-		$this->render[$this->prefix.'conf'] = $text;
+		$this[$this->prefix.'conf'] = $text;
 
 		return $this;
 	}
 
 	public function delay($d) {
-		$this->render[$this->prefix.'del'] = $d;
+		$this[$this->prefix.'del'] = $d;
 
 		return $this;
 	}
 
 	public function on($viewID) {
-		$this->render[$this->prefix.'tavi'] = $viewID;
+		$this[$this->prefix.'tavi'] = $viewID;
 
 		return $this;
 	}
 
 	public function getName() {
-		return $this->actionName;
+		return $this->name;
 	}
 
-	public function render() {
-		if ($this->wrapperTag)
-			return [$this->wrapperTag => $this->render];
+	public function appendChild(Registry $r) {}
 
-		return $this->render;
+	public function render($update = false) {
+		return $this->properties;
 	}
 
 } 

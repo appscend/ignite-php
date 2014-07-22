@@ -1,16 +1,7 @@
 <?php
-
 namespace Ignite;
 
-use Ignite\Views\ViewConfigContainer;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Symfony\Component\Serializer as Serializer;
-use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-
-abstract class View extends Registry implements ConfigurationInterface {
+class View extends Registry {
 
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
@@ -18,95 +9,63 @@ abstract class View extends Registry implements ConfigurationInterface {
 	const MENU_ELEMENTS_SPEC			= 'menu_elements.json';
 
 	/**
-	 * @var ViewElementsContainer[]|ViewConfigContainer[]
+	 * @var ElementContainer[]
 	 */
-	protected $contents			= [
-		'config' 				=> null,
-		'elements' 				=> null,
-		'actionGroups' 			=> null,
-		'launchActions' 		=> null,
-		'visibleLaunchActions' 	=> null,
-		'hiddenLaunchActions'	=> null,
-		'buttons' 				=> null,
-		'menus'					=> null
-	];
+	protected $elementsContainers = [];
+
+	/**
+	 * @var ConfigContainer
+	 */
+	protected $config = null;
 
 	/**
 	 * @var Application
 	 */
 	protected $app;
-
 	protected $viewID;
-	
-	public function __construct($app, $viewID) {
+
+	public function __construct(Application $app) {
 		parent::__construct('par');
-		$this->contents['config'] 				= new ViewConfigContainer();
-
-		$this->contents['actionGroups'] 		= new ViewElementsContainer(self::ACTION_GROUP_SPEC, 'ags');
-
-		$this->contents['buttons'] 				= new ViewElementsContainer(self::BUTTON_ELEMENTS_SPEC, 'bs');
-
-		$this->contents['launchActions'] 		= new ViewElementsContainer(self::LAUNCH_ACTIONS_SPEC, 'las');
-		$this->contents['visibleLaunchActions'] = new ViewElementsContainer(self::LAUNCH_ACTIONS_SPEC, 'vas');
-		$this->contents['hiddenLaunchActions'] 	= new ViewElementsContainer(self::LAUNCH_ACTIONS_SPEC, 'has');
-
-		$this->contents['menus'] 				= new ViewElementsContainer(self::MENU_ELEMENTS_SPEC, 'ms');
+		$this->elementsContainers['action_groups'] = $this->appendChild(new ElementContainer(self::ACTION_GROUP_SPEC, 'ags'));
+		$this->elementsContainers['buttons'] = $this->appendChild(new ElementContainer(self::BUTTON_ELEMENTS_SPEC, 'bs'));
+		$this->elementsContainers['launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'las'));
+		$this->elementsContainers['visible_launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'vas'));
+		$this->elementsContainers['hidden_launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'has'));
+		$this->elementsContainers['menus'] = $this->appendChild(new ElementContainer(self::MENU_ELEMENTS_SPEC, 'ms'));
 
 		$this->app = $app;
-		$this->viewID = $viewID;
-	}
-	
-	public function __get($name) {
-		switch ($name) {
-			case "elements": return $this->contents['elements'];
-			case "config": return $this->contents['config'];
-		}
-
-		return null;
-	}
-	
-	protected function addElementContainer(ViewElementsContainer $element) {
-		if ($element instanceof ViewElementsContainer) {
-			$this->contents['elements'] = $element;
-		}
-		else
-			throw new \InvalidArgumentException('Element must be instance of \\Ignite\\ViewElementsContainer');
 	}
 
 	public function addLaunchAction(Action $action, $type = null) {
 		switch($type) {
 			case Action::LAUNCH_ACTION_VISIBLE: {
 				$wrapperTag = 'va';
-				$where = 'visibleLaunchActions';
+				$where = 'visible_launch_actions';
 
 				break;
 			}
 			case Action::LAUNCH_ACTION_HIDDEN: {
 				$wrapperTag = 'ha';
-				$where = 'hiddenLaunchActions';
+				$where = 'hidden_launch_actions';
 
 				break;
 			}
 			default: {
-				$wrapperTag = 'la';
-				$where = 'launchActions';
+			$wrapperTag = 'la';
+			$where = 'launch_actions';
 			}
 		}
 
-		if (!isset($this->contents[$where]->_vars[$wrapperTag])) {
-			$this->contents[$where]->_vars[$wrapperTag] = [];
-		}
-
-		$this->contents[$where]->_vars[$wrapperTag][] = $action;
+		$action->setTag($wrapperTag);
+		$this->elementsContainers[$where]->appendChild($action);
 	}
 
 	public function addMenu(Element $menu = null) {
-		if ($menu == null)
-			$menu = new Element();
+		if ($menu === null)
+			$menu = new Element('m');
 
-		$menu->wrapperTag = 'm';
-
-		$this->contents['menus']->_vars[] = $menu;
+		$menu->setTag('m');
+		$this->elementsContainers['menus']->appendChild($menu);
 
 		return $menu;
 	}
@@ -118,12 +77,11 @@ abstract class View extends Registry implements ConfigurationInterface {
 	 */
 	public function addMenuElement($element = null, Element $menu) {
 		if ($element == null)
-			$element = new Element();
+			$element = new Element('me');
 		else if (is_array($element))
-			$element = new Element($element);
+			$element = new Element('me', $element);
 
-		$element->wrapperTag = 'me';
-		$menu->addChild($element);
+		$menu->appendChild($element);
 
 		return $element;
 	}
@@ -134,18 +92,18 @@ abstract class View extends Registry implements ConfigurationInterface {
 	 * @return int
 	 */
 	public function addActionGroup(array $actions, $name = null) {
-		$actionGroup = new Element([], 'ag');
+		$actionGroup = new Element('ag');
 
-		$this->contents['actionGroups']->_vars[] = $actionGroup;
+		$this->elementsContainers['action_groups']->appendChild($actionGroup);
 
-		$idx = count($this->contents['actionGroups']->_vars);
+		$idx = count($this->elementsContainers['action_groups']);
 		if (isset($name))
-			$actionGroup->_vars['agn'] = $name;
+			$actionGroup['agn'] = $name;
 
 		foreach ($actions as $a) {
-			$a->wrapperTag = 'age';
+			$a->setTag('age');
 
-			$actionGroup->addChild($a);
+			$actionGroup->appendChild($a);
 		}
 
 		return $idx;
@@ -157,13 +115,13 @@ abstract class View extends Registry implements ConfigurationInterface {
 	 */
 	public function addButtonGroup($group = null) {
 		if ($group == null)
-			$group = new Element([], 'bg');
+			$group = new Element('bg');
 		else if (!$group instanceof Element)
-			$group = new Element($group, 'bg');
+			$group = new Element('bg', $group);
 
-		$group->wrapperTag = 'bg';
+		$group->setTag('bg');
 
-		$this->contents['buttons']->_vars[] = $group;
+		$this->elementsContainers['buttons']->appendChild($group);
 
 		return $group;
 	}
@@ -175,140 +133,44 @@ abstract class View extends Registry implements ConfigurationInterface {
 	 */
 	public function addButtonElement($button, $group = null) {
 		if (!$button instanceof Element)
-			$button = new Element($button);
+			$button = new Element('b', $button);
 
 		if ($group !== null) {
-			$button->wrapperTag = 'b';
-			$group->addChild($button);
-		} else {
-
-			if (!isset($this->contents['buttons']->_vars['b']))
-				$this->contents['buttons']->_vars['b'] = [];
-
-			$this->contents['buttons']->_vars['b'][] = $button;
-		}
+			$button->setTag('b');
+			$group->appendChild($button);
+		} else
+			$this->elementsContainers['buttons']->appendChild($button);
 
 		return $button;
 	}
 
-	/*protected function loadSpecFile() {
-		if (!is_readable(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName))
-			throw new FileNotFoundException("Configuration file '{$this->configFileName}' not found or not readable.");
+	public function render($update = false) {
+		if ($this->render_cache !== [] && $update == false)
+			return $this->render_cache;
 
-		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.$this->configFileName), true));
-	}*/
+		$result = [];
 
-	private function prefixArrayKeys($array, $prefix) {
-		$result = array();
-		foreach ($array as $area=>$configs) {
-			array_walk($configs, function ($value,$key) use (&$result, $prefix, $area) {
-				$result[$area][$prefix.$key] = $value;
-			});
-		}
+		foreach ($this->getChildren() as $c) {
+			if ($c->isEmpty())
+				continue;
 
-		return $result;
-	}
+			if ($c->getTag() !== null) {
+				if (!isset($result[$c->getTag()]))
+					$result[$c->getTag()] = [];
 
-	private function translateTags(array $array) {
-		$translated = [];
-		foreach($array as $k => $v) {
-			$translated[$k] = $v['tag'];
-		}
-
-		return $translated;
-	}
-
-	private function translateConfigTags($translate, $config) {
-		$translation = ['cfg' => []];
-
-		foreach($config['cfg'] as $k => $v) {
-			$translation['cfg'][$translate[$k]] = $v;
-		}
-
-		return $translation;
-	}
-
-	public function render() {
-		$translatedTags = $this->translateTags($this->configSpec);
-
-		$configData = $tabletConfigData = $androidConfigData = $androidTabletConfigData = $tallDeviceConfigData = [];
-		try {$configData 				= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID.".toml")->validateWith($this));}
-		catch(\InvalidArgumentException $ex) {}
-		try {$tabletConfigData 			= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-tablet.toml")->validateWith($this));}
-		catch(\InvalidArgumentException $ex) {}
-		try {$androidConfigData 		= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-android.toml")->validateWith($this));}
-		catch(\InvalidArgumentException $ex) {}
-		try {$androidTabletConfigData 	= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-android-tablet.toml")->validateWith($this));}
-		catch(\InvalidArgumentException $ex) {}
-		try {$tallDeviceConfigData 		= $this->translateConfigTags($translatedTags, $this->app->scan($this->viewID."-tall.toml")->validateWith($this));}
-		catch(\InvalidArgumentException $ex) {}
-
-		$tabletConfigData 			= $this->prefixArrayKeys($tabletConfigData, 'pad');
-		$androidConfigData 			= $this->prefixArrayKeys($androidConfigData, 'and');
-		$androidTabletConfigData 	= $this->prefixArrayKeys($androidTabletConfigData, 'andpad');
-		$tallDeviceConfigData 		= $this->prefixArrayKeys($tallDeviceConfigData, 'ff5');
-
-		$objectData = (new Processor())->processConfiguration($this, [$this->config->getVars()]);
-		$finalConfig = array_merge(isset($configData['cfg'])?$configData['cfg']:[], isset($tabletConfigData['cfg'])?$tabletConfigData['cfg']:[], isset($androidConfigData['cfg'])?$androidConfigData['cfg']:[], isset($androidTabletConfigData['cfg'])?$androidTabletConfigData['cfg']:[], isset($tallDeviceConfigData['cfg'])?$tallDeviceConfigData['cfg']:[], $objectData['cfg']);
-
-		/*(new Processor())->processConfiguration($this->elements, [$this->elements->render()]);
-		(new Processor())->processConfiguration($this->actionGroups, [$this->actionGroups->render()]);*/
-
-		if (!isset($finalConfig['vt']))
-			throw new InvalidConfigurationException("'view_type' variable is not configured.");
-
-		//$this->elements->setVars($this->translateTags());
-		$this->config->setVars($finalConfig);
-
-		return parent::render();
-	}
-
-	public function getConfigTreeBuilder() {
-		$methods = [
-			'string' => 'scalarNode',
-			'boolean' => 'enumNode',
-			'integer' => 'integerNode',
-			'enum' => 'enumNode',
-			'float' => 'floatNode'
-		];
-
-		$treeBuilder = new TreeBuilder();
-		$root = $treeBuilder->root(0);
-
-		$cfgNode = $root->children()->arrayNode('cfg')->ignoreExtraKeys()->isRequired();
-		$node = $cfgNode->children();
-
-		foreach ($this->configSpec as $fieldName => $field) {
-			if ($field['type'] !== 'ref') {
-				$node = call_user_func_array([$node, $methods[$field['type']]], [$fieldName]);
-
-				if (isset($field['min']))
-					$node = $node->min($field['min']);
-				if (isset($field['max']))
-					$node = $node->max($field['max']);
-				if (isset($field['enum']))
-					$node = $node->values($field['enum']);
-
-			} else {
-				$node = call_user_func_array([$node, $methods[$this->configSpec[$field['ref']]['type']]], [$field['ref']]);
-
-				if (isset($this->configSpec[$field['ref']]['min']))
-					$node = $node->min($this->configSpec[$field['ref']]['min']);
-				if (isset($this->configSpec[$field['ref']]['max']))
-					$node = $node->max($this->configSpec[$field['ref']]['max']);
-				if (isset($this->configSpec[$field['ref']]['enum']))
-					$node = $node->values($this->configSpec[$field['ref']]['enum']);
+				$result[$c->getTag()][] = $c->render($update);
 			}
-
-			if ($field['type'] === 'boolean')
-				$node = $node->values(['yes', 'no']);
-
-			$node = $node->end();
+			else
+				$result = array_merge($result, $c->render($update));
 		}
 
-		$node->end()->end();
+		if ($this->isRoot())
+			$this->render_cache = [$this->tag => [$result]];
+		else
+			$this->render_cache = $result;
 
-        return $treeBuilder;
-    }
-    
-}
+		return $this->render_cache;
+
+	}
+
+} 

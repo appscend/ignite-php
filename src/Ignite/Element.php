@@ -2,95 +2,74 @@
 
 namespace Ignite;
 
-class Element extends Registry{
-
-	/**
-	 * @var Element[]
-	 */
-	protected $children = [];
+class Element extends Registry {
 
 	/**
 	 * @var Action
 	 */
-	protected $action	= null;
+	protected $action 			= null;
+	protected $actionClosure 	= null;
 
 	/**
-	 * @var \Closure[]
+	 * @var View
 	 */
-	private $actionClosure = [];
+	public $view = null;
 
-	public function __construct($vars = [], $wrapperTag = null) {
-		parent::__construct($wrapperTag);
-		$this->_vars = $vars;
+	public function __construct($tag = null, array $properties = []) {
+		$this->tag = $tag;
+		$this->properties = $properties;
 	}
 
-	/**
-	 * @param Element|Action $child
-	 */
-	public function addChild($child) {
-		if (!isset($this->children[$child->wrapperTag]))
-			$this->children[$child->wrapperTag] = [];
-
-		$this->children[$child->wrapperTag][] = $child;
-	}
-
-	public function setView($v) {
-		if ($v instanceof View)
-			$this->view = $v;
-		else {
-			throw new \InvalidArgumentException("Argument 1 must be an instance of \\Ignite\\View");
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public function setAction(Action $a) {
-		$this->action = $a;
-	}
-
-	public function render() {
-		if (empty($this->actionClosure))
-			return parent::render();
-
-		/**
-		 * @var $cl \Closure
-		 */
-		$cl = current($this->actionClosure);
-		$name = key($this->actionClosure);
-		$fresult = $cl();
-
-
-		if ($fresult instanceof Action) {
-			$this->action = $fresult;
-		} else if (is_array($fresult)) {
-
-			if (is_string($name)) {
-				$index = $name;
-				$this->view->addActionGroup($fresult, $index);
-			} else
-				$index = $this->view->addActionGroup($fresult);
-
-			$this->action = new Action('pag:', [$index]);
-		}
+	public function render($update = false) {
+		if ($this->render_cache !== [] && $update == false)
+			return $this->render_cache;
 
 		$result = [];
 
-		if ($this->action !== null) {
-			$renderedAction = $this->action->render();
-			if ($renderedAction !== null)
-				$result = array_merge($result, $renderedAction);
+		foreach ($this->properties as $name => $prop) {
+			$result[$name] = $prop;
 		}
 
-		return array_merge($result, parent::render());
+		foreach ($this->getChildren() as $c) {
+			if ($c->isEmpty())
+				continue;
+
+			if ($c->getTag() !== null) {
+				if (!isset($result[$c->getTag()]))
+					$result[$c->getTag()] = [];
+
+				$result[$c->getTag()][] = $c->render($update);
+			}
+			else
+				$result = array_merge($result, $c->render($update));
+		}
+
+		if ($this->action !== null)
+			$result = array_merge($result, $this->action->render());
+
+		if ($this->isRoot())
+			$this->render_cache = [$this->tag => [$result]];
+		else
+			$this->render_cache = $result;
+
+		return $this->render_cache;
 	}
 
-	public function __set($key, $value) {
-		if ($value instanceof \Closure)
-			$this->actionClosure[$key] = $value;
-		else
-			parent::__set($key, $value);
+	public function __set($k, $v) {
+		if ($v instanceof \Closure) {
+			$this->actionClosure = $v;
+			$fresult = $v();
+
+			if ($fresult instanceof Action) {
+				$this->action = $fresult;
+
+				return ;
+			} else if (is_array($fresult)) {
+				$this->action = new Action('pag:', [$k]);
+				$this->view->addActionGroup($fresult, $k);
+			}
+
+		}
 	}
 
 }

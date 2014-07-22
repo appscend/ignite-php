@@ -2,94 +2,109 @@
 
 namespace Ignite;
 
-class Registry  {
-    protected $_vars	= [];
-	protected $renderCache = null;
+abstract class Registry implements \ArrayAccess, \Countable {
+
+	protected $render_cache = [];
+	/**
+	 * @var Registry[]
+	 */
+	protected $children		= [];
+	protected $properties	= [];
+	protected $tag			= null;
+	protected $parent		= null;
+
+	public abstract function render($update = false);
+
+	public function __construct($tag = null) {
+		$this->tag = $tag;
+	}
+
+	public function appendChild(Registry $child) {
+		$this->children[] = $child;
+		$child->setParent($this);
+
+		return $child;
+	}
 
 	/**
-	 * @var View
+	 * @param Registry $child
+	 * @return mixed
 	 */
-	protected $view		= null;
-    
-    public $wrapperTag 	= null;
+	public function prependChild(Registry $child) {
+		array_unshift($this->children, $child);
+		$child->setParent($this);
 
-    public function __construct($wrapperTag = null) {
-        $this->wrapperTag = $wrapperTag;
-    }
-    
-    public function render($update = false) {
-	    if ($this->renderCache !== null && $update == false)
-			return $this->renderCache;
+		return $child;
+	}
 
-		$vars = get_object_vars($this);
-	    $result = array_merge([], $this->_vars);
+	public function removeChild($idx) {
+		if (isset($this->children[$idx])) {
+			array_splice($this->children, $idx, 1);
 
-	    unset($vars['_vars']);
-	    unset($vars['action']);
-		unset($vars['view']);
-		unset($vars['app']);
-	    unset($vars['wrapperTag']);
-
-		foreach ($vars as $var) {
-			if ($var instanceof Registry) {
-				$subResult = $var->render();
-				if ($subResult !== null)
-					$result = array_merge($result, $subResult);
-			} else if (is_array($var)) {
-				$result = array_merge($result, $this->renderArray($var, $result));
-			}
+			return true;
 		}
 
-	    if (count($result)) {
-		    if ($this->wrapperTag !== null)
-	        	$result = [$this->wrapperTag => $result];
-
-			$this->renderCache = $result;
-
-	        return $result;
-        }
-
-        return null;
-    }
-
-	protected function renderArray($arr, &$where) {
-		foreach($arr as $key => $val) {
-			if ($val instanceof Registry) {
-				$render = $val->render();
-				if (empty($render)) $render = [];
-
-				if (is_int($key))
-					$where[$key] = $render;
-				else
-					$where = array_merge($where, $render);
-
-			}
-			else if (is_array($val)) {
-				$where[$key] = [];
-				$where = array_merge($where[$key], $this->renderArray($val, $where[$key]));
-			}
-		}
-
-		return $where;
+		return false;
 	}
 
-	public function setVars(array $arr) {
-		$this->_vars = $arr;
+	public function setParent(Registry $parent) {
+		$this->parent = $parent;
 	}
 
-	public function getVars() {
-		return isset($this->wrapperTag) ? [$this->wrapperTag => $this->_vars] : $this->_vars;
+	public function getTag() {
+		return $this->tag;
 	}
 
-	public function __set($key, $val) {
-		$this->_vars[$key] = $val;
+	public function getChild($idx) {
+		return isset($this->children[$idx]) ? $this->children[$idx] : null;
 	}
 
-	public function __get($key) {
-		if (isset($this->_vars[$key]))
-			return $this->_vars[$key];
-
-		return null;
+	public function getChildren() {
+		return $this->children;
 	}
 
-}
+	public function getParent() {
+		return $this->parent;
+	}
+
+	public function getProperties() {
+		return $this->properties;
+	}
+
+	public function setProperties(array $p) {
+		$this->properties = $p;
+	}
+
+	public function setTag($t) {
+		$this->tag = $t;
+	}
+
+	public function isRoot() {
+		return $this->parent === null;
+	}
+
+	public function isEmpty() {
+		return !isset($this->children[0]) && empty($this->properties);
+	}
+
+	public function count() {
+		return count($this->children);
+	}
+
+	public function offsetExists($k) {
+		return isset($this->properties[$k]);
+	}
+
+	public function offsetGet($k) {
+		return $this->properties[$k];
+	}
+
+	public function offsetSet($k, $v) {
+		if (is_string($k) || !is_object($v))
+			$this->properties[$k] = $v;
+	}
+
+	public function offsetUnset($k) {
+		unset($this->properties[$k]);
+	}
+} 
