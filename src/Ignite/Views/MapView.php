@@ -1,7 +1,9 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\ConfigContainer;
 use Ignite\Element;
+use Ignite\ElementContainer;
 use Ignite\View;
 use Ignite\ViewElementsContainer;
 
@@ -10,10 +12,12 @@ class MapView extends View{
 	const ELEMENTS_CONFIG_SPEC_FILE = 'Map/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('Map/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = ['e' => []];
+		parent::__construct($app);
+		$this->viewID = $viewID;
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('Map/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	/**
@@ -22,26 +26,26 @@ class MapView extends View{
 	 */
 	public function addLocation($content) {
 		if (!$content instanceof Element)
-			$content = new Element($content);
+			$content = new Element('e', $content);
 
-		$this->contents['elements']->_vars[0]['e'][] = $content;
+		$this->elementsContainers['elements']->appendChild($content);
 
-		return count($this->contents['elements']->_vars[0]['e'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	/**
 	 * @param int $idx
 	 */
 	public function getLocation($idx) {
-		return $this->contents['elements']->_vars[0]['e'][$idx];
+		return $this->elementsContainers['elements']->getChild($idx);
 	}
 
 	public function removeLocation($idx) {
-		return array_splice($this->contents['elements']->_vars[0]['e'], $idx, 1);
+		return $this->elementsContainers['elements']->removeChild($idx);
 	}
 
 	public function getLocations() {
-		return $this->contents['elements']->_vars[0]['e'];
+		return $this->elementsContainers['elements']->getChildren();
 	}
 
 } 

@@ -3,18 +3,20 @@
 namespace Ignite\Views;
 use Ignite\Element;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
-
+use Ignite\ElementContainer;
+use Ignite\ConfigContainer;
 
 class WebView extends View{
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'Web/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('Web/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = ['e' => []];
+		parent::__construct($app);
+		$this->viewID = $viewID;
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('Web/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	/**
@@ -24,11 +26,14 @@ class WebView extends View{
 		if (!$content instanceof Element)
 			$content = new Element($content);
 
-		$this->contents['elements']->_vars[0]['e'] = $content;
+		if (count($this->elementsContainers['elements']))
+			$this->elementsContainers['elements']->replaceChild($content, 0);
+		else
+			$this->elementsContainers['elements']->appendChild($content);
 	}
 
 	public function getContent() {
-		return $this->contents['elements']->_vars[0]['e'];
+		return $this->elementsContainers['elements']->getChild(0);
 	}
 
 } 

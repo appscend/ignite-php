@@ -1,8 +1,9 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\ConfigContainer;
+use Ignite\ElementContainer;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
 use Ignite\Element;
 
 class ImageGridView extends View{
@@ -10,10 +11,12 @@ class ImageGridView extends View{
 	const ELEMENTS_CONFIG_SPEC_FILE = 'ImageGrid/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('ImageGrid/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = ['e' => []];
+		parent::__construct($app);
+		$this->viewID = $viewID;
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('ImageGrid/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	/**
@@ -22,25 +25,25 @@ class ImageGridView extends View{
 	 */
 	public function addImage($content) {
 		if ($content instanceof Element) {
-			$this->contents['elements']->_vars[0]['e'][] = $content;
+			$this->elementsContainers['elements']->appendChild($content);
 		} else {
-			$el = new Element($content);
-			$this->contents['elements']->_vars[0]['e'][] = $el;
+			$el = new Element('e', $content);
+			$this->elementsContainers['elements']->appendChild($el);
 		}
 
-		return count($this->contents['elements']->_vars[0]['e'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	public function getImage($idx) {
-		return $this->contents['elements']->_vars[0]['e'][$idx];
+		return $this->elementsContainers['elements']->getChild($idx);
 	}
 
 	public function removeImage($idx) {
-		return array_splice($this->contents['elements']->_vars[0]['e'], $idx, 1);
+		return $this->elementsContainers['elements']->removeChild($idx);
 	}
 
 	public function getImages() {
-		return $this->contents['elements']->_vars[0]['e'];
+		return $this->elementsContainers['elements']->getChildren();
 	}
 
 } 

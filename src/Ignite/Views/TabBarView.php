@@ -3,17 +3,20 @@
 namespace Ignite\Views;
 use Ignite\Element;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
+use Ignite\ElementContainer;
+use Ignite\ConfigContainer;
 
 class TabBarView extends View {
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'TabBar/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('TabBar/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE));
-		$this->contents['elements']->_vars['tab'] = [];
+		parent::__construct($app);
+		$this->viewID = $viewID;
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('TabBar/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	/**
@@ -22,24 +25,24 @@ class TabBarView extends View {
 	 */
 	public function addTab($content) {
 		if (!$content instanceof Element)
-			$content = new Element($content);
+			$content = new Element('tab', $content);
 
-		$this->contents['elements']->_vars['tab'][] = $content;
+		$this->elementsContainers['elements']->appendChild($content);
 
-		return count($this->contents['elements']->_vars['tab'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	public function getTab($idx) {
-		return $this->contents['elements']->_vars[0]['e'][$idx];
+		return $this->elementsContainers['elements']->getChild($idx);
 	}
 
 
 	public function removeTab($idx) {
-		return array_splice($this->contents['elements']->_vars['tab'], $idx, 1);
+		return $this->elementsContainers['elements']->removeChild($idx);
 	}
 
 	public function getTabs() {
-		return $this->contents['elements']->_vars['tab'];
+		return $this->elementsContainers['elements']->getChildren();
 	}
 
 } 

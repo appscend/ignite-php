@@ -11,7 +11,7 @@ class CoverflowView extends View {
 	const ELEMENTS_CONFIG_SPEC_FILE = 'CoverFlow/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
+		parent::__construct($app);
 		$this->viewID = $viewID;
 
 		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));

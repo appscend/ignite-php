@@ -37,6 +37,17 @@ abstract class Registry implements \ArrayAccess, \Countable {
 		return $child;
 	}
 
+	public function replaceChild(Registry $child, $idx) {
+		if (isset($this->children[$idx])) {
+			$this->children[$idx] = $child;
+			$child->setParent($this);
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public function removeChild($idx) {
 		if (isset($this->children[$idx])) {
 			array_splice($this->children, $idx, 1);

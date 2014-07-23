@@ -1,19 +1,22 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\ConfigContainer;
 use Ignite\Element;
+use Ignite\ElementContainer;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
 
 class FormView extends View{
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'Form/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('Form/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = ['e' => []];
+		parent::__construct($app);
+		$this->viewID = $viewID;
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('Form/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	public function insertGroupSeparator($content) {
@@ -61,15 +64,15 @@ class FormView extends View{
 	}
 
 	public function removeElement($idx) {
-		return array_splice($this->contents['elements']->_vars[0]['e'], $idx, 1);
+		return $this->elementsContainers['elements']->removeChild($idx);
 	}
 
 	public function getElement($idx) {
-		return $this->contents['elements']->_vars[0]['e'][$idx];
+		return $this->elementsContainers['elements']->getChild($idx);
 	}
 
 	public function getElements() {
-		return $this->contents['elements']->_vars[0]['e'];
+		return $this->elementsContainers['elements']->getChildren();
 	}
 
 	/**
@@ -79,15 +82,15 @@ class FormView extends View{
 	 */
 	private function insertElement($type, $content) {
 		if ($content instanceof Element) {
-			$this->contents['elements']->_vars[0]['e'][] = $content;
+			$this->elementsContainers['elements']->appendChild($content);
 			$content['control_type'] = $type;
 		} else {
-			$el = new Element($content);
-			$this->contents['elements']->_vars[0]['e'][] = $el;
-			$el->_vars['control_type'] = $type;
+			$el = new Element('e', $content);
+			$this->elementsContainers['elements']->appendChild($el);
+			$el['control_type'] = $type;
 		}
 
-		return count($this->contents['elements']->_vars[0]['e'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 } 

@@ -1,19 +1,22 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\ConfigContainer;
 use Ignite\Element;
+use Ignite\ElementContainer;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
 
 class ListView extends View{
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'List/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('List/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE));
-		$this->contents['elements']->_vars['s'] = [];
+		parent::__construct($app);
+		$this->viewID = $viewID;
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 's'));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('List/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	/**
@@ -22,16 +25,13 @@ class ListView extends View{
 	 */
 	public function addSection($content) {
 		if ($content instanceof Element) {
-			$this->contents['elements']->_vars['s'][] = $content;
+			$this->elementsContainers['elements']->appendChild($content);
 		} else {
-			$el = new Element($content);
-			$this->contents['elements']->_vars['s'][] = $el;
+			$el = new Element('es', $content);
+			$this->elementsContainers['elements']->appendChild($el);
 		}
 
-		//$content['es'] = [['e' => []]];
-		//$this->contents['elements']->_vars['s'][] = $content;
-
-		return count($this->contents['elements']->_vars['s'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	/**
@@ -40,43 +40,40 @@ class ListView extends View{
 	 * @return int
 	 */
 	public function addListElement($content, $section) {
-		if ($content instanceof Element) {
-			if (!$section instanceof Element)
-				$section = $this->contents['elements']->_vars['s'][$section];
+		if (!$content instanceof Element)
+			$content = new Element('e', $content);
 
-			if (!isset($section->_vars['es']))
-				$section->_vars['es'] = ['e' => []];
+		if (!$section instanceof Element)
+			$section = $this->elementsContainers['elements']->getChild($section);
 
-		} else {
-			$content = new Element($content);
-		}
+		$section->appendChild($content);
 
-		$section->_vars['es'][0]['e'][] = $content;
-
-		return count($section->_vars['es'][0]['e']);
+		return count($section);
 	}
 
 	public function removeSection($idx) {
-		return array_splice($this->contents['elements']->_vars['s'], $idx, 1);
-	}
-
-	public function removeListElement($idx, $section) {
-		return array_splice($this->contents['elements']->_vars['s'][$section]['es'][0]['e'], $idx, 1);
-	}
-
-	public function getSections() {
-		return $this->contents['elements']->_vars['s'];
+		return $this->elementsContainers['elements']->removeChild($idx);
 	}
 
 	/**
-	 * @param int|Element $section
+	 * @param int $idx
+	 * @param Element $section
+	 * @return boolean
+	 */
+	public function removeListElement($idx, $section) {
+		return $section->removeChild($idx);
+	}
+
+	public function getSections() {
+		return $this->elementsContainers['elements']->getChildren();
+	}
+
+	/**
+	 * @param Element $section
 	 * @return Element[]
 	 */
 	public function getListElements($section) {
-		if (!$section instanceof Element)
-			$section = $this->contents['elements']->_vars['s'][$section];
-
-		return $section->_vars['es'][0]['e'];
+		return $section->getChildren();
 	}
 
 } 

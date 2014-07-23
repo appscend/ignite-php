@@ -3,53 +3,56 @@
 namespace Ignite\Views;
 use Ignite\Element;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
+use Ignite\ElementContainer;
+use Ignite\ConfigContainer;
 
 class WidgetView extends View{
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'Widget/elements.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app, $viewID);
-		$this->contents['config']->appendConfigFile('Widget/config.json');
-		$this->addElementContainer(new ViewElementsContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
-		$this->contents['elements']->_vars[0] = ['e' => []];
+		parent::__construct($app);
+		$this->viewID = $viewID;
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('Widget/config.json');
+		$this->config['view_id'] = $viewID;
 	}
 
 	public function addViewElement($content) {
 		if (!$content instanceof Element)
-			$content = new Element($content);
+			$content = new Element('e', $content);
 
-		$this->contents['elements']->_vars[0]['e'][] = $content;
+		$this->elementsContainers['elements']->appendChild($content);
 
-		return count($this->contents['elements']->_vars[0]['e'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	public function addTextLabel($content) {
 		if (!$content instanceof Element)
-			$content = new Element($content);
+			$content = new Element('e', $content);
 
-		$content->_vars['element_type'] = 'label';
-		$this->contents['elements']->_vars[0]['e'][] = $content;
+		$content['element_type'] = 'label';
+		$this->elementsContainers['elements']->appendChild($content);
 
-		return count($this->contents['elements']->_vars[0]['e'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	public function addImage($content) {
 		if (!$content instanceof Element)
-			$content = new Element($content);
+			$content = new Element('e', $content);
 
 		$content['element_type'] = 'image';
-		$this->contents['elements']->_vars[0]['e'][] = $content;
+		$this->elementsContainers['elements']->appendChild($content);
 
-		return count($this->contents['elements']->_vars[0]['e'])-1;
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	public function removeElement($idx) {
-		return array_splice($this->contents['elements']->_vars[0]['e'], $idx, 1);
+		return $this->elementsContainers['elements']->removeChild($idx);
 	}
 
 	public function getElements() {
-		return $this->contents['elements']->_vars[0]['e'];
+		return $this->elementsContainers['elements']->getChildren();
 	}
 } 

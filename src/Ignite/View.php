@@ -1,7 +1,7 @@
 <?php
 namespace Ignite;
 
-class View extends Registry {
+abstract class View extends Registry {
 
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
