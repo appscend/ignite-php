@@ -25,6 +25,7 @@ class WidgetView extends View{
 			$content = new Element('e', $content);
 
 		$this->elementsContainers['elements']->appendChild($content);
+		$content->view = $this;
 
 		return count($this->elementsContainers['elements'])-1;
 	}
@@ -35,6 +36,7 @@ class WidgetView extends View{
 
 		$content['element_type'] = 'label';
 		$this->elementsContainers['elements']->appendChild($content);
+		$content->view = $this;
 
 		return count($this->elementsContainers['elements'])-1;
 	}
@@ -45,6 +47,7 @@ class WidgetView extends View{
 
 		$content['element_type'] = 'image';
 		$this->elementsContainers['elements']->appendChild($content);
+		$content->view = $this;
 
 		return count($this->elementsContainers['elements'])-1;
 	}

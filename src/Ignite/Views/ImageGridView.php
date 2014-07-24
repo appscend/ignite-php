@@ -26,9 +26,11 @@ class ImageGridView extends View{
 	 */
 	public function addImage($content) {
 		if ($content instanceof Element) {
+			$content->view = $this;
 			$this->elementsContainers['elements']->appendChild($content);
 		} else {
 			$el = new Element('e', $content);
+			$el->view = $this;
 			$this->elementsContainers['elements']->appendChild($el);
 		}
 

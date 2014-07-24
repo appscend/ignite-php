@@ -31,6 +31,8 @@ class WebView extends View{
 			$this->elementsContainers['elements']->replaceChild($content, 0);
 		else
 			$this->elementsContainers['elements']->appendChild($content);
+
+		$content->view = $this;
 	}
 
 	public function getContent() {

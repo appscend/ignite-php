@@ -2,6 +2,8 @@
 
 namespace Ignite;
 
+use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
+
 class Element extends Registry {
 
 	/**
@@ -63,8 +65,13 @@ class Element extends Registry {
 				$result = array_merge($result, $c->render($update));
 		}
 
-		if ($this->action !== null)
-			$result = array_merge($result, $this->action->render());
+		if ($this->action !== null) {
+			if ($this->view !== null && !$this->view->validateAction($this->action)) {
+				throw new InvalidTypeException("Action '{$this->action->getName()}' is not a valid action.");
+			} else {
+				$result = array_merge($result, $this->action->render());
+			}
+		}
 
 		if ($this->isRoot())
 			$this->render_cache = [$this->tag => [$result]];

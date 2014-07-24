@@ -29,6 +29,7 @@ class TabBarView extends View {
 			$content = new Element('tab', $content);
 
 		$this->elementsContainers['elements']->appendChild($content);
+		$content->view = $this;
 
 		return count($this->elementsContainers['elements'])-1;
 	}

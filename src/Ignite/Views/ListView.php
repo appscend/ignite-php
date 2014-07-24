@@ -26,9 +26,11 @@ class ListView extends View{
 	 */
 	public function addSection($content) {
 		if ($content instanceof Element) {
+			$content->view = $this;
 			$this->elementsContainers['elements']->appendChild($content);
 		} else {
 			$el = new Element('es', $content);
+			$el->view = $this;
 			$this->elementsContainers['elements']->appendChild($el);
 		}
 
@@ -47,6 +49,7 @@ class ListView extends View{
 		if (!$section instanceof Element)
 			$section = $this->elementsContainers['elements']->getChild($section);
 
+		$content->view = $this;
 		$section->appendChild($content);
 
 		return count($section);

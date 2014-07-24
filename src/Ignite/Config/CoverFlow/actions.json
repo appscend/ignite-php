@@ -1,107 +1,47 @@
 {
-	"refreshPage": {
-		"name": "r",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"r": {
+		"name": "refreshPage"
 	},
-	"goBack": {
-		"name": "b",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"b": {
+		"name": "goBack"
 	},
-	"goForward": {
-		"name": "f",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"f": {
+		"name": "goForward"
 	},
-	"bookmark": {
-		"name": "fav",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"fav": {
+		"name": "bookmark"
 	},
-	"startSlideshow": {
-		"name": "slideshow",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"slideshow": {
+		"name": "startSlideshow"
 	},
-	"increaseFontSize": {
-		"name": "fp",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"fp": {
+		"name": "increaseFontSize"
 	},
-	"dereaseFontSize": {
-		"name": "fm",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"fm": {
+		"name": "dereaseFontSize"
 	},
-	"cycleFontSize": {
-		"name": "fa",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"fa": {
+		"name": "cycleFontSize"
 	},
 	"share": {
-		"name": "share",
-		"params": {
-			"required": [],
-			"optional": ["service"]
-		}
+		"name": "share"
 	},
-	"loadNextItem": {
-		"name": "ni",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"ni": {
+		"name": "loadNextItem"
 	},
-	"loadPreviousItem": {
-		"name": "pi",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"pi": {
+		"name": "loadPreviousItem"
 	},
-	"getInfoEvent": {
-		"name": "getinfo",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"getinfo": {
+		"name": "getInfoEvent"
 	},
-	"triggerJSFunction": {
-		"name": "trigger",
-		"params": {
-			"required": ["fname"],
-			"optional": []
-		}
+	"trigger": {
+		"name": "triggerJSFunction"
 	},
-	"getFormEvent": {
-		"name": "getform",
-		"params": {
-			"required": ["gid"],
-			"optional": []
-		}
+	"getform": {
+		"name": "getFormEvent"
 	},
-	"getDataEvent": {
-		"name": "getdata",
-		"params": {
-			"required": ["url"],
-			"optional": []
-		}
+	"getdata": {
+		"name": "getDataEvent"
 	}
 }

@@ -1,14 +1,14 @@
 <?php
 namespace Ignite;
 
-use Symfony\Component\Config\Definition\Processor;
-
 abstract class View extends Registry {
 
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
 	const BUTTON_ELEMENTS_SPEC			= 'button_elements.json';
 	const MENU_ELEMENTS_SPEC			= 'menu_elements.json';
+
+	const GENERIC_ACTIONS_SPEC			= 'generic_actions.json';
 
 	/**
 	 * @var ElementContainer[]
@@ -19,6 +19,8 @@ abstract class View extends Registry {
 	 * @var ConfigContainer
 	 */
 	protected $config = null;
+
+	protected $actionsSpec = [];
 
 	/**
 	 * @var Application
@@ -34,6 +36,8 @@ abstract class View extends Registry {
 		$this->elementsContainers['visible_launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'vas'));
 		$this->elementsContainers['hidden_launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'has'));
 		$this->elementsContainers['menus'] = $this->appendChild(new ElementContainer(self::MENU_ELEMENTS_SPEC, 'ms'));
+
+		$this->actionsSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/generic_actions.json'), true);
 
 		$this->app = $app;
 	}
@@ -55,13 +59,13 @@ abstract class View extends Registry {
 			$this->config->addPrefixedProperties($config['landscape_tablet'], 'padl');
 
 		if (isset($config['landscape_android']))
-			$this->config->addPrefixedProperties($config['landscape'], 'andl');
+			$this->config->addPrefixedProperties($config['landscape_android'], 'andl');
 
 		if (isset($config['tablet_android']))
-			$this->config->addPrefixedProperties($config['landscape'], 'andpad');
+			$this->config->addPrefixedProperties($config['tablet_android'], 'andpad');
 
 		if (isset($config['landscape_tablet_android']))
-			$this->config->addPrefixedProperties($config['landscape'], 'andpadl');
+			$this->config->addPrefixedProperties($config['landscape_tablet_android'], 'andpadl');
 
 	}
 
@@ -80,8 +84,8 @@ abstract class View extends Registry {
 				break;
 			}
 			default: {
-			$wrapperTag = 'la';
-			$where = 'launch_actions';
+				$wrapperTag = 'la';
+				$where = 'launch_actions';
 			}
 		}
 
@@ -95,6 +99,7 @@ abstract class View extends Registry {
 
 		$menu->setTag('m');
 		$this->elementsContainers['menus']->appendChild($menu);
+		$menu->view = $this;
 
 		return $menu;
 	}
@@ -111,6 +116,7 @@ abstract class View extends Registry {
 			$element = new Element('me', $element);
 
 		$menu->appendChild($element);
+		$element->view = $this;
 
 		return $element;
 	}
@@ -134,6 +140,8 @@ abstract class View extends Registry {
 			$actionGroup->appendChild($a);
 		}
 
+		$actionGroup->view = $this;
+
 		return $idx;
 	}
 
@@ -148,6 +156,7 @@ abstract class View extends Registry {
 			$group = new Element('bg', $group);
 
 		$group->setTag('bg');
+		$group->view = $this;
 
 		$this->elementsContainers['buttons']->appendChild($group);
 
@@ -169,7 +178,15 @@ abstract class View extends Registry {
 		} else
 			$this->elementsContainers['buttons']->appendChild($button);
 
+		$button->view = $this;
+
 		return $button;
+	}
+
+	public function validateAction(Action $a) {
+		$name = $a->getName();
+
+		return isset($this->actionsSpec[$name]);
 	}
 
 	public function render($update = false) {

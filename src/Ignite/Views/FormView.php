@@ -85,11 +85,12 @@ class FormView extends View{
 		if ($content instanceof Element) {
 			$this->elementsContainers['elements']->appendChild($content);
 			$content['control_type'] = $type;
+			$content->view = $this;
 		} else {
 			$el = new Element('e', $content);
 			$this->elementsContainers['elements']->appendChild($el);
 			$el['control_type'] = $type;
-			//$el->setFor('control_type', TAB | ANDROID);
+			$el->view = $this;
 		}
 
 		return count($this->elementsContainers['elements'])-1;
