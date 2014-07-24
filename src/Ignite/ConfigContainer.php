@@ -4,6 +4,8 @@ namespace Ignite;
 
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\Processor;
 
 class ConfigContainer extends Element implements ConfigurationInterface {
 
@@ -21,23 +23,45 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents('/home/razvan/proiecte/ignitephp'.self::CONFIG_PATH.'/'.$filepath), true));
 	}
 
+	public function addPrefixedProperties(array $props, $prefix) {
+		$props = $this->translateTags($props);
+
+		try {
+			(new Processor())->processConfiguration($this, [$props]);
+		} catch (InvalidConfigurationException $e) {
+			throw new InvalidConfigurationException($e->getMessage()." (for prefix '$prefix')");
+		}
+
+		$prefixed = [];
+
+		foreach ($props as $k => $v)
+			$prefixed[$prefix.$k] = $v;
+
+		$this->prefix_properties[$prefix] = $prefixed;
+	}
+
 	public function render($update = false) {
-		$this->translateTags();
+		$this->properties = $this->translateTags($this->properties);
+		$this->properties = (new Processor())->processConfiguration($this, [$this->properties]);
+
+		foreach ($this->prefix_properties as $p)
+			$this->properties = array_merge($this->properties, $p);
 
 		return parent::render($update);
 	}
 
-	private function translateTags() {
+	private function translateTags(array $arr) {
+		$this->isTranslated = true;
 		$result = [];
 
-		foreach ($this->properties as $name => $v) {
-			if ($this->configSpec[$name])
+		foreach ($arr as $name => $v) {
+			if (isset($this->configSpec[$name]))
 				$result[$this->configSpec[$name]['tag']] = $v;
 			else
-				$result[$name] = $v;
+				throw new InvalidConfigurationException("Option $name is not recognized.");
 		}
 
-		$this->properties = $result;
+		return $result;
 	}
 
 	public function getConfigTreeBuilder() {
@@ -52,12 +76,11 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		$treeBuilder = new TreeBuilder();
 		$root = $treeBuilder->root(0);
 
-		$cfgNode = $root->children()->arrayNode('cfg')->ignoreExtraKeys()->isRequired();
-		$node = $cfgNode->children();
+		$node = $root->children();
 
 		foreach ($this->configSpec as $fieldName => $field) {
 			if ($field['type'] !== 'ref') {
-				$node = call_user_func_array([$node, $methods[$field['type']]], [$fieldName]);
+				$node = call_user_func_array([$node, $methods[$field['type']]], [$field['tag']]);
 
 				if (isset($field['min']))
 					$node = $node->min($field['min']);
@@ -67,7 +90,7 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 					$node = $node->values($field['enum']);
 
 			} else {
-				$node = call_user_func_array([$node, $methods[$this->configSpec[$field['ref']]['type']]], [$field['ref']]);
+				$node = call_user_func_array([$node, $methods[$this->configSpec[$field['ref']]['type']]], [$this->configSpec[$field['ref']]['tag']]);
 
 				if (isset($this->configSpec[$field['ref']]['min']))
 					$node = $node->min($this->configSpec[$field['ref']]['min']);

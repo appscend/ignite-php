@@ -12,6 +12,7 @@ class QRCodeView extends View{
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('QRCode/config.json');
 		$this->config['view_id'] = $viewID;
+		$this->config['view_type'] = 'cs';
 	}
 
 } 

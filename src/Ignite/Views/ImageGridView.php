@@ -17,6 +17,7 @@ class ImageGridView extends View{
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('ImageGrid/config.json');
 		$this->config['view_id'] = $viewID;
+		$this->config['view_type'] = 'p';
 	}
 
 	/**

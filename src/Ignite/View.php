@@ -1,6 +1,8 @@
 <?php
 namespace Ignite;
 
+use Symfony\Component\Config\Definition\Processor;
+
 abstract class View extends Registry {
 
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
@@ -34,6 +36,33 @@ abstract class View extends Registry {
 		$this->elementsContainers['menus'] = $this->appendChild(new ElementContainer(self::MENU_ELEMENTS_SPEC, 'ms'));
 
 		$this->app = $app;
+	}
+
+	public function parseConfiguration($filepath) {
+		$config = $this->app->scan($filepath)->getArray();
+		$this->config->setProperties(array_merge($this->config->getProperties(), $config['cfg']));
+
+		if (isset($config['landscape']))
+			$this->config->addPrefixedProperties($config['landscape'], 'l');
+
+		if (isset($config['tablet']))
+			$this->config->addPrefixedProperties($config['tablet'], 'pad');
+
+		if (isset($config['android']))
+			$this->config->addPrefixedProperties($config['android'], 'and');
+
+		if (isset($config['landscape_tablet']))
+			$this->config->addPrefixedProperties($config['landscape_tablet'], 'padl');
+
+		if (isset($config['landscape_android']))
+			$this->config->addPrefixedProperties($config['landscape'], 'andl');
+
+		if (isset($config['tablet_android']))
+			$this->config->addPrefixedProperties($config['landscape'], 'andpad');
+
+		if (isset($config['landscape_tablet_android']))
+			$this->config->addPrefixedProperties($config['landscape'], 'andpadl');
+
 	}
 
 	public function addLaunchAction(Action $action, $type = null) {

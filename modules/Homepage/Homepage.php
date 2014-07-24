@@ -19,6 +19,7 @@ class Homepage extends Module {
         
         $controllers->get('bye', function (Application $app) {
             $view = new Views\CoverflowView($app, "endpage");
+			$view->parseConfiguration(MODULES_DIR.'/Homepage/config/endpage.toml');
 
 			$view->addImage(["image" => "Test section", "name" => "xxx"]);
 			$view->addImage([

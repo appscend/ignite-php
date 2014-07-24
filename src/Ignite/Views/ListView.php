@@ -17,6 +17,7 @@ class ListView extends View{
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('List/config.json');
 		$this->config['view_id'] = $viewID;
+		$this->config['view_type'] = 'l';
 	}
 
 	/**

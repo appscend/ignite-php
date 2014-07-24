@@ -17,6 +17,7 @@ class WidgetView extends View{
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('Widget/config.json');
 		$this->config['view_id'] = $viewID;
+		$this->config['view_type'] = 'wd';
 	}
 
 	public function addViewElement($content) {

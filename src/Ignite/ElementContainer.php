@@ -10,6 +10,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 	private $configSpec = [];
 	private $translationTags = [];
+	private $isTranslated = false;
 
 	public function __construct($specFile, $tag = null) {
 		parent::__construct($tag);
@@ -28,6 +29,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 	}
 
 	private function translateTags(Registry $child) {
+		$this->isTranslated = true;
 		$result = [];
 
 		foreach ($child->getProperties() as $k => $v) {
@@ -44,8 +46,10 @@ class ElementContainer extends Element implements ConfigurationInterface{
 	}
 
 	public function render($update = false) {
-		$this->getTranslation($this->configSpec);
-		$this->translateTags($this);
+		if (!$this->isTranslated) {
+			$this->getTranslation($this->configSpec);
+			$this->translateTags($this);
+		}
 
 		return parent::render($update);
 	}

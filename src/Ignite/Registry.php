@@ -10,6 +10,7 @@ abstract class Registry implements \ArrayAccess, \Countable {
 	 */
 	protected $children		= [];
 	protected $properties	= [];
+	protected $prefix_properties = [];
 	protected $tag			= null;
 	protected $parent		= null;
 
@@ -84,6 +85,10 @@ abstract class Registry implements \ArrayAccess, \Countable {
 
 	public function setProperties(array $p) {
 		$this->properties = $p;
+	}
+
+	public function appendProperties(array $p) {
+		$this->properties = array_merge($this->properties, $p);
 	}
 
 	public function setTag($t) {

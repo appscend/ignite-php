@@ -1,7 +1,17 @@
 [cfg]
-view_type = "t"
-view_id = "testID"
 title = "asasd"
 activity_indicator_image_load = "no"
 navigation_bar_text_size = 10
-more_title = "More... title"
+image_reflection = "yes"
+
+[landscape]
+title = "asasd"
+activity_indicator_image_load = "no"
+navigation_bar_text_size = 10
+image_reflection = "yes"
+
+[landscape_tablet_android]
+title = "asasd"
+activity_indicator_image_load = "no"
+navigation_bar_text_size = 10
+image_reflection = "yes"

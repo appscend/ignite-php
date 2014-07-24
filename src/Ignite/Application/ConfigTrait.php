@@ -2,12 +2,15 @@
 
 namespace Ignite\Application;
 
-use Yosymfony\Silex\ConfigServiceProvider\Config;
+use Yosymfony\Silex\ConfigServiceProvider\ConfigRepository;
 
 trait ConfigTrait
 {
-    public function scan($path)
-    {
+	/**
+	 * @param string $path
+	 * @return ConfigRepository
+	 */
+	public function scan($path) {
         return $this['configuration']->load($path);
     }
 }

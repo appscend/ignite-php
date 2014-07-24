@@ -17,6 +17,7 @@ class FormView extends View{
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('Form/config.json');
 		$this->config['view_id'] = $viewID;
+		$this->config['view_type'] = 'fr';
 	}
 
 	public function insertGroupSeparator($content) {
@@ -88,6 +89,7 @@ class FormView extends View{
 			$el = new Element('e', $content);
 			$this->elementsContainers['elements']->appendChild($el);
 			$el['control_type'] = $type;
+			//$el->setFor('control_type', TAB | ANDROID);
 		}
 
 		return count($this->elementsContainers['elements'])-1;

@@ -18,6 +18,7 @@ class MapView extends View{
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('Map/config.json');
 		$this->config['view_id'] = $viewID;
+		$this->config['view_type'] = 'm';
 	}
 
 	/**
