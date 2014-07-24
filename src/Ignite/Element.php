@@ -20,6 +20,25 @@ class Element extends Registry {
 		$this->properties = $properties;
 	}
 
+	/**
+	 * @param \Closure|Action
+	 */
+	public function onTap($action) {
+		if ($action instanceof \Closure) {
+			$fresult = $action();
+
+			if ($fresult instanceof Action) {
+				$this->action = $fresult;
+
+				return ;
+			} else if (is_array($fresult)) {
+				$index = $this->view->addActionGroup($fresult);
+				$this->action = new Action('pag:', [$index-1]);
+			}
+		} else
+			$this->action = $action;
+	}
+
 	public function render($update = false) {
 		if ($this->render_cache !== [] && $update == false)
 			return $this->render_cache;
@@ -53,23 +72,6 @@ class Element extends Registry {
 			$this->render_cache = $result;
 
 		return $this->render_cache;
-	}
-
-	public function __set($k, $v) {
-		if ($v instanceof \Closure) {
-			$this->actionClosure = $v;
-			$fresult = $v();
-
-			if ($fresult instanceof Action) {
-				$this->action = $fresult;
-
-				return ;
-			} else if (is_array($fresult)) {
-				$this->action = new Action('pag:', [$k]);
-				$this->view->addActionGroup($fresult, $k);
-			}
-
-		}
 	}
 
 }

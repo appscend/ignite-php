@@ -131,7 +131,6 @@ abstract class View extends Registry {
 
 		foreach ($actions as $a) {
 			$a->setTag('age');
-
 			$actionGroup->appendChild($a);
 		}
 
@@ -200,6 +199,20 @@ abstract class View extends Registry {
 
 		return $this->render_cache;
 
+	}
+
+	/**
+	 * @param string $k
+	 * @param \Closure $v
+	 */
+	public function __set($k, $v) {
+		$fresult = $v();
+
+		if ($fresult instanceof Action)
+			$fresult = [$fresult];
+
+		if (is_array($fresult))
+			$this->addActionGroup($fresult, $k);
 	}
 
 } 

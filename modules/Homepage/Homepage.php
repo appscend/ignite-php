@@ -27,13 +27,13 @@ class Homepage extends Module {
 				"name" => " 239487 329023y4i2h342hg34"
 			], 0);
 
-			$view->getImage(0)->special = function() {return Navigation::refresh();};
-			$view->getImage(1)->doStuff = function() {
+			$view->getImage(0)->onTap(function() {return Navigation::refresh();});
+			$view->getImage(1)->onTap(function() {
 				return [ListActions::executeActionsSelected()->requiresLogin('fb'),
-						ListActions::toggleSelectable(),
-						ListActions::setSelectable(1)->on("test")
+					ListActions::toggleSelectable(),
+					ListActions::setSelectable(1)->on("test")
 				];
-			};
+			});
 
 			$view->addLaunchAction(Navigation::refresh());
 			$view->addLaunchAction(CoverFlowActions::scrollTo(10,10), Action::LAUNCH_ACTION_VISIBLE);
