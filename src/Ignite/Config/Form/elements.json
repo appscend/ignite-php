@@ -1,284 +1,280 @@
 {
-	"es": {
-		"e": {
-			"control_key": {
-				"tag": "key",
-				"type": "string"
-			},
-			"control_type": {
-				"tag": "type",
-				"type": "enum",
-				"enum": ["g", "ts", "mv", "p", "s", "tf", "ta", "i", "m", "dp", "b"]
-			},
-			"control_title": {
-				"tag": "title",
-				"type": "string"
-			},
-			"required": {
-				"tag": "req",
-				"type": "boolean"
-			},
-			"required_failed_text": {
-				"tag": "reqt",
-				"type": "string"
-			},
-			"regex_validation": {
-				"tag": "val",
-				"type": "string"
-			},
-			"regex_fail_text": {
-				"tag": "valt",
-				"type": "string"
-			},
-			"default": {
-				"tag": "dv",
-				"type": "string"
-			},
-			"persistent_key": {
-				"tag": "res",
-				"type": "boolean"
-			},
-			"section_footer_text": {
-				"tag": "ft",
-				"type": "string"
-			},
-			"section_header_height": {
-				"tag": "sh",
-				"type": "string"
-			},
-			"value_true": {
-				"tag": "tv",
-				"type": "string"
-			},
-			"value_false": {
-				"tag": "fv",
-				"type": "string"
-			},
-			"title_true": {
-				"tag": "sot",
-				"type": "string"
-			},
-			"title_false": {
-				"tag": "soft",
-				"type": "string"
-			},
-			"image_true": {
-				"tag": "soi",
-				"type": "string"
-			},
-			"image_false": {
-				"tag": "sofi",
-				"type": "string"
-			},
-			"switch_color": {
-				"tag": "sc",
-				"type": "string"
-			},
-			"switch_width": {
-				"tag": "sw",
-				"type": "integer"
-			},
-			"null_value": {
-				"tag": "nv",
-				"type": "string"
-			},
-			"mv_values": {
-				"tag": "values",
-				"type": "string"
-			},
-			"mv_titles": {
-				"tag": "titles",
-				"type": "string"
-			},
-			"mv_second_key": {
-				"tag": "key2",
-				"type": "string"
-			},
-			"second_key_default": {
-				"tag": "dv2",
-				"type": "string"
-			},
-			"p_values": {
-				"tag": "values",
-				"type": "string"
-			},
-			"p_titles": {
-				"tag": "titles",
-				"type": "string"
-			},
-			"p_second_keys": {
-				"tag": "key2",
-				"type": "string"
-			},
-			"p_second_keys_values": {
-				"tag": "values2",
-				"type": "string"
-			},
-			"p_second_keys_titles": {
-				"tag": "titles2",
-				"type": "string"
-			},
-			"p_order": {
-				"tag": "ord",
-				"type": "boolean"
-			},
-			"min_value": {
-				"tag": "minv",
-				"type": "float"
-			},
-			"max_value": {
-				"tag": "maxv",
-				"type": "float"
-			},
-			"decimals": {
-				"tag": "dec",
-				"type": "integer"
-			},
-			"tf_password_field": {
-				"tag": "sec",
-				"type": "boolean"
-			},
-			"tf_done_button": {
-				"tag": "ut",
-				"type": "boolean"
-			},
-			"tf_keyboard_type": {
-				"tag": "kt",
-				"type": "enum",
-				"enum": ["alph", "nap", "nbp", "decp", "u", "ea"]
-			},
-			"tf_keyboard_done_type": {
-				"tag": "kdbt",
-				"type": "integer",
-				"min": 0,
-				"max": 6
-			},
-			"tf_autocapitalization_type": {
-				"tag": "at",
-				"type": "enum",
-				"enum": ["no", "s", "w", "ac"]
-			},
-			"tf_autocorrection_type": {
-				"tag": "act",
-				"type": "enum",
-				"enum": ["default", "no", "yes"]
-			},
-			"tf_placeholder_text": {
-				"tag": "plh",
-				"type": "string"
-			},
-			"tf_text_alignment": {
-				"tag": "al",
-				"type": "enum",
-				"enum": ["l", "c", "r"]
-			},
-			"tf_text_left_padding": {
-				"tag": "lpad",
-				"type": "integer"
-			},
-			"tf_text_top_padding": {
-				"tag": "tpad",
-				"type": "integer"
-			},
-			"tf_text_right_padding": {
-				"tag": "rpad",
-				"type": "integer"
-			},
-			"tf_auto_select": {
-				"tag": "kt",
-				"type": "integer"
-			},
-			"tf_select_action": {
-				"tag": "sa",
-				"type": "string"
-			},
-			"ta_autocapitalization_type": {
-				"tag": "at",
-				"type": "enum",
-				"enum": ["no", "s", "w", "ac"]
-			},
-			"ta_autocorrection_type": {
-				"tag": "act",
-				"type": "enum",
-				"enum": ["default", "no", "yes"]
-			},
-			"ta_password_field": {
-				"tag": "sec",
-				"type": "boolean"
-			},
-			"ta_done_button": {
-				"tag": "ut",
-				"type": "boolean"
-			},
-			"ta_keyboard_type": {
-				"tag": "kt",
-				"type": "enum",
-				"enum": ["alph", "nap", "nbp", "decp", "u", "ea"]
-			},
-			"ta_keyboard_done_type": {
-				"tag": "kdbt",
-				"type": "integer",
-				"min": 0,
-				"max": 6
-			},
-			"ta_placeholder_text": {
-				"tag": "plh",
-				"type": "string"
-			},
-			"ta_placeholder_text_color": {
-				"tag": "plhc",
-				"type": "string"
-			},
-			"ta_placeholder_text_align": {
-				"tag": "lpad",
-				"type": "enum",
-				"enum": ["l", "c", "r"]
-			},
-			"ta_auto_select": {
-				"tag": "sel",
-				"type": "boolean"
-			},
-			"image_resize": {
-				"tag": "ir",
-				"type": "integer"
-			},
-			"allow_editing": {
-				"tag": "ie",
-				"type": "boolean"
-			},
-			"location_encode_type": {
-				"tag": "mec",
-				"type": "integer",
-				"min": 1,
-				"max": 4
-			},
-			"picker_type": {
-				"tag": "dt",
-				"type": "integer",
-				"min": 0,
-				"max": 2
-			},
-			"date_format": {
-				"tag": "dvf",
-				"type": "string"
-			},
-			"date_min": {
-				"tag": "dmin",
-				"type": "string"
-			},
-			"date_max": {
-				"tag": "dmax",
-				"type": "string"
-			},
-			"b_text_alignment": {
-				"tag": "ta",
-				"type": "enum",
-				"enum": ["l", "c", "r"]
-			},
-			"b_action": {
-				"tag": "a",
-				"type": "string"
-			}
-		}
+	"control_key": {
+		"tag": "key",
+		"type": "string"
+	},
+	"control_type": {
+		"tag": "type",
+		"type": "enum",
+		"enum": ["g", "ts", "mv", "p", "s", "tf", "ta", "i", "m", "dp", "b"]
+	},
+	"control_title": {
+		"tag": "title",
+		"type": "string"
+	},
+	"required": {
+		"tag": "req",
+		"type": "boolean"
+	},
+	"required_failed_text": {
+		"tag": "reqt",
+		"type": "string"
+	},
+	"regex_validation": {
+		"tag": "val",
+		"type": "string"
+	},
+	"regex_fail_text": {
+		"tag": "valt",
+		"type": "string"
+	},
+	"default": {
+		"tag": "dv",
+		"type": "string"
+	},
+	"persistent_key": {
+		"tag": "res",
+		"type": "boolean"
+	},
+	"section_footer_text": {
+		"tag": "ft",
+		"type": "string"
+	},
+	"section_header_height": {
+		"tag": "sh",
+		"type": "string"
+	},
+	"value_true": {
+		"tag": "tv",
+		"type": "string"
+	},
+	"value_false": {
+		"tag": "fv",
+		"type": "string"
+	},
+	"title_true": {
+		"tag": "sot",
+		"type": "string"
+	},
+	"title_false": {
+		"tag": "soft",
+		"type": "string"
+	},
+	"image_true": {
+		"tag": "soi",
+		"type": "string"
+	},
+	"image_false": {
+		"tag": "sofi",
+		"type": "string"
+	},
+	"switch_color": {
+		"tag": "sc",
+		"type": "string"
+	},
+	"switch_width": {
+		"tag": "sw",
+		"type": "integer"
+	},
+	"null_value": {
+		"tag": "nv",
+		"type": "string"
+	},
+	"mv_values": {
+		"tag": "values",
+		"type": "string"
+	},
+	"mv_titles": {
+		"tag": "titles",
+		"type": "string"
+	},
+	"mv_second_key": {
+		"tag": "key2",
+		"type": "string"
+	},
+	"second_key_default": {
+		"tag": "dv2",
+		"type": "string"
+	},
+	"p_values": {
+		"tag": "values",
+		"type": "string"
+	},
+	"p_titles": {
+		"tag": "titles",
+		"type": "string"
+	},
+	"p_second_keys": {
+		"tag": "key2",
+		"type": "string"
+	},
+	"p_second_keys_values": {
+		"tag": "values2",
+		"type": "string"
+	},
+	"p_second_keys_titles": {
+		"tag": "titles2",
+		"type": "string"
+	},
+	"p_order": {
+		"tag": "ord",
+		"type": "boolean"
+	},
+	"min_value": {
+		"tag": "minv",
+		"type": "float"
+	},
+	"max_value": {
+		"tag": "maxv",
+		"type": "float"
+	},
+	"decimals": {
+		"tag": "dec",
+		"type": "integer"
+	},
+	"tf_password_field": {
+		"tag": "sec",
+		"type": "boolean"
+	},
+	"tf_done_button": {
+		"tag": "ut",
+		"type": "boolean"
+	},
+	"tf_keyboard_type": {
+		"tag": "kt",
+		"type": "enum",
+		"enum": ["alph", "nap", "nbp", "decp", "u", "ea"]
+	},
+	"tf_keyboard_done_type": {
+		"tag": "kdbt",
+		"type": "integer",
+		"min": 0,
+		"max": 6
+	},
+	"tf_autocapitalization_type": {
+		"tag": "at",
+		"type": "enum",
+		"enum": ["no", "s", "w", "ac"]
+	},
+	"tf_autocorrection_type": {
+		"tag": "act",
+		"type": "enum",
+		"enum": ["default", "no", "yes"]
+	},
+	"tf_placeholder_text": {
+		"tag": "plh",
+		"type": "string"
+	},
+	"tf_text_alignment": {
+		"tag": "al",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"tf_text_left_padding": {
+		"tag": "lpad",
+		"type": "integer"
+	},
+	"tf_text_top_padding": {
+		"tag": "tpad",
+		"type": "integer"
+	},
+	"tf_text_right_padding": {
+		"tag": "rpad",
+		"type": "integer"
+	},
+	"tf_auto_select": {
+		"tag": "kt",
+		"type": "integer"
+	},
+	"tf_select_action": {
+		"tag": "sa",
+		"type": "string"
+	},
+	"ta_autocapitalization_type": {
+		"tag": "at",
+		"type": "enum",
+		"enum": ["no", "s", "w", "ac"]
+	},
+	"ta_autocorrection_type": {
+		"tag": "act",
+		"type": "enum",
+		"enum": ["default", "no", "yes"]
+	},
+	"ta_password_field": {
+		"tag": "sec",
+		"type": "boolean"
+	},
+	"ta_done_button": {
+		"tag": "ut",
+		"type": "boolean"
+	},
+	"ta_keyboard_type": {
+		"tag": "kt",
+		"type": "enum",
+		"enum": ["alph", "nap", "nbp", "decp", "u", "ea"]
+	},
+	"ta_keyboard_done_type": {
+		"tag": "kdbt",
+		"type": "integer",
+		"min": 0,
+		"max": 6
+	},
+	"ta_placeholder_text": {
+		"tag": "plh",
+		"type": "string"
+	},
+	"ta_placeholder_text_color": {
+		"tag": "plhc",
+		"type": "string"
+	},
+	"ta_placeholder_text_align": {
+		"tag": "lpad",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"ta_auto_select": {
+		"tag": "sel",
+		"type": "boolean"
+	},
+	"image_resize": {
+		"tag": "ir",
+		"type": "integer"
+	},
+	"allow_editing": {
+		"tag": "ie",
+		"type": "boolean"
+	},
+	"location_encode_type": {
+		"tag": "mec",
+		"type": "integer",
+		"min": 1,
+		"max": 4
+	},
+	"picker_type": {
+		"tag": "dt",
+		"type": "integer",
+		"min": 0,
+		"max": 2
+	},
+	"date_format": {
+		"tag": "dvf",
+		"type": "string"
+	},
+	"date_min": {
+		"tag": "dmin",
+		"type": "string"
+	},
+	"date_max": {
+		"tag": "dmax",
+		"type": "string"
+	},
+	"b_text_alignment": {
+		"tag": "ta",
+		"type": "enum",
+		"enum": ["l", "c", "r"]
+	},
+	"b_action": {
+		"tag": "a",
+		"type": "string"
 	}
 }

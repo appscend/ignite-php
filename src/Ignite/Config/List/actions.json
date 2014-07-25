@@ -1,37 +1,17 @@
 {
-	"toggleSelect": {
-		"name": "tsel",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"tsel": {
+		"name": "toggleSelect"
 	},
-	"setSelectable": {
-		"name": "tsel",
-		"params": {
-			"required": ["state"],
-			"optional": []
-		}
+	"tsel:": {
+		"name": "setSelectable"
 	},
-	"toggleSelectUnique": {
-		"name": "tselu",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"tselu": {
+		"name": "toggleSelectUnique"
 	},
-	"executeActionS": {
-		"name": "execsel",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"execsel": {
+		"name": "executeActionS"
 	},
-	"executeActionSToggle": {
-		"name": "execasel",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"execasel": {
+		"name": "executeActionSToggle"
 	}
 }

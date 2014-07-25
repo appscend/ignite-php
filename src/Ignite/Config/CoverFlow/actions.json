@@ -1,47 +1,17 @@
 {
-	"r": {
-		"name": "refreshPage"
-	},
-	"b": {
-		"name": "goBack"
-	},
-	"f": {
-		"name": "goForward"
-	},
-	"fav": {
-		"name": "bookmark"
-	},
 	"slideshow": {
 		"name": "startSlideshow"
 	},
-	"fp": {
-		"name": "increaseFontSize"
+	"flipSlide": {
+		"name": "nextPage"
 	},
-	"fm": {
-		"name": "dereaseFontSize"
+	"scrollx:y:": {
+		"name": "scrollTo"
 	},
-	"fa": {
-		"name": "cycleFontSize"
+	"scrollrx:ry:": {
+		"name": "scrollRelativeTo"
 	},
-	"share": {
-		"name": "share"
-	},
-	"ni": {
-		"name": "loadNextItem"
-	},
-	"pi": {
-		"name": "loadPreviousItem"
-	},
-	"getinfo": {
-		"name": "getInfoEvent"
-	},
-	"trigger": {
-		"name": "triggerJSFunction"
-	},
-	"getform": {
-		"name": "getFormEvent"
-	},
-	"getdata": {
-		"name": "getDataEvent"
+	"scrollpx:py:": {
+		"name": "scrollToPercentage"
 	}
 }

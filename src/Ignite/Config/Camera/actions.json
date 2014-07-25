@@ -1,9 +1,5 @@
 {
-	"swapCameras": {
-		"name": "swap",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"swap": {
+		"name": "swapCameras"
 	}
 }

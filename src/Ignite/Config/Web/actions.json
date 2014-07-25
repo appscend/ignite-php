@@ -1,37 +1,47 @@
 {
-	"startSlideshow": {
-		"name": "slideshow",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"r": {
+		"name": "refreshPage"
 	},
-	"flipSlide": {
-		"name": "flipSlide",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"b": {
+		"name": "goBack"
 	},
-	"scrollTo": {
-		"name": "scrollx",
-		"params": {
-			"required": ["x", "y"],
-			"optional": []
-		}
+	"f": {
+		"name": "goForward"
 	},
-	"scrollToRelative": {
-		"name": "scrollrx",
-		"params": {
-			"required": ["x", "y"],
-			"optional": []
-		}
+	"fav": {
+		"name": "bookmark"
 	},
-	"scrollToViewRelative": {
-		"name": "scrollpx",
-		"params": {
-			"required": ["x", "y"],
-			"optional": []
-		}
+	"fp": {
+		"name": "increaseFontSize"
+	},
+	"fm": {
+		"name": "dereaseFontSize"
+	},
+	"fa": {
+		"name": "cycleFontSize"
+	},
+	"share": {
+		"name": "share"
+	},
+	"share:": {
+		"name": "shareTo"
+	},
+	"ni": {
+		"name": "loadNextItem"
+	},
+	"pi": {
+		"name": "loadPreviousItem"
+	},
+	"getinfo": {
+		"name": "getInfoEvent"
+	},
+	"trigger:": {
+		"name": "triggerJSFunction"
+	},
+	"getform:": {
+		"name": "getFormEvent"
+	},
+	"getdata": {
+		"name": "getDataEvent"
 	}
 }

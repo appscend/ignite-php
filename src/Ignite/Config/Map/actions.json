@@ -1,37 +1,17 @@
 {
-	"showUserLocation": {
-		"name": "sloc",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"sloc": {
+		"name": "showUserLocation"
 	},
-	"trackUserLocation": {
-		"name": "track",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"track": {
+		"name": "trackUserLocation"
 	},
-	"centerUserLocation": {
-		"name": "center",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"center": {
+		"name": "centerUserLocation"
 	},
-	"showDirections": {
-		"name": "dir",
-		"params": {
-			"required": [],
-			"optional": ["name"]
-		}
+	"dir": {
+		"name": "showDirections"
 	},
-	"searchLocation": {
-		"name": "slideshow",
-		"params": {
-			"required": [],
-			"optional": ["name"]
-		}
+	"locsearch": {
+		"name": "searchLocation"
 	}
 }

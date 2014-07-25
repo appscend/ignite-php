@@ -1,58 +1,26 @@
 {
-	"submit": {
-		"name": "pv",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation"]
-		}
+	"pv:": {
+		"name": "submit"
 	},
-	"submitLocation": {
-		"name": "plv",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation", "accuracy"]
-		}
+	"plv:": {
+		"name": "submitLocation"
 	},
-	"modalView": {
-		"name": "mv",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation", "accuracy", "modalstyle"]
-		}
+	"mv:": {
+		"name": "modalView"
 	},
-	"modalViewLocation": {
-		"name": "mlv",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation", "accuracy", "modalstyle"]
-		}
+	"mlv:": {
+		"name": "modalViewLocation"
 	},
-	"replaceView": {
-		"name": "rv",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation"]
-		}
+	"rv:": {
+		"name": "replaceView"
 	},
-	"replaceViewLocation": {
-		"name": "rlv",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation", "accuracy"]
-		}
+	"rlv:": {
+		"name": "replaceViewLocation"
 	},
-	"replaceAll": {
-		"name": "rav",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation"]
-		}
+	"rav:": {
+		"name": "replaceAll"
 	},
-	"replaceAllLocation": {
-		"name": "ralv",
-		"params": {
-			"required": ["paramxml"],
-			"optional": ["data", "form", "animation", "accuracy"]
-		}
+	"ralv:": {
+		"name": "replaceAllLocation"
 	}
 }

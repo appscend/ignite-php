@@ -1,6 +1,7 @@
 <?php
 namespace Ignite;
 
+use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
 
 abstract class View extends Registry {
@@ -136,20 +137,24 @@ abstract class View extends Registry {
 	 * @param Action[] $actions
 	 * @param null|string $name
 	 * @return int
+	 * @throws InvalidTypeException
 	 */
 	public function addActionGroup(array $actions, $name = null) {
 		$actionGroup = new Element('ag');
+
+		foreach ($actions as $a) {
+			if ($this->validateAction($a)) {
+				$a->setTag('age');
+				$actionGroup->appendChild($a);
+			} else
+				throw new InvalidTypeException("Action '{$a->getName()}' is not a valid action.");
+		}
 
 		$this->elementsContainers['action_groups']->appendChild($actionGroup);
 
 		$idx = count($this->elementsContainers['action_groups']);
 		if (isset($name))
 			$actionGroup['agn'] = $name;
-
-		foreach ($actions as $a) {
-			$a->setTag('age');
-			$actionGroup->appendChild($a);
-		}
 
 		$actionGroup->view = $this;
 

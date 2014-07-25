@@ -1,72 +1,38 @@
 {
-	"saveImage": {
-		"name": "savePic",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"savePic": {
+		"name": "saveImage"
 	},
-	"removeImage": {
-		"name": "removePic",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"removePic": {
+		"name": "removeImage"
 	},
-	"shareImage": {
-		"name": "sharePic",
-		"params": {
-			"required": [],
-			"optional": ["service"]
-		}
+	"sharePic": {
+		"name": "shareImage"
 	},
-	"editShareImage": {
-		"name": "editShare",
-		"params": {
-			"required": [],
-			"optional": ["service"]
-		}
+	"sharePic:": {
+		"name": "shareImageTo"
 	},
-	"startSlideshow": {
-		"name": "slideshow",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"editShare": {
+		"name": "editShareImage"
 	},
-	"toggleBars": {
-		"name": "tn",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"editShare:": {
+		"name": "editShareImageTo"
 	},
-	"moveNext": {
-		"name": "nextp",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"slideshow": {
+		"name": "startSlideshow"
 	},
-	"movePrevious": {
-		"name": "prevp",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"tn": {
+		"name": "toggleBars"
+	},
+	"nextp": {
+		"name": "moveNext"
+	},
+	"prevp": {
+		"name": "movePrevious"
 	},
 	"scrollTo": {
-		"name": "scrollx",
-		"params": {
-			"required": ["x", "y"],
-			"optional": []
-		}
+		"name": "scrollx"
 	},
 	"flipSlide": {
-		"name": "flipSlide",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+		"name": "flipSlide"
 	}
 }

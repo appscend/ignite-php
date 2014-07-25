@@ -9,6 +9,7 @@ use Ignite\View;
 class FormView extends View{
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'Form/elements.json';
+	const ACTIONS_CONFIG_SPEC_FILE = 'Form/actions.json';
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app);
@@ -20,6 +21,8 @@ class FormView extends View{
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'fr';
 		$this->config->view = $this;
+
+		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
 	}
 
 	public function insertGroupSeparator($content) {

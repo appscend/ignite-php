@@ -1,100 +1,44 @@
 {
-	"refreshElement": {
-		"name": "refreshl",
-		"params": {
-			"required": ["view_id"],
-			"optional": []
-		}
+	"refreshl:": {
+		"name": "refreshElement"
 	},
-	"changeOpacity": {
-		"name": "rea",
-		"params": {
-			"required": ["avi", "alpha", "lalpha", "padalpha", "padlalpha"],
-			"optional": ["duration"]
-		}
+	"rea:": {
+		"name": "changeOpacity"
 	},
-	"changeOpacityByKey": {
-		"name": "reak",
-		"params": {
-			"required": ["key", "alpha", "lalpha", "padalpha", "padlalpha"],
-			"optional": ["duration"]
-		}
+	"reak:": {
+		"name": "changeOpacityByKey"
 	},
-	"changePositionAndSize": {
-		"name": "ref",
-		"params": {
-			"required": ["avi", "coords"],
-			"optional": ["lcoords", "padcoords", "padlcoords", "duration"]
-		}
+	"ref:": {
+		"name": "changePositionAndSize"
 	},
-	"changePositionAndSizeByKey": {
-		"name": "refk",
-		"params": {
-			"required": ["key", "coords"],
-			"optional": ["lcoords", "padcoords", "padlcoords", "duration"]
-		}
+	"refk:": {
+		"name": "changePositionAndSizeByKey"
 	},
-	"toggleLocations": {
-		"name": "toggle",
-		"params": {
-			"required": ["avi", "direction", "v1", "v2", "duration"],
-			"optional": ["lv1", "padv1", "padlv1", "v2", "lv2", "padv2", "padlv2"]
-		}
+	"toggle:": {
+		"name": "toggleLocations"
 	},
-	"changeProperties": {
-		"name": "rps",
-		"params": {
-			"required": ["avi", "value", "key"],
-			"optional": []
-		}
+	"rps": {
+		"name": "changeProperties"
 	},
-	"changePropertiesByKey": {
-		"name": "rpsk",
-		"params": {
-			"required": ["key", "value", "key"],
-			"optional": []
-		}
+	"rpsk": {
+		"name": "changePropertiesByKey"
 	},
-	"saveScreenshot": {
-		"name": "snap",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"snap": {
+		"name": "saveScreenshot"
 	},
-	"saveScreenshotLocalStorage": {
-		"name": "snapd",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+	"snapd": {
+		"name": "saveScreenshotLocalStorage"
 	},
-	"saveScreenshotToUrl": {
-		"name": "snapto",
-		"params": {
-			"required": ["url"],
-			"optional": []
-		}
+	"snapto": {
+		"name": "saveScreenshotToUrl"
 	},
-	"scrollTo": {
-		"name": "scrollx",
-		"params": {
-			"required": ["x", "y"],
-			"optional": []
-		}
+	"scrollx:y:": {
+		"name": "scrollTo"
 	},
-	"scrollToRelative": {
-		"name": "scrollrx",
-		"params": {
-			"required": ["x", "y"],
-			"optional": []
-		}
+	"scrollrx:ry:": {
+		"name": "scrollToRelative"
 	},
-	"scrollToRelativeView": {
-		"name": "scrollpx",
-		"params": {
-			"required": ["x", "y"],
-			"optional": []
-		}
+	"scrollpx:py:": {
+		"name": "scrollToPercentage"
 	}
 }

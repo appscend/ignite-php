@@ -5,11 +5,11 @@ use Ignite\ConfigContainer;
 use Ignite\Element;
 use Ignite\ElementContainer;
 use Ignite\View;
-use Ignite\ViewElementsContainer;
 
 class MapView extends View{
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'Map/elements.json';
+	const ACTIONS_CONFIG_SPEC_FILE = 'Map/actions.json';
 
 	public function __construct($app, $viewID) {
 		parent::__construct($app);
@@ -21,6 +21,8 @@ class MapView extends View{
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'm';
 		$this->config->view = $this;
+
+		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
 	}
 
 	/**

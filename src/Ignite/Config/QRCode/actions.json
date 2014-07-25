@@ -1,9 +1,5 @@
 {
 	"startListening": {
-		"name": "startListening",
-		"params": {
-			"required": [],
-			"optional": []
-		}
+		"name": "startListening"
 	}
 }
