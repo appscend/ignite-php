@@ -59,25 +59,25 @@ abstract class View extends Registry {
 		$this->config->setProperties(array_merge($this->config->getProperties(), $config['cfg']));
 
 		if (isset($config['landscape']))
-			$this->config->addPrefixedProperties($config['landscape'], 'l');
+			$this->config->addPrefixedProperties($config['landscape'], Element::$prefixes[Element::FOR_LANDSCAPE -1]);
 
 		if (isset($config['tablet']))
-			$this->config->addPrefixedProperties($config['tablet'], 'pad');
+			$this->config->addPrefixedProperties($config['tablet'], Element::$prefixes[Element::FOR_TABLET -1]);
 
 		if (isset($config['android']))
-			$this->config->addPrefixedProperties($config['android'], 'and');
+			$this->config->addPrefixedProperties($config['android'], Element::$prefixes[Element::FOR_ANDROID -1]);
 
 		if (isset($config['landscape_tablet']))
-			$this->config->addPrefixedProperties($config['landscape_tablet'], 'padl');
+			$this->config->addPrefixedProperties($config['landscape_tablet'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET) -1]);
 
 		if (isset($config['landscape_android']))
-			$this->config->addPrefixedProperties($config['landscape_android'], 'andl');
+			$this->config->addPrefixedProperties($config['landscape_android'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_ANDROID) -1]);
 
 		if (isset($config['tablet_android']))
-			$this->config->addPrefixedProperties($config['tablet_android'], 'andpad');
+			$this->config->addPrefixedProperties($config['tablet_android'], Element::$prefixes[(Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
 
 		if (isset($config['landscape_tablet_android']))
-			$this->config->addPrefixedProperties($config['landscape_tablet_android'], 'andpadl');
+			$this->config->addPrefixedProperties($config['landscape_tablet_android'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
 
 	}
 

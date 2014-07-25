@@ -39,6 +39,19 @@ class ElementContainer extends Element implements ConfigurationInterface{
 				$result[$k] = $v;
 		}
 
+		foreach ($child->getPrefixedProperties() as $key => &$for) {
+			if (empty($for)) continue;
+
+			$for = $this->view->processor->processConfiguration($this, [$for]);
+
+			foreach($for as $k => $v) {
+				if (isset($this->translationTags[$k]))
+					$result[Element::$prefixes[$key].$this->translationTags[$k]] = $v;
+				else
+					$result[$k] = $v;
+			}
+		}
+
 		$child->setProperties($result);
 
 		foreach ($child->getChildren() as $c)

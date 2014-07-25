@@ -2,6 +2,7 @@
 namespace Ignite\Modules\Homepage;
 use Ignite\Action;
 use Ignite\Actions;
+use Ignite\Element;
 use Ignite\Module;
 use Ignite\Application;
 use Ignite\Views;
@@ -25,13 +26,13 @@ class Homepage extends Module {
 				"name" => " 239487 329023y4i2h342hg34"
 			], 0);
 
-			$view->getImage(0)->onTap(function() {return Actions\Navigation::refresh();});
+			$view->getImage(0)->onTap(function() {return Actions\Navigation::refresh();})->setFor(["image" => "umadbro"], Element::FOR_ANDROID | Element::FOR_LANDSCAPE);
 			$view->getImage(1)->onTap(function() {
 				return [Actions\CoverFlowActions::startSlideshow()->requiresLogin('fb'),
 					Actions\CoverFlowActions::flip(),
 					Actions\System::alert("bla") ->on("test")
 				];
-			});
+			})->setFor(["name" => "this is not what you think"], Element::FOR_LANDSCAPE | Element::FOR_ANDROID | Element::FOR_TABLET);
 
 			$view->addLaunchAction(Actions\Navigation::refresh());
 			$view->addLaunchAction(Actions\CoverFlowActions::scrollTo(10,10), Action::LAUNCH_ACTION_VISIBLE);

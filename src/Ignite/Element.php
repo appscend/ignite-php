@@ -6,6 +6,10 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 
 class Element extends Registry {
 
+	const FOR_LANDSCAPE = 1;
+	const FOR_TABLET	= 2;
+	const FOR_ANDROID	= 4;
+
 	/**
 	 * @var Action
 	 */
@@ -20,10 +24,14 @@ class Element extends Registry {
 	public function __construct($tag = null, array $properties = []) {
 		$this->tag = $tag;
 		$this->properties = $properties;
+		for ($i=0; $i < 7; $i++) {
+			$this->prefix_properties[$i] = [];
+		}
 	}
 
 	/**
 	 * @param \Closure|Action
+	 * @return $this
 	 */
 	public function onTap($action) {
 		if ($action instanceof \Closure) {
@@ -32,13 +40,33 @@ class Element extends Registry {
 			if ($fresult instanceof Action) {
 				$this->action = $fresult;
 
-				return ;
 			} else if (is_array($fresult)) {
 				$index = $this->view->addActionGroup($fresult);
 				$this->action = new Action('pag:', [$index-1]);
 			}
 		} else
 			$this->action = $action;
+
+		return $this;
+	}
+
+	/**
+	 * @param array $props
+	 * @param int $where
+	 * @return $this
+	 * @throws \InvalidArgumentException
+	 */
+	public function setFor(array $props, $where) {
+		if (1 > $where || 7 < $where)
+			throw new \InvalidArgumentException("Invalid prefix mask for element.");
+
+		$this->prefix_properties[$where-1] = array_merge($this->prefix_properties[$where-1], $props);
+
+		return $this;
+	}
+
+	public function getFor($what) {
+		return $this->prefix_properties[$what];
 	}
 
 	public function render($update = false) {

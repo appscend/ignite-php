@@ -14,6 +14,16 @@ abstract class Registry implements \ArrayAccess, \Countable {
 	protected $tag			= null;
 	protected $parent		= null;
 
+	public static $prefixes = [
+		'l',
+		'pad',
+		'and',
+		'padl',
+		'andl',
+		'andpad',
+		'andpadl'
+	];
+
 	public abstract function render($update = false);
 
 	public function __construct($tag = null) {
@@ -89,6 +99,10 @@ abstract class Registry implements \ArrayAccess, \Countable {
 
 	public function appendProperties(array $p) {
 		$this->properties = array_merge($this->properties, $p);
+	}
+
+	public function getPrefixedProperties() {
+		return $this->prefix_properties;
 	}
 
 	public function setTag($t) {
