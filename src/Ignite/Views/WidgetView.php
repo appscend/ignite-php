@@ -14,10 +14,12 @@ class WidgetView extends View{
 		parent::__construct($app);
 		$this->viewID = $viewID;
 		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->elementsContainers['elements']->view = $this;
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('Widget/config.json');
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'wd';
+		$this->config->view = $this;
 	}
 
 	public function addViewElement($content) {

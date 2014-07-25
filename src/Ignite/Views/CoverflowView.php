@@ -16,10 +16,12 @@ class CoverflowView extends View {
 		$this->viewID = $viewID;
 
 		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
+		$this->elementsContainers['elements']->view = $this;
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('CoverFlow/config.json');
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'c';
+		$this->config->view = $this;
 
 		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
 	}
@@ -30,18 +32,15 @@ class CoverflowView extends View {
 	 * @throws \InvalidArgumentException
 	 */
 	public function addImage($content) {
-		if ($content instanceof Element) {
-			$this->elementsContainers['elements']->appendChild($content);
+		if ($content instanceof Element)
 			$content->setTag('e');
-			$content->view = $this;
-		}
-		else if (is_array($content)) {
-			$el = new Element('e', $content);
-			$el->view = $this;
-			$this->elementsContainers['elements']->appendChild($el);
-		}
+		else if (is_array($content))
+			$content = new Element('e', $content);
 		else
 			throw new \InvalidArgumentException("Parameter must be instance of \\Ignite\\Element or array.");
+
+		$content->view = $this;
+		$this->elementsContainers['elements']->appendChild($content);
 
 		return count($this->elementsContainers['elements'])-1;
 	}

@@ -14,7 +14,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 	public function __construct($specFile, $tag = null) {
 		parent::__construct($tag);
-		$this->configSpec = json_decode(file_get_contents('/home/razvan/proiecte/ignitephp'.ConfigContainer::CONFIG_PATH.'/'.$specFile), true);
+		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.$specFile), true);
 	}
 
 	private function getTranslation(array $arr) {
@@ -45,6 +45,18 @@ class ElementContainer extends Element implements ConfigurationInterface{
 			$this->translateTags($c);
 	}
 
+	public function appendChild(Registry $el) {
+		$el->setProperties($this->view->processor->processConfiguration($this, [$el->getProperties()]));
+
+		return parent::appendChild($el);
+	}
+
+	public function prependChild(Registry $el) {
+		$el->setProperties($this->view->processor->processConfiguration($this, [$el->getProperties()]));
+
+		return parent::prependChild($el);
+	}
+
 	public function render($update = false) {
 		if (!$this->isTranslated) {
 			$this->getTranslation($this->configSpec);
@@ -60,52 +72,53 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		$node = $treeBuilder->root(0)
 			->children();
 
-		foreach ($this->$configSpec as $fieldName => $field) {
-			if (is_array($field)) {
-				$node = $this->configTreeArray($node, $field, $fieldName);
-			} else {
-				switch ($field['type']) {
-					case 'string': {
-						$node = $node->scalarNode($fieldName);
+		foreach ($this->configSpec as $fieldName => $field) {
+			switch ($field['type']) {
+				case 'string': {
+					$node = $node->scalarNode($fieldName);
 
-						break;
-					}
-
-					case 'float':
-					case 'integer': {
-						$node = $node->node($fieldName, $field['type']);
-
-						if (isset($field['min']))
-							$node = $node->min($field['min']);
-
-						if (isset($field['max']))
-							$node = $node->max($field['max']);
-
-						break;
-					}
-
-					case 'enum': {
-						$node = $node->enumNode($fieldName);
-						$node = $node->values($field['enum']);
-
-						break;
-					}
-
-					case 'boolean': {
-						$node = $node->enumNode($fieldName);
-						$node = $node->values(['true', 'false']);
-
-						break;
-					}
-
-					default: {
-					throw new InvalidConfigurationException("Type '{$field['type']}' does not exist.");
-					}
+					break;
 				}
 
-				$node = $node->end();
+				case 'float':
+				case 'integer': {
+					$node = $node->node($fieldName, $field['type']);
+
+					if (isset($field['min']))
+						$node = $node->min($field['min']);
+
+					if (isset($field['max']))
+						$node = $node->max($field['max']);
+
+					break;
+				}
+
+				case 'enum': {
+					$node = $node->enumNode($fieldName);
+					$node = $node->values($field['enum']);
+
+					break;
+				}
+
+				case 'boolean': {
+					$node = $node->enumNode($fieldName);
+					$node = $node->values(['true', 'false']);
+
+					break;
+				}
+
+				case 'Action': {
+					$node = $this->getActionTree($node, $field['prefix']);
+
+					break;
+				}
+
+				default: {
+				throw new InvalidConfigurationException("Type '{$field['type']}' does not exist.");
+				}
 			}
 
+			$node = $node->end();
 		}
 
 		$node->end();
@@ -154,6 +167,12 @@ class ElementContainer extends Element implements ConfigurationInterface{
 						break;
 					}
 
+					case 'Action': {
+						$node = $this->getActionTree($node, $fn['prefix']);
+
+						break;
+					}
+
 					default: {
 					throw new InvalidConfigurationException("Type '{$f['type']}' does not exist.");
 					}
@@ -164,6 +183,49 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		}
 
 		return $node->end()->end()->end();
+	}
+
+	private function getActionTree(NodeBuilder $n, $prefix) {
+		$n = $n->scalarNode($prefix.'a')->end();
+		$n = $n->scalarNode($prefix.'pr')->end();
+		$n = $n->scalarNode($prefix.'l')->end();
+		$n = $n->scalarNode($prefix.'lp')->end();
+		$n = $n->scalarNode($prefix.'aprod')->end();
+		$n = $n->scalarNode($prefix.'dprod')->end();
+
+		$n = $n->scalarNode('prod'.$prefix.'a')->end();
+		$n = $n->scalarNode('prod'.$prefix.'pr')->end();
+		$n = $n->scalarNode('prod'.$prefix.'l')->end();
+		$n = $n->scalarNode('prod'.$prefix.'lp')->end();
+		$n = $n->scalarNode('prod'.$prefix.'aprod')->end();
+		$n = $n->scalarNode('prod'.$prefix.'dprod')->end();
+		$n = $n->scalarNode('prod'.$prefix.'rsk')->end();
+		$n = $n->scalarNode('prod'.$prefix.'rsv')->end();
+		$n = $n->scalarNode('prod'.$prefix.'conf')->end();
+		$n = $n->scalarNode('prod'.$prefix.'del')->end();
+		$n = $n->scalarNode('prod'.$prefix.'tavi')->end();
+
+		$n = $n->scalarNode($prefix.'rsk')->end();
+		$n = $n->scalarNode($prefix.'rsv')->end();
+
+		$n = $n->scalarNode('rs'.$prefix.'a')->end();
+		$n = $n->scalarNode('rs'.$prefix.'pr')->end();
+		$n = $n->scalarNode('rs'.$prefix.'l')->end();
+		$n = $n->scalarNode('rs'.$prefix.'lp')->end();
+		$n = $n->scalarNode('rs'.$prefix.'aprod')->end();
+		$n = $n->scalarNode('rs'.$prefix.'dprod')->end();
+		$n = $n->scalarNode('rs'.$prefix.'rsk')->end();
+		$n = $n->scalarNode('rs'.$prefix.'rsv')->end();
+		$n = $n->scalarNode('rs'.$prefix.'conf')->end();
+		$n = $n->scalarNode('rs'.$prefix.'del')->end();
+		$n = $n->scalarNode('rs'.$prefix.'tavi')->end();
+
+		$n = $n->scalarNode($prefix.'conf')->end();
+		$n = $n->scalarNode($prefix.'del')->end();
+		//the last element has its end after the switch statement ends
+		$n = $n->scalarNode($prefix.'tavi');
+
+		return $n;
 	}
 
 }

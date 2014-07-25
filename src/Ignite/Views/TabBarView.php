@@ -14,10 +14,12 @@ class TabBarView extends View {
 		parent::__construct($app);
 		$this->viewID = $viewID;
 		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE));
+		$this->elementsContainers['elements']->view = $this;
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('TabBar/config.json');
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 't';
+		$this->config->view = $this;
 	}
 
 	/**

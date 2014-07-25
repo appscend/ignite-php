@@ -1,6 +1,8 @@
 <?php
 namespace Ignite;
 
+use Symfony\Component\Config\Definition\Processor;
+
 abstract class View extends Registry {
 
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
@@ -28,14 +30,23 @@ abstract class View extends Registry {
 	protected $app;
 	protected $viewID;
 
+	public $processor = null;
+
 	public function __construct(Application $app) {
 		parent::__construct('par');
+		$this->processor = new Processor();
 		$this->elementsContainers['action_groups'] = $this->appendChild(new ElementContainer(self::ACTION_GROUP_SPEC, 'ags'));
+		$this->elementsContainers['action_groups']->view = $this;
 		$this->elementsContainers['buttons'] = $this->appendChild(new ElementContainer(self::BUTTON_ELEMENTS_SPEC, 'bs'));
+		$this->elementsContainers['buttons']->view = $this;
 		$this->elementsContainers['launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'las'));
+		$this->elementsContainers['launch_actions']->view = $this;
 		$this->elementsContainers['visible_launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'vas'));
+		$this->elementsContainers['visible_launch_actions']->view = $this;
 		$this->elementsContainers['hidden_launch_actions'] = $this->appendChild(new ElementContainer(self::LAUNCH_ACTIONS_SPEC, 'has'));
+		$this->elementsContainers['hidden_launch_actions']->view = $this;
 		$this->elementsContainers['menus'] = $this->appendChild(new ElementContainer(self::MENU_ELEMENTS_SPEC, 'ms'));
+		$this->elementsContainers['menus']->view = $this;
 
 		$this->actionsSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/generic_actions.json'), true);
 

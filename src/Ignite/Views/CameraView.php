@@ -13,6 +13,7 @@ class CameraView extends View{
 		$this->config->appendConfigSpec('Camera/config.json');
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'cam';
+		$this->config->view = $this;
 	}
 
 } 

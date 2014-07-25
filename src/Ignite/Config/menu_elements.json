@@ -1,24 +1,19 @@
 {
-	"ms": {
-		"m": {
-			"me": {
-				"text": {
-					"tag": "t",
-					"type": "string"
-				},
-				"cancel_button": {
-					"tag": "cancel",
-					"type": "boolean"
-				},
-				"destruct_button": {
-					"tag": "destruct",
-					"type": "boolean"
-				},
-				"action": {
-					"tag": "a",
-					"type": "string"
-				}
-			}
-		}
+	"text": {
+		"tag": "t",
+		"type": "string"
+	},
+	"cancel_button": {
+		"tag": "cancel",
+		"type": "boolean"
+	},
+	"destruct_button": {
+		"tag": "destruct",
+		"type": "boolean"
+	},
+	"action": {
+		"tag": "a",
+		"type": "Action",
+		"prefix": ""
 	}
 }

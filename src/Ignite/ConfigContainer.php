@@ -51,7 +51,6 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 	}
 
 	private function translateTags(array $arr) {
-		$this->isTranslated = true;
 		$result = [];
 
 		foreach ($arr as $name => $v) {

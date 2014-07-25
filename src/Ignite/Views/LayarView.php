@@ -13,6 +13,7 @@ class LayarView extends View{
 		$this->config->appendConfigSpec('Layar/config.json');
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'lr';
+		$this->config->view = $this;
 	}
 
 } 

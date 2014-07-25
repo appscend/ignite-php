@@ -1,12 +1,7 @@
 {
-	"ags": {
-		"ag": {
-			"age": {
-				"action": {
-					"tag": "a",
-					"type": "string"
-				}
-			}
-		}
+	"a": {
+		"tag": "a",
+		"type": "Action",
+		"prefix": ""
 	}
 }

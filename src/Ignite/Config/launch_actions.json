@@ -1,26 +1,7 @@
 {
-	"las": {
-		"la": {
-			"action": {
-				"type": "action",
-				"tag": "a"
-			}
-		}
-	},
-	"vas": {
-		"va": {
-			"action": {
-				"type": "action",
-				"tag": "a"
-			}
-		}
-	},
-	"has": {
-		"ha": {
-			"action": {
-				"type": "action",
-				"tag": "a"
-			}
-		}
+	"action": {
+		"type": "Action",
+		"tag": "a",
+		"prefix": ""
 	}
 }
