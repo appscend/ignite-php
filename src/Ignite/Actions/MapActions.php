@@ -4,18 +4,27 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class MapActions {
+class MapActions extends ActionBuffer {
 
 	public static function showUserLocation() {
-		return new Action('sloc');
+		$action = new Action('sloc');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function trackUserLocation() {
-		return new Action('track');
+		$action = new Action('track');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function centerLocation() {
-		return new Action('center');
+		$action = new Action('center');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function directionTo($name) {
@@ -24,7 +33,10 @@ class MapActions {
 		if ($name === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function locationSearch($name) {
@@ -33,7 +45,10 @@ class MapActions {
 		if ($name === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

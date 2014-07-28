@@ -3,10 +3,13 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class LocalPushNotifications {
+class LocalPushNotifications extends ActionBuffer {
 
 	public static function scheduleAt($text, $date, $before) {
-		return new Action('spn:d:b:', func_get_args());
+		$action = new Action('spn:d:b:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function schedule($before) {
@@ -15,11 +18,17 @@ class LocalPushNotifications {
 		if ($before === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function remove($id) {
-		return new Action('rpn:', func_get_args());
+		$action = new Action('rpn:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

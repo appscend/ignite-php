@@ -4,65 +4,110 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class Navigation {
+class Navigation extends ActionBuffer{
 
 	public static function push($paramxml, $data, $form, $animation) {
-		return new Action('p:', func_get_args());
+		$action = new Action('p:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function pushWithLocation($paramxml, $data, $form, $animation, $accuracy) {
-		return new Action('pl:', func_get_args());
+		$action = new Action('pl:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function modalView($paramxml, $data, $form, $animation, $accuracy, $modalStyle) {
-		return new Action('m:', func_get_args());
+		$action = new Action('m:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function modalViewWithLocation($paramxml, $data, $form, $animation, $accuracy, $modalStyle) {
-		return new Action('ml:', func_get_args());
+		$action = new Action('ml:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function replace($paramxml, $data, $form, $animation) {
-		return new Action('r:', func_get_args());
+		$action = new Action('r:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function replaceWithLocation($paramxml, $data, $form, $animation, $accuracy) {
-		return new Action('rl:', func_get_args());
+		$action = new Action('rl:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function replaceAll($paramxml, $data, $form, $animation) {
-		return new Action('ra:', func_get_args());
+		$action = new Action('ra:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function replaceAllWithLocation($paramxml, $data, $form, $animation, $accuracy) {
-		return new Action('ral:', func_get_args());
+		$action = new Action('ral:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function closeModal() {
-		return new Action('closeModal');
+		$action = new Action('closeModal');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function openBrowserUrl($url) {
-		return new Action('surl:', func_get_args());
+		$action = new Action('surl:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function slideShow($paramxml) {
-		return new Action('s:', func_get_args());
+		$action = new Action('s:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function slideShowPostData($paramxml, $data) {
-		return new Action('s:d:', func_get_args());
+		$action = new Action('s:d:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function refresh() {
-		return new Action('refresh');
+		$action = new Action('refresh');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function previous() {
-		return new Action('pop');
+		$action = new Action('pop');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function home() {
-		return new Action('poptr');
+		$action = new Action('poptr');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 }

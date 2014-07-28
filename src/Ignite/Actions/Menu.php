@@ -4,14 +4,20 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class Menu {
+class Menu extends ActionBuffer {
 
 	public static function display($id) {
-		return new Action('menu:', func_get_args());
+		$action = new Action('menu:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function close() {
-		return new Action('cmenu');
+		$action = new Action('cmenu');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

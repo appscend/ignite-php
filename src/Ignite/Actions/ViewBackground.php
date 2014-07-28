@@ -4,26 +4,37 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class ViewBackground {
+class ViewBackground extends ActionBuffer {
 
-	public static function store($data, $key, $form) {
-		return new Action('s:k:gid:', func_get_args());
+	public static function setBackgroundImage($image, $duration) {
+		$actionName = 'sbi:';
+
+		if ($duration === '')
+			$actionName .= 'd:';
+
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
-	public static function remove($key, $form) {
-		return new Action('r:gid:', func_get_args());
+	public static function setBackgroundVideo($video) {
+		$action = new Action('sbv:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
-	public static function removeAll($form) {
-		return new Action('rgid:', func_get_args());
-	}
+	public static function setBackgroundColor($color, $duration) {
+		$actionName = 'sbc:';
 
-	public static function secureStore($data, $key) {
-		return new Action('ss:k:', func_get_args());
-	}
+		if ($duration === '')
+			$actionName .= 'd:';
 
-	public static function removeSecure($key) {
-		return new Action('rs:', func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

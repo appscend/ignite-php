@@ -3,14 +3,20 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class ImageGridActions {
+class ImageGridActions extends ActionBuffer{
 
 	public static function savePicture() {
-		return new Action('savePic');
+		$action = new Action('savePic');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function removePicture() {
-		return new Action('removePic');
+		$action = new Action('removePic');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function sharePicture($service) {
@@ -19,7 +25,10 @@ class ImageGridActions {
 		if ($service === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function editAndSharePicture($service) {
@@ -28,31 +37,52 @@ class ImageGridActions {
 		if ($service === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function startSlideshow() {
-		return new Action('slideshow');
+		$action = new Action('slideshow', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function toggleBars() {
-		return new Action('tn');
+		$action = new Action('tn');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function moveNext() {
-		return new Action('nextp');
+		$action = new Action('nextp');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function movePrevious() {
-		return new Action('prevp');
+		$action = new Action('prevp');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function scrollTo($x, $y) {
-		return new Action('scrollx:y:', func_get_args());
+		$action = new Action('scrollx:y:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function flipSlide() {
-		return new Action('flipSlide');
+		$action = new Action('flipSlide');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

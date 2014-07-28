@@ -4,33 +4,54 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class System {
+class System extends ActionBuffer{
 
 	public static function callJSFunction($name, $params) {
-		return new Action('func:', func_get_args());
+		$action = new Action('func:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function alert($message) {
-		return new Action('alert:', func_get_args());
+		$action = new Action('alert:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function removeAds($message) {
-		return new Action('dropads:', func_get_args());
+		$action = new Action('dropads:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function saveImage($url) {
-		return new Action('si:', func_get_args());
+		$action = new Action('si:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function openURL($url) {
-		return new Action('url:', func_get_args());
+		$action = new Action('url:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function mapDirections($lat, $long) {
-		return new Action('dirl:l:', func_get_args());
+		$action = new Action('dirl:l:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function addToFav() {
-		return new Action('fav');
+		$action = new Action('fav');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 } 

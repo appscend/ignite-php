@@ -4,26 +4,41 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class CoverFlowActions {
+class CoverFlowActions extends ActionBuffer{
 
 	public static function startSlideshow() {
-		return new Action('slideshow');
+		$action = new Action('slideshow');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function flip() {
-		return new Action('flipSlide');
+		$action = new Action('flipSlide');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function scrollTo($x, $y) {
-		return new Action('scrollx:y:', func_get_args());
+		$action = new Action('scrollx:y:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function scrollToRelative($x, $y) {
-		return new Action('scrollrx:y:', func_get_args());
+		$action = new Action('scrollrx:y:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function scrollToPercentage($x, $y) {
-		return new Action('scrollpx:y:', func_get_args());
+		$action = new Action('scrollpx:y:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

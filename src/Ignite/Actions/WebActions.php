@@ -4,34 +4,55 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class WebActions {
+class WebActions extends ActionBuffer {
 
 	public static function refresh() {
-		return new Action('r');
+		$action = new Action('r');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function back() {
-		return new Action('b');
+		$action = new Action('b');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function forward() {
-		return new Action('f');
+		$action = new Action('f');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function bookmark() {
-		return new Action('fav');
+		$action = new Action('fav');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function increaseFontSize() {
-		return new Action('fp');
+		$action = new Action('fp');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function decreaseFontSize() {
-		return new Action('fm');
+		$action = new Action('fm');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function cycleFontSizes() {
-		return new Action('fa');
+		$action = new Action('fa');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function sharePage($service) {
@@ -40,30 +61,51 @@ class WebActions {
 		if (isset($service))
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function loadNextItem() {
-		return new Action('ni');
+		$action = new Action('ni');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function loadPreviousItem() {
-		return new Action('pi');
+		$action = new Action('pi');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function getInfoEvent() {
-		return new Action('getinfo');
+		$action = new Action('getinfo');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function callJSFunction($fname) {
-		return new Action('trigger:', func_get_args());
+		$action = new Action('trigger:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function getFormEvent($id) {
-		return new Action('getform:', func_get_args());
+		$action = new Action('getform:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function getDataEvent($url) {
-		return new Action('getdata:', func_get_args());
+		$action = new Action('getdata:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 } 

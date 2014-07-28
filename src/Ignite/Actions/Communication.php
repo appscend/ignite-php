@@ -4,10 +4,13 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class Communication {
+class Communication extends ActionBuffer{
 
 	public static function call($number) {
-		return new Action('call:', func_get_args());
+		$action = new Action('call:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function email($address, $title, $body) {
@@ -18,7 +21,10 @@ class Communication {
 		if ($body === '')
 			$actionName .= 'b:';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function sms($number, $text) {
@@ -27,7 +33,10 @@ class Communication {
 		if ($text === '')
 			$actionName .= 'b:';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

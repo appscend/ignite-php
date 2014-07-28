@@ -2,6 +2,7 @@
 
 namespace Ignite;
 
+use Ignite\Actions\ActionBuffer;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 
 class Element extends Registry {
@@ -24,9 +25,7 @@ class Element extends Registry {
 	public function __construct($tag = null, array $properties = []) {
 		$this->tag = $tag;
 		$this->properties = $properties;
-		for ($i=0; $i < 7; $i++) {
-			$this->prefix_properties[$i] = [];
-		}
+		$this->prefix_properties = array_fill(0, 7, []);
 	}
 
 	/**
@@ -35,16 +34,17 @@ class Element extends Registry {
 	 */
 	public function onTap($action) {
 		if ($action instanceof \Closure) {
-			$fresult = $action();
+			$action();
+			$fresult = ActionBuffer::getAndClearBuffer();
 
-			if ($fresult instanceof Action) {
-				$this->action = $fresult;
+			if (!isset($fresult[1])) {
+				$this->action = $fresult[0];
 
-			} else if (is_array($fresult)) {
+			} else {
 				$index = $this->view->addActionGroup($fresult);
 				$this->action = new Action('pag:', [$index-1]);
 			}
-		} else
+		} else if ($action instanceof Action)
 			$this->action = $action;
 
 		return $this;

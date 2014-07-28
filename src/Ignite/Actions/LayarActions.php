@@ -4,10 +4,13 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class LayarActions {
+class LayarActions extends ActionBuffer {
 
 	public static function start() {
-		return new Action('startListening');
+		$action = new Action('startListening');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

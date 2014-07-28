@@ -4,28 +4,41 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class DataStorage {
+class DataStorage extends ActionBuffer {
 
-	public static function setBackgroundImage($image, $duration) {
-		$actionName = 'sbi:';
+	public static function store($data, $key, $form) {
+		$action = new Action('s:k:gid:', func_get_args());
+		self::$actionBuffer[] = $action;
 
-		if ($duration === '')
-			$actionName .= 'd:';
-
-		return new Action($actionName, func_get_args());
+		return $action;
 	}
 
-	public static function setBackgroundVideo($video) {
-		return new Action('sbv:', func_get_args());
+	public static function remove($key, $form) {
+		$action = new Action('r:gid:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
-	public static function setBackgroundColor($color, $duration) {
-		$actionName = 'sbc:';
+	public static function removeAll($form) {
+		$action = new Action('rgid:', func_get_args());
+		self::$actionBuffer[] = $action;
 
-		if ($duration === '')
-			$actionName .= 'd:';
+		return $action;
+	}
 
-		return new Action($actionName, func_get_args());
+	public static function secureStore($data, $key) {
+		$action = new Action('ss:k:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	public static function removeSecure($key) {
+		$action = new Action('rs:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

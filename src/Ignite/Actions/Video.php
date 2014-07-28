@@ -4,10 +4,13 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class Video {
+class Video extends ActionBuffer {
 
 	public static function playModal($video) {
-		return new Action('pv:', func_get_args());
+		$action = new Action('pv:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 

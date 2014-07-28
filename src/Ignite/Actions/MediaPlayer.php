@@ -4,26 +4,41 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class MediaPlayer {
+class MediaPlayer extends ActionBuffer {
 
 	public static function appendAll() {
-		return new Action('mpaa');
+		$action = new Action('mpaa');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function replaceAll() {
-		return new Action('mpraa');
+		$action = new Action('mpraa');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function replaceAllAndPlay() {
-		return new Action('mprp');
+		$action = new Action('mprp');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function appendAllNoPopup() {
-		return new Action('mpaaq');
+		$action = new Action('mpaaq');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function replaceAllNoPopup() {
-		return new Action('mprpq');
+		$action = new Action('mprpq');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function append($index) {
@@ -32,7 +47,10 @@ class MediaPlayer {
 		if ($index === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function appendAndPlay($index) {
@@ -41,7 +59,10 @@ class MediaPlayer {
 		if ($index === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function appendNoPopup($index) {
@@ -50,7 +71,10 @@ class MediaPlayer {
 		if ($index === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function appendNoPopupAndPlay($index) {
@@ -59,43 +83,73 @@ class MediaPlayer {
 		if ($index === '')
 			$actionName .= ':';
 
-		return new Action($actionName, func_get_args());
+		$action = new Action($actionName, func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function enqueueSong($name, $description, $mediaLink, $image, $shopLink) {
-		return new Action('am:d:m:i:l:', func_get_args());
+		$action = new Action('am:d:m:i:l:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function enqueueSongAndPlay($name, $description, $mediaLink, $image, $shopLink) {
-		return new Action('amnp:d:m:i:l:', func_get_args());
+		$action = new Action('amnp:d:m:i:l:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function enqueueSongNoPopup($name, $description, $mediaLink, $image, $shopLink) {
-		return new Action('amq:d:m:i:l:', func_get_args());
+		$action = new Action('amq:d:m:i:l:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function enqueueSongNoPopupAndPlay($name, $description, $mediaLink, $image, $shopLink) {
-		return new Action('amnpq:d:m:i:l:', func_get_args());
+		$action = new Action('amnpq:d:m:i:l:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function toggleOverlayVisibility() {
-		return new Action('tmp');
+		$action = new Action('tmp');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function previous() {
-		return new Action('prev');
+		$action = new Action('prev');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function next() {
-		return new Action('next');
+		$action = new Action('next');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function clearPlaylist() {
-		return new Action('mpclr');
+		$action = new Action('mpclr');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function togglePlay() {
-		return new Action('play');
+		$action = new Action('play');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

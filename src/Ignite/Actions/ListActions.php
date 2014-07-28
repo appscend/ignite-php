@@ -4,25 +4,40 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class ListActions {
+class ListActions extends ActionBuffer {
 
 	public static function toggleSelectable() {
-		return new Action('tsel');
+		$action = new Action('tsel');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function setSelectable($state) {
-		return new Action('mpraa:', func_get_args());
+		$action = new Action('mpraa:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function toggleSelectUnique() {
-		return new Action('tselu');
+		$action = new Action('tselu');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function executeActionsSelected() {
-		return new Action('execsel');
+		$action = new Action('execsel');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function executeActionsSelectedAndToggle() {
-		return new Action('execasel');
+		$action = new Action('execasel');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 } 

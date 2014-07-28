@@ -4,10 +4,13 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class CameraActions {
+class CameraActions extends ActionBuffer{
 
 	public static function swapCamera() {
-		return new Action('swap');
+		$action = new Action('swap');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 

@@ -4,30 +4,48 @@ namespace Ignite\Actions;
 
 use Ignite\Action;
 
-class User {
+class User extends ActionBuffer {
 
 	public static function login() {
-		return new Action('login');
+		$action = new Action('login');
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function loginAdapter($adapter) {
-		return new Action('li:', func_get_args());
+		$action = new Action('li:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function logoutAdapter($adapter) {
-		return new Action('lo:', func_get_args());
+		$action = new Action('lo:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function toggleLogin($adapter) {
-		return new Action('tl:', func_get_args());
+		$action = new Action('tl:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function addPersistentData($data, $key) {
-		return new Action('sud:k:', func_get_args());
+		$action = new Action('sud:k:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 	public static function removePersistentData($key) {
-		return new Action('rudk:', func_get_args());
+		$action = new Action('rudk:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
 	}
 
 } 
