@@ -30,9 +30,10 @@ class Element extends Registry {
 
 	/**
 	 * @param \Closure|Action
+	 * @param string $name
 	 * @return $this
 	 */
-	public function onTap($action) {
+	public function onTap($action, $name = null) {
 		if ($action instanceof \Closure) {
 			$action();
 			$fresult = ActionBuffer::getAndClearBuffer();
@@ -41,8 +42,11 @@ class Element extends Registry {
 				$this->action = $fresult[0];
 
 			} else {
-				$index = $this->view->addActionGroup($fresult);
-				$this->action = new Action('pag:', [$index-1]);
+				$index = $this->view->addActionGroup($fresult, $name);
+				if ($name !== null)
+					$this->action = new Action('pag:', [$name]);
+				else
+					$this->action = new Action('pag:', [$index-1]);
 			}
 		} else if ($action instanceof Action)
 			$this->action = $action;

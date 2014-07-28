@@ -1,6 +1,7 @@
 <?php
 namespace Ignite;
 
+use Ignite\Actions\ActionBuffer;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
 
@@ -103,6 +104,7 @@ abstract class View extends Registry {
 
 		$action->setTag($wrapperTag);
 		$this->elementsContainers[$where]->appendChild($action);
+		ActionBuffer::getAndClearBuffer();
 	}
 
 	public function addMenu(Element $menu = null) {
