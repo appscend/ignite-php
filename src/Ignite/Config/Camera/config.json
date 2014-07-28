@@ -6,6 +6,6 @@
 	"camera_content_mode": {
 		"tag": "ccm",
 		"type": "enum",
-		"enum": ["stf", "aft"]
+		"enum": {"scale_to_fit": "atf", "scale_to_fill": "stf"}
 	}
 }

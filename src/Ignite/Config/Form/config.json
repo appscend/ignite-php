@@ -18,7 +18,7 @@
 	"section_header_text_alignment": {
 		"tag": "sa",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"section_header_font_color": {
 		"tag": "sc",
@@ -39,7 +39,7 @@
 	"section_footer_text_alignment": {
 		"tag": "sfal",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"section_footer_font_color": {
 		"tag": "sfc",

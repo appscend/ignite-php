@@ -14,7 +14,20 @@
 	"image_mode": {
 		"tag": "tu",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"image_spacing": {
 		"tag": "cs",

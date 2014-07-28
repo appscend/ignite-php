@@ -33,9 +33,12 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		$result = [];
 
 		foreach ($child->getProperties() as $k => $v) {
-			if (isset($this->translationTags[$k]))
-				$result[$this->translationTags[$k]] = $v;
-			else
+			if (isset($this->translationTags[$k])) {
+				if ($this->configSpec[$k]['type'] == 'enum') {
+					$result[$this->translationTags[$k]] = isset($this->configSpec[$k]['enum'][$v]) ? $this->configSpec[$k]['enum'][$v] : $v;
+				} else
+					$result[$this->translationTags[$k]] = $v;
+			} else
 				$result[$k] = $v;
 		}
 
@@ -45,9 +48,12 @@ class ElementContainer extends Element implements ConfigurationInterface{
 			$for = $this->view->processor->processConfiguration($this, [$for]);
 
 			foreach($for as $k => $v) {
-				if (isset($this->translationTags[$k]))
-					$result[Element::$prefixes[$key].$this->translationTags[$k]] = $v;
-				else
+				if (isset($this->translationTags[$k])) {
+					if ($this->configSpec[$k]['type'] == 'enum') {
+						$result[Element::$prefixes[$key].$this->translationTags[$k]] = isset($this->configSpec[$k]['enum'][$v]) ? $this->configSpec[$k]['enum'][$v] : $v;
+					} else
+						$result[Element::$prefixes[$key].$this->translationTags[$k]] = $v;
+				} else
 					$result[$k] = $v;
 			}
 		}
@@ -108,7 +114,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 				case 'enum': {
 					$node = $node->enumNode($fieldName);
-					$node = $node->values($field['enum']);
+					$node = $node->values(array_values($field['enum']));
 
 					break;
 				}
@@ -168,7 +174,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 					case 'enum': {
 						$node = $node->enumNode($fn);
-						$node = $node->values($f['enum']);
+						$node = $node->values(array_values($f['enum']));
 
 						break;
 					}

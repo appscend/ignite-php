@@ -10,7 +10,7 @@
 	"show_which": {
 		"tag": "show",
 		"type": "enum",
-		"enum": ["content", "url"]
+		"enum": {"content": "content", "url": "url"}
 	},
 	"display_item_image": {
 		"tag": "showi",

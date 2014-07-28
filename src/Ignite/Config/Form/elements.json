@@ -143,7 +143,14 @@
 	"tf_keyboard_type": {
 		"tag": "kt",
 		"type": "enum",
-		"enum": ["alph", "nap", "nbp", "decp", "u", "ea"]
+		"enum": {
+			"alphabetic": "alph",
+			"numbers_punct": "nap",
+			"numeric": "nbp",
+			"decimal": "decp",
+			"url": "u",
+			"email": "ea"
+		}
 	},
 	"tf_keyboard_done_type": {
 		"tag": "kdbt",
@@ -154,12 +161,21 @@
 	"tf_autocapitalization_type": {
 		"tag": "at",
 		"type": "enum",
-		"enum": ["no", "s", "w", "ac"]
+		"enum": {
+			"none": "no",
+			"sentences": "s",
+			"words": "w",
+			"all": "ac"
+		}
 	},
 	"tf_autocorrection_type": {
 		"tag": "act",
 		"type": "enum",
-		"enum": ["default", "no", "yes"]
+		"enum": {
+			"default": "default",
+			"none": "no",
+			"yes": "yes"
+		}
 	},
 	"tf_placeholder_text": {
 		"tag": "plh",
@@ -168,7 +184,7 @@
 	"tf_text_alignment": {
 		"tag": "al",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"tf_text_left_padding": {
 		"tag": "lpad",
@@ -193,12 +209,21 @@
 	"ta_autocapitalization_type": {
 		"tag": "at",
 		"type": "enum",
-		"enum": ["no", "s", "w", "ac"]
+		"enum": {
+			"none": "no",
+			"sentences": "s",
+			"words": "w",
+			"all": "ac"
+		}
 	},
 	"ta_autocorrection_type": {
 		"tag": "act",
 		"type": "enum",
-		"enum": ["default", "no", "yes"]
+		"enum": {
+			"default": "default",
+			"none": "no",
+			"yes": "yes"
+		}
 	},
 	"ta_password_field": {
 		"tag": "sec",
@@ -211,7 +236,14 @@
 	"ta_keyboard_type": {
 		"tag": "kt",
 		"type": "enum",
-		"enum": ["alph", "nap", "nbp", "decp", "u", "ea"]
+		"enum": {
+			"alphabetic": "alph",
+			"numbers_punct": "nap",
+			"numeric": "nbp",
+			"decimal": "decp",
+			"url": "u",
+			"email": "ea"
+		}
 	},
 	"ta_keyboard_done_type": {
 		"tag": "kdbt",
@@ -230,7 +262,7 @@
 	"ta_placeholder_text_align": {
 		"tag": "lpad",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"ta_auto_select": {
 		"tag": "sel",
@@ -271,7 +303,7 @@
 	"b_text_alignment": {
 		"tag": "ta",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"b_action": {
 		"tag": "a",

@@ -43,7 +43,20 @@
 	"table_header_image_mode": {
 		"tag": "thicm",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"table_header_force_height": {
 		"tag": "thh",
@@ -52,7 +65,7 @@
 	"table_header_vertical_alignment": {
 		"tag": "thva",
 		"type": "enum",
-		"enum": ["t", "c", "b"]
+		"enum": {"top": "t", "center": "c", "bottom": "b"}
 	},
 	"table_header_font": {
 		"tag": "thf",
@@ -73,7 +86,7 @@
 	"table_header_text_alignment": {
 		"tag": "tha",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"section_name_height": {
 		"tag": "sh",
@@ -99,7 +112,7 @@
 	"section_name_text_alignment": {
 		"tag": "sa",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"section_name_top_pad": {
 		"tag": "stp",
@@ -152,7 +165,20 @@
 	"cell_background_image_mode": {
 		"tag": "cicm",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"cell_background_image_left_cap_w": {
 		"tag": "cilcw",
@@ -173,7 +199,20 @@
 	"cell_selected_background_image_mode": {
 		"tag": "scicm",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"cell_selected_background_image_left_cap_w": {
 		"tag": "scilcw",
@@ -206,7 +245,20 @@
 	"cell_selected_alternate_background_image_mode": {
 		"tag": "sacicm",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"cell_selected_alternate_background_image_left_cap_w": {
 		"tag": "sacilcw",
@@ -239,12 +291,25 @@
 	"element_image_mode": {
 		"tag": "icm",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"element_image_vertical_alignment": {
 		"tag": "iva",
 		"type": "enum",
-		"enum": ["t", "m", "b"]
+		"enum": {"top": "t", "center": "c", "bottom": "b"}
 	},
 	"element_image_background_color": {
 		"tag": "ibc",
@@ -269,7 +334,20 @@
 	"element_selected_image_mode": {
 		"tag": "sicm",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"description_image_lines_span": {
 		"tag": "itl",
@@ -291,7 +369,7 @@
 	"description_image_alignment": {
 		"tag": "ita",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"description_image_left_margin": {
 		"tag": "itlm",
@@ -337,7 +415,7 @@
 	"name_text_alignment": {
 		"tag": "na",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"subtext_line_span": {
 		"tag": "n2l",
@@ -363,7 +441,7 @@
 	"subtext_text_alignment": {
 		"tag": "n2a",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"description_line_span": {
 		"tag": "dl",
@@ -389,7 +467,7 @@
 	"description_text_alignment": {
 		"tag": "da",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"detail_view_background_color": {
 		"tag": "dvbc",
@@ -426,7 +504,20 @@
 	"detail_view_image_mode": {
 		"tag": "ls",
 		"type": "enum",
-		"enum": ["stf", "aft", "afl", "t", "b", "l", "r", "tl", "tr", "bl", "br", "c"]
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"detail_view_name_line_span": {
 		"tag": "dvnl",
@@ -452,7 +543,7 @@
 	"detail_view_name_text_alignment": {
 		"tag": "dvna",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"detail_view_description_line_span": {
 		"tag": "dvdl",
@@ -478,7 +569,7 @@
 	"detail_view_description_text_alignment": {
 		"tag": "dvda",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"badge_font": {
 		"tag": "bdgf",
@@ -528,7 +619,7 @@
 	"accessory_text_alignment": {
 		"tag": "ata",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"accessory_vertical_alignment": {
 		"tag": "avo",

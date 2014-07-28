@@ -31,7 +31,7 @@ class Homepage extends Module {
 				Actions\CoverFlowActions::startSlideshow()->requiresLogin('fb');
 				Actions\CoverFlowActions::flip();
 				Actions\System::alert("bla")->on("test");
-			})->setFor(["name" => "this is not what you think"], Element::FOR_LANDSCAPE | Element::FOR_ANDROID | Element::FOR_TABLET);
+			}, 'test')->setFor(["name" => "this is not what you think"], Element::FOR_LANDSCAPE | Element::FOR_ANDROID | Element::FOR_TABLET);
 
 			$view->addLaunchAction(Actions\Navigation::refresh());
 			$view->addLaunchAction(Actions\CoverFlowActions::scrollTo(10,10), Action::LAUNCH_ACTION_VISIBLE);

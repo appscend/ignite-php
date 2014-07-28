@@ -54,8 +54,12 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		$result = [];
 
 		foreach ($arr as $name => $v) {
-			if (isset($this->configSpec[$name]))
-				$result[$this->configSpec[$name]['tag']] = $v;
+			if (isset($this->configSpec[$name])) {
+				if ($this->configSpec[$name]['type'] == 'enum')
+					$result[$this->configSpec[$name]['tag']] = isset($this->configSpec[$name]['enum'][$v]) ? $this->configSpec[$name]['enum'][$v] : $v;
+				else
+					$result[$this->configSpec[$name]['tag']] = $v;
+			}
 			else
 				throw new InvalidConfigurationException("Option $name is not recognized.");
 		}
