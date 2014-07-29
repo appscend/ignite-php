@@ -13,36 +13,42 @@ class WidgetActions extends ActionBuffer{
 		return $action;
 	}
 
-	public static function changeElementOpacity($avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration) {
-		$action = new Action('rea:', func_get_args());
+	public static function changeElementOpacity($avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration = null) {
+		$action = new Action('rea:', [$avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function changeGroupOpacity($key, $alpha, $lalpha, $padalpha, $padlalpha, $duration) {
-		$action = new Action('reak:', func_get_args());
+	public static function changeGroupOpacity($key, $alpha, $lalpha, $padalpha, $padlalpha, $duration = null) {
+		$action = new Action('reak:', [$avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function changePositionAndSize($avi, $coords, $lcoords, $padcoords, $padlcoords, $duration) {
-		$action = new Action('ref:', func_get_args());
+	public static function changePositionAndSize($avi, $coords, $lcoords = [], $padcoords = [], $padlcoords = [], $duration = null) {
+		$lcoords = implode($lcoords, '::');
+		$padcoords = implode($padcoords, '::');
+		$padlcoords = implode($padlcoords, '::');
+		$action = new Action('ref:', [$avi, $coords, $lcoords, $padcoords, $padlcoords, $duration]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function changeGroupPositionAndSize($key, $coords, $lcoords, $padcoords, $padlcoords, $duration) {
-		$action = new Action('refk:', func_get_args());
+	public static function changeGroupPositionAndSize($key, $coords, $lcoords = [], $padcoords = [], $padlcoords = [], $duration = null) {
+		$lcoords = implode($lcoords, '::');
+		$padcoords = implode($padcoords, '::');
+		$padlcoords = implode($padlcoords, '::');
+		$action = new Action('refk:', [$key, $coords, $lcoords, $padcoords, $padlcoords, $duration]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function swapElementLocation($avi, $direction, $v1, $lv1, $padv1, $padlv1, $v2, $lv2, $padv2, $padlv2, $duration) {
-		$action = new Action('toggle:', func_get_args());
+	public static function swapElementLocation($avi, $direction, $v1, $v2, $duration, $lv1 = null, $padv1 = null, $padlv1 = null, $lv2 = null, $padv2 = null, $padlv2 = null) {
+		$action = new Action('toggle:', [$avi, $direction, $v1, $v2, $duration, $lv1, $padv1, $padlv1, $lv2, $padv2, $padlv2]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

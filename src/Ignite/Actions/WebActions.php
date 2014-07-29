@@ -55,13 +55,13 @@ class WebActions extends ActionBuffer {
 		return $action;
 	}
 
-	public static function sharePage($service) {
+	public static function sharePage($service = null) {
 		$actionName = 'share';
 
-		if (isset($service))
+		if ($service !== null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$service]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

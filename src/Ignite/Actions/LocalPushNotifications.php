@@ -12,13 +12,13 @@ class LocalPushNotifications extends ActionBuffer {
 		return $action;
 	}
 
-	public static function schedule($before) {
+	public static function schedule($before = null) {
 		$actionName = 'spn';
 
-		if ($before === '')
+		if ($before === null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$before]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

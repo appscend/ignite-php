@@ -13,27 +13,27 @@ class Communication extends ActionBuffer{
 		return $action;
 	}
 
-	public static function email($address, $title, $body) {
+	public static function email($address, $title = null, $body = null) {
 		$actionName = 'e:';
 
-		if ($title === '')
+		if ($title === null)
 			$actionName .= 't:';
-		if ($body === '')
+		if ($body === null)
 			$actionName .= 'b:';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$address, $title, $body]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function sms($number, $text) {
+	public static function sms($number, $text = null) {
 		$actionName = 'sms:';
 
-		if ($text === '')
+		if ($text === null)
 			$actionName .= 'b:';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$number, $text]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

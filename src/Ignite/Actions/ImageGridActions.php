@@ -19,25 +19,25 @@ class ImageGridActions extends ActionBuffer{
 		return $action;
 	}
 
-	public static function sharePicture($service) {
+	public static function sharePicture($service = null) {
 		$actionName = 'sharePic';
 
-		if ($service === '')
+		if ($service === null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$service]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function editAndSharePicture($service) {
+	public static function editAndSharePicture($service = null) {
 		$actionName = 'editShare';
 
-		if ($service === '')
+		if ($service === null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$service]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

@@ -6,15 +6,15 @@ use Ignite\Action;
 
 class SocialNetwork extends ActionBuffer {
 
-	public static function share($title, $text, $url, $image, $service) {
+	public static function share($title, $text, $url, $image = null, $service = null) {
 		$actionName = 'share:t:u:';
 
-		if ($image === '')
+		if ($image === null)
 			$actionName .= 'i:';
-		if ($service === '')
+		if ($service === null)
 			$actionName .= 's:';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$title, $text, $url, $image, $service]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

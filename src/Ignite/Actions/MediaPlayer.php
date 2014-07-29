@@ -41,49 +41,49 @@ class MediaPlayer extends ActionBuffer {
 		return $action;
 	}
 
-	public static function append($index) {
+	public static function append($index = null) {
 		$actionName = 'ap';
 
-		if ($index === '')
+		if ($index === null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$index]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function appendAndPlay($index) {
+	public static function appendAndPlay($index = null) {
 		$actionName = 'anp';
 
-		if ($index === '')
+		if ($index === null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$index]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function appendNoPopup($index) {
+	public static function appendNoPopup($index = null) {
 		$actionName = 'apq';
 
-		if ($index === '')
+		if ($index === null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$index]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function appendNoPopupAndPlay($index) {
+	public static function appendNoPopupAndPlay($index = null) {
 		$actionName = 'anpq';
 
-		if ($index === '')
+		if ($index === null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$index]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

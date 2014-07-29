@@ -6,57 +6,57 @@ use Ignite\Action;
 
 class Navigation extends ActionBuffer{
 
-	public static function push($paramxml, $data, $form, $animation) {
-		$action = new Action('p:', func_get_args());
+	public static function push($paramxml, $data = null, $form = null, $animation = null) {
+		$action = new Action('p:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function pushWithLocation($paramxml, $data, $form, $animation, $accuracy) {
-		$action = new Action('pl:', func_get_args());
+	public static function pushWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		$action = new Action('pl:', [$paramxml, $data, $form, $animation, $accuracy]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function modalView($paramxml, $data, $form, $animation, $accuracy, $modalStyle) {
-		$action = new Action('m:', func_get_args());
+	public static function modalView($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+		$action = new Action('m:', [$paramxml, $data, $form, $animation, $accuracy, $modalStyle]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function modalViewWithLocation($paramxml, $data, $form, $animation, $accuracy, $modalStyle) {
-		$action = new Action('ml:', func_get_args());
+	public static function modalViewWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+		$action = new Action('ml:', [$paramxml, $data, $form, $animation, $accuracy, $modalStyle]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function replace($paramxml, $data, $form, $animation) {
-		$action = new Action('r:', func_get_args());
+	public static function replace($paramxml, $data = null, $form = null, $animation = null) {
+		$action = new Action('r:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function replaceWithLocation($paramxml, $data, $form, $animation, $accuracy) {
-		$action = new Action('rl:', func_get_args());
+	public static function replaceWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		$action = new Action('rl:', [$paramxml, $data, $form, $animation, $accuracy]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function replaceAll($paramxml, $data, $form, $animation) {
-		$action = new Action('ra:', func_get_args());
+	public static function replaceAll($paramxml, $data = null, $form = null, $animation = null) {
+		$action = new Action('ra:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function replaceAllWithLocation($paramxml, $data, $form, $animation, $accuracy) {
-		$action = new Action('ral:', func_get_args());
+	public static function replaceAllWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		$action = new Action('ral:', [$paramxml, $data, $form, $animation, $accuracy]);
 		self::$actionBuffer[] = $action;
 
 		return $action;

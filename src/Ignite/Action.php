@@ -12,10 +12,9 @@ class Action extends Registry {
 	public function __construct($name, array $params = [], $prefix = '') {
 		$this->name = $this[$prefix.'a'] = $name;
 		$this->prefix = $prefix;
-		
+
 		if (!empty($params))
 			$this[$prefix.'pr'] = join("::", $params);
-		
 	}
 
 	public function requiresLogin($provider = null) {

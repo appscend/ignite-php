@@ -27,25 +27,25 @@ class MapActions extends ActionBuffer {
 		return $action;
 	}
 
-	public static function directionTo($name) {
+	public static function directionTo($name = null) {
 		$actionName = 'dir';
 
-		if ($name === '')
+		if ($name !== null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$name]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function locationSearch($name) {
+	public static function locationSearch($name = null) {
 		$actionName = 'locsearch';
 
-		if ($name === '')
+		if ($name !== null)
 			$actionName .= ':';
 
-		$action = new Action($actionName, func_get_args());
+		$action = new Action($actionName, [$name]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
