@@ -114,7 +114,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 				case 'enum': {
 					$node = $node->enumNode($fieldName);
-					$node = $node->values(array_values($field['enum']));
+					$node = $node->values(array_keys($field['enum']));
 
 					break;
 				}
@@ -143,65 +143,6 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		$node->end();
 
 		return $treeBuilder;
-	}
-
-	private function configTreeArray(NodeBuilder $node, $arr, $fieldName) {
-		$node = $node->arrayNode($fieldName)->prototype('array')->children();
-		foreach ($arr as $fn => $f) {
-			//this array contains elements which are arrays, otherwise we should always have a tag property present
-			if (!isset($f['tag'])) {
-				$node = $this->configTreeArray($node, $f, $fn);
-			} else {
-				switch ($f['type']) {
-					case 'string': {
-						$node = $node->scalarNode($fn);
-
-						break;
-					}
-
-					case 'float':
-					case 'integer': {
-						$node = $node->node($fn, $f['type']);
-
-						if (isset($f['min']))
-							$node = $node->min($f['min']);
-
-						if (isset($f['max']))
-							$node = $node->max($f['max']);
-
-						break;
-					}
-
-					case 'enum': {
-						$node = $node->enumNode($fn);
-						$node = $node->values(array_values($f['enum']));
-
-						break;
-					}
-
-					case 'boolean': {
-						$node = $node->enumNode($fn);
-						$node = $node->values(['yes', 'no']);
-
-						break;
-					}
-
-					case 'Action': {
-						$node = $this->getActionTree($node, $fn['prefix']);
-
-						break;
-					}
-
-					default: {
-					throw new InvalidConfigurationException("Type '{$f['type']}' does not exist.");
-					}
-				}
-
-				$node = $node->end();
-			}
-		}
-
-		return $node->end()->end()->end();
 	}
 
 	private function getActionTree(NodeBuilder $n, $prefix) {

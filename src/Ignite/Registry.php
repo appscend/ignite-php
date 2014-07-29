@@ -15,13 +15,13 @@ abstract class Registry implements \ArrayAccess, \Countable {
 	protected $parent		= null;
 
 	public static $prefixes = [
-		'l',
-		'pad',
-		'and',
-		'padl',
-		'andl',
-		'andpad',
-		'andpadl'
+		'l',		//001
+		'pad',		//010
+		'padl',		//011
+		'and',		//100
+		'andl',		//101
+		'andpad',	//110
+		'andpadl'	//111
 	];
 
 	public abstract function render($update = false);

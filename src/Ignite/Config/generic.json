@@ -99,7 +99,7 @@
 	"navigation_bar_text_align": {
 		"tag": "nba",
 		"type": "enum",
-		"enum": ["l", "c", "r"]
+		"enum": {"left": "l", "center": "c", "right": "r"}
 	},
 	"navigation_bar_text_font": {
 		"tag": "nbf",

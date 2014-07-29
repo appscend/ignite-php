@@ -3,5 +3,9 @@
 		"tag": "a",
 		"type": "Action",
 		"prefix": ""
+	},
+	"action_group_name": {
+		"tag": "agn",
+		"type": "string"
 	}
 }

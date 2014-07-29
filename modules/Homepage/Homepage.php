@@ -43,7 +43,7 @@ class Homepage extends Module {
 			$view->addMenuElement(["text" => "text 2"], $menu);
 
 			$view->addButtonElement(["text" => "buton fara grup"]);
-			$view->addButtonElement(["text" => "buton in grup"], $view->addButtonGroup(["position" => "rn"]));
+			$view->addButtonElement(["text" => "buton in grup"], $view->addButtonGroup(["position" => "right"])->setFor(["position" => "left"], Element::FOR_ANDROID));
             
             return $view;
         })->bind("endpage");

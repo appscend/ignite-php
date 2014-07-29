@@ -18,7 +18,7 @@
 	"position": {
 		"tag": "p",
 		"type": "enum",
-		"enum": ["t", "rn", "tn", "ln"]
+		"enum": {"toolbar": "t", "right": "rn", "center": "tn", "left": "ln"}
 	},
 	"force_padding": {
 		"tag": "pd",
