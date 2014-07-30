@@ -1,6 +1,8 @@
 <?php
 namespace Ignite;
 
+use Ignite\Actions\ActionBuffer;
+
 class Action extends Registry {
 
 	const LAUNCH_ACTION_VISIBLE = 'visible';
@@ -27,21 +29,17 @@ class Action extends Registry {
 		return $this;
 	}
 
-	public function requiresPurchase($bundleId, Action $notPurchasedAction = null, $displayStoreView = null) {
+	public function requiresPurchase($bundleId, $displayStoreView = null) {
 		$this[$this->prefix.'aprod'] = $bundleId;
 
 		if (isset($displayStoreView))
 			$this[$this->prefix.'dprod'] = 'yes';
 
-		if (isset($action))
-			$this[$this->prefix.'prod'] = $notPurchasedAction->getName();
-
 		return $this;
 	}
 
-	public function requiresSecureKey(Action $securityFailedAction, $value = null) {
+	public function requiresSecureKey($value = null) {
 		$this[$this->prefix.'rsk'] = 'yes';
-		$this[$this->prefix.'rs'] = $securityFailedAction->getName();
 
 		if (isset($value))
 			$this[$this->prefix.'rsv'] = $value;
@@ -67,8 +65,74 @@ class Action extends Registry {
 		return $this;
 	}
 
+	/**
+	 * @param \Closure|Action $action
+	 * @param string $name
+	 * @param View $view
+	 * @throws \InvalidArgumentException
+	 */
+	public function onProductCheckFail($action, $name = null, View $view = null) {
+		if ($action instanceof \Closure) {
+			$action();
+
+			$fresult = ActionBuffer::getAndClearBuffer();
+
+			if (!isset($fresult[1])) {
+				$ac = $fresult[0];
+				$ac->setPrefix($this->prefix.'prod');
+			} else {
+				$index = $view->addActionGroup($fresult, $name);
+				if ($name !== null)
+					$ac = new Action('pag:', [$name], $this->prefix.'prod');
+				else
+					$ac = new Action('pag:', [$index-1], $this->prefix.'prod');
+			}
+		} else if ($action instanceof Action) {
+			$ac = $action;
+			$ac->setPrefix($this->prefix.'prod');
+		} else
+			throw new \InvalidArgumentException("Parameter 1 for 'onProductCheckFail' must be instance of Action or Closure.");
+
+		$this->properties = array_merge($this->properties, $ac->render());
+	}
+
+	/**
+	 * @param \Closure|Action $action
+	 * @param string $name
+	 * @param View $view
+	 * @throws \InvalidArgumentException
+	 */
+	public function onSecureKeyCheckFail($action, $name = null, View $view = null) {
+		if ($action instanceof \Closure) {
+			$action();
+
+			$fresult = ActionBuffer::getAndClearBuffer();
+
+			if (!isset($fresult[1])) {
+				$ac = $fresult[0];
+				$ac->setPrefix($this->prefix.'rs');
+			} else {
+				$index = $view->addActionGroup($fresult, $name);
+				if ($name !== null)
+					$ac = new Action('pag:', [$name], $this->prefix.'rs');
+				else
+					$ac = new Action('pag:', [$index-1], $this->prefix.'rs');
+			}
+		} else if ($action instanceof Action) {
+			$ac = $action;
+			$ac->setPrefix($this->prefix.'rs');
+		} else
+			throw new \InvalidArgumentException("Parameter 1 for 'onSecureKeyCheckFail' must be instance of Action or Closure.");
+
+		$this->properties = array_merge($this->properties, $ac->render());
+	}
+
 	public function getName() {
 		return $this->name;
+	}
+
+	public function setPrefix($p) {
+		$this->prefix = $p;
 	}
 
 	public function appendChild(Registry $r) {}

@@ -5,8 +5,10 @@ use Ignite\ConfigContainer;
 use Ignite\ElementContainer;
 use Ignite\View;
 use Ignite\Element;
+use Ignite\Action;
+use Ignite\Actions\ActionBuffer;
 
-class ImageGridView extends View{
+class ImageGridView extends View {
 
 	const ELEMENTS_CONFIG_SPEC_FILE = 'ImageGrid/elements.json';
 	const ACTIONS_CONFIG_SPEC_FILE = 'ImageGrid/actions.json';
@@ -52,6 +54,36 @@ class ImageGridView extends View{
 
 	public function getImages() {
 		return $this->elementsContainers['elements']->getChildren();
+	}
+
+	/**
+	 * @param \Closure|Action $action
+	 * @param string $name
+	 * @throws \InvalidArgumentException
+	 */
+	public function onPageFlip($action, $name = null) {
+		if ($action instanceof \Closure) {
+			$action();
+
+			$fresult = ActionBuffer::getAndClearBuffer();
+
+			if (!isset($fresult[1])) {
+				$ac = $fresult[0];
+				$ac->setPrefix('pg');
+			} else {
+				$index = $this->addActionGroup($fresult, $name);
+				if ($name !== null)
+					$ac = new Action('pag:', [$name], 'pg');
+				else
+					$ac = new Action('pag:', [$index-1], 'pg');
+			}
+		} else if ($action instanceof Action) {
+			$ac = $action;
+			$ac->setPrefix('pg');
+		} else
+			throw new \InvalidArgumentException("Parameter 1 for 'onPageFlip' must be instance of Action or Closure.");
+
+		$this->config->appendChild($ac);
 	}
 
 } 

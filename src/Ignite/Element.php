@@ -70,7 +70,7 @@ class Element extends Registry {
 	}
 
 	public function getFor($what) {
-		return $this->prefix_properties[$what];
+		return $this->prefix_properties[$what-1];
 	}
 
 	public function render($update = false) {

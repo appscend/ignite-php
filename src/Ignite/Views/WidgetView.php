@@ -1,7 +1,9 @@
 <?php
 
 namespace Ignite\Views;
-use Ignite\Element;
+use Ignite\Elements\WidgetTextLabel;
+use Ignite\Elements\WidgetViewElement;
+use Ignite\Elements\WidgetImage;
 use Ignite\View;
 use Ignite\ElementContainer;
 use Ignite\ConfigContainer;
@@ -26,9 +28,9 @@ class WidgetView extends View{
 
 	}
 
-	public function addViewElement($content) {
-		if (!$content instanceof Element)
-			$content = new Element('e', $content);
+	public function addView($content) {
+		if (!$content instanceof WidgetView)
+			$content = new WidgetViewElement('e', $content);
 
 		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
@@ -37,10 +39,9 @@ class WidgetView extends View{
 	}
 
 	public function addTextLabel($content) {
-		if (!$content instanceof Element)
-			$content = new Element('e', $content);
+		if (!$content instanceof WidgetTextLabel)
+			$content = new WidgetTextLabel('e', $content);
 
-		$content['element_type'] = 'label';
 		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
 
@@ -48,10 +49,9 @@ class WidgetView extends View{
 	}
 
 	public function addImage($content) {
-		if (!$content instanceof Element)
-			$content = new Element('e', $content);
+		if (!$content instanceof WidgetImage)
+			$content = new WidgetImage('e', $content);
 
-		$content['element_type'] = 'image';
 		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
 

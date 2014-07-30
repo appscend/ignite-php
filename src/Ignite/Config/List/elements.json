@@ -96,16 +96,19 @@
 
 	"action": {
 		"tag": "a",
-		"type": "string"
+		"type": "Action",
+		"prefix": ""
 	},
 
 	"accessory_action": {
-		"tag": "aa",
-		"type": "string"
+		"tag": "a",
+		"type": "Action",
+		"prefix": "a"
 	},
 
 	"action_selected": {
-		"tag": "sa",
-		"type": "string"
+		"tag": "a",
+		"type": "Action",
+		"prefix": "s"
 	}
 }

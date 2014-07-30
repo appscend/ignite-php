@@ -20,7 +20,7 @@ abstract class View extends Registry {
 	protected $elementsContainers = [];
 
 	/**
-	 * @var ConfigContainer
+	 * @var ConfigContainer|null
 	 */
 	protected $config = null;
 

@@ -203,8 +203,9 @@
 		"type": "integer"
 	},
 	"tf_select_action": {
-		"tag": "sa",
-		"type": "string"
+		"tag": "a",
+		"type": "Action",
+		"prefix": "s"
 	},
 	"ta_autocapitalization_type": {
 		"tag": "at",

@@ -3,6 +3,7 @@
 namespace Ignite\Views;
 use Ignite\ConfigContainer;
 use Ignite\Element;
+use Ignite\Elements\TextFieldElement;
 use Ignite\ElementContainer;
 use Ignite\View;
 
@@ -45,8 +46,21 @@ class FormView extends View{
 		return $this->insertElement('s', $content);
 	}
 
+	/**
+	 * @param array|TextFieldElement $content
+	 * @return int
+	 */
 	public function insertTextField($content) {
-		return $this->insertElement('tf', $content);
+		if ($content instanceof TextFieldElement) {
+			$this->elementsContainers['elements']->appendChild($content);
+			$content->view = $this;
+		} else {
+			$el = new Element('e', $content);
+			$this->elementsContainers['elements']->appendChild($el);
+			$el->view = $this;
+		}
+
+		return count($this->elementsContainers['elements'])-1;
 	}
 
 	public function insertTextArea($content) {

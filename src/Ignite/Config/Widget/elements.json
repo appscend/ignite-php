@@ -54,7 +54,7 @@
 		"type": "string"
 	},
 	"snap_animation_duration": {
-		"tag": "snapy",
+		"tag": "snapd",
 		"type": "float",
 		"min": 0
 	},
@@ -62,13 +62,15 @@
 		"tag": "swipe",
 		"type": "boolean"
 	},
-	"action_swipe_left": {
-		"tag": "swla",
-		"type": "string"
+	"swipe_left_action": {
+		"tag": "a",
+		"type": "Action",
+		"prefix": "swl"
 	},
-	"action_swipe_right": {
-		"tag": "swra",
-		"type": "string"
+	"swipe_right_action": {
+		"tag": "a",
+		"type": "string",
+		"prefix": "swr"
 	},
 	"drag_min_x": {
 		"tag": "minx",
@@ -255,12 +257,14 @@
 		"type": "string"
 	},
 	"alternate_action": {
-		"tag": "aa",
-		"type": "string"
+		"tag": "a",
+		"type": "Action",
+		"prefix": "a"
 	},
 	"action_double_tap": {
-		"tag": "da",
-		"type": "string"
+		"tag": "a",
+		"type": "Action",
+		"prefix": "d"
 	},
 	"use_alternate_favorite": {
 		"tag": "afavcat",

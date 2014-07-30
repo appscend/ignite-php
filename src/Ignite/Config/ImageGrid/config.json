@@ -115,6 +115,11 @@
 		"tag": "pg",
 		"type": "boolean"
 	},
+	"page_flip_action": {
+		"tag": "a",
+		"type": "Action",
+		"prefix": "pg"
+	},
 	"page_by_page_flip_action": {
 		"tag": "pga",
 		"type": "string"

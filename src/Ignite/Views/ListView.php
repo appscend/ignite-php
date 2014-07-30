@@ -3,6 +3,7 @@
 namespace Ignite\Views;
 use Ignite\ConfigContainer;
 use Ignite\Element;
+use Ignite\Elements\ListElement;
 use Ignite\ElementContainer;
 use Ignite\View;
 
@@ -43,12 +44,12 @@ class ListView extends View{
 	}
 
 	/**
-	 * @param array|Element $content
+	 * @param array|ListElement $content
 	 * @param int|Element $section
 	 * @return int
 	 */
 	public function addListElement($content, $section) {
-		if (!$content instanceof Element)
+		if (!$content instanceof ListElement)
 			$content = new Element('e', $content);
 
 		if (!$section instanceof Element)
