@@ -71,11 +71,15 @@ class ImageGridView extends View {
 				$ac = $fresult[0];
 				$ac->setPrefix('pg');
 			} else {
-				$index = $this->addActionGroup($fresult, $name);
+
+				$el = $this->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'pg');
-				else
+				else {
+					$index = $this['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'pg');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;

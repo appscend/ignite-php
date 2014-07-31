@@ -32,30 +32,27 @@ class WidgetView extends View{
 		if (!$content instanceof WidgetView)
 			$content = new WidgetViewElement('e', $content);
 
-		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
 
-		return count($this->elementsContainers['elements'])-1;
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	public function addTextLabel($content) {
 		if (!$content instanceof WidgetTextLabel)
 			$content = new WidgetTextLabel('e', $content);
 
-		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
 
-		return count($this->elementsContainers['elements'])-1;
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	public function addImage($content) {
 		if (!$content instanceof WidgetImage)
 			$content = new WidgetImage('e', $content);
 
-		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
 
-		return count($this->elementsContainers['elements'])-1;
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	public function removeElement($idx) {

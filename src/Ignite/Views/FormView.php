@@ -51,16 +51,12 @@ class FormView extends View{
 	 * @return int
 	 */
 	public function insertTextField($content) {
-		if ($content instanceof TextFieldElement) {
-			$this->elementsContainers['elements']->appendChild($content);
-			$content->view = $this;
-		} else {
-			$el = new Element('e', $content);
-			$this->elementsContainers['elements']->appendChild($el);
-			$el->view = $this;
-		}
+		if (!$content instanceof TextFieldElement)
+			$content = new Element('e', $content);
 
-		return count($this->elementsContainers['elements'])-1;
+		$content->view = $this;
+
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	public function insertTextArea($content) {
@@ -101,18 +97,13 @@ class FormView extends View{
 	 * @return int
 	 */
 	private function insertElement($type, $content) {
-		if ($content instanceof Element) {
-			$this->elementsContainers['elements']->appendChild($content);
-			$content['control_type'] = $type;
-			$content->view = $this;
-		} else {
-			$el = new Element('e', $content);
-			$this->elementsContainers['elements']->appendChild($el);
-			$el['control_type'] = $type;
-			$el->view = $this;
-		}
+		if (!$content instanceof Element)
+			$content = new Element('e', $content);
 
-		return count($this->elementsContainers['elements'])-1;
+		$content['control_type'] = $type;
+		$content->view = $this;
+
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 } 

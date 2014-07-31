@@ -33,11 +33,13 @@ class WebView extends View{
 			$content = new Element($content);
 
 		if (count($this->elementsContainers['elements']))
-			$this->elementsContainers['elements']->replaceChild($content, 0);
+			$el = $this->elementsContainers['elements']->replaceChild($content, 0);
 		else
-			$this->elementsContainers['elements']->appendChild($content);
+			$el = $this->elementsContainers['elements']->appendChild($content);
 
 		$content->view = $this;
+
+		return $el;
 	}
 
 	public function getContent() {

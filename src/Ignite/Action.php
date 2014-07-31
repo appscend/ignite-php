@@ -81,11 +81,15 @@ class Action extends Registry {
 				$ac = $fresult[0];
 				$ac->setPrefix($this->prefix.'prod');
 			} else {
-				$index = $view->addActionGroup($fresult, $name);
+
+				$el = $view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], $this->prefix.'prod');
-				else
+				else {
+					$index = $view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], $this->prefix.'prod');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;
@@ -112,11 +116,15 @@ class Action extends Registry {
 				$ac = $fresult[0];
 				$ac->setPrefix($this->prefix.'rs');
 			} else {
-				$index = $view->addActionGroup($fresult, $name);
+
+				$el = $view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], $this->prefix.'rs');
-				else
+				else {
+					$index = $view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], $this->prefix.'rs');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;

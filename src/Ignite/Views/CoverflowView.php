@@ -28,7 +28,7 @@ class CoverflowView extends View {
 
 	/**
 	 * @param array|Element $content
-	 * @return int
+	 * @return Element
 	 * @throws \InvalidArgumentException
 	 */
 	public function addImage($content) {
@@ -40,9 +40,8 @@ class CoverflowView extends View {
 			throw new \InvalidArgumentException("Parameter must be instance of \\Ignite\\Element or array.");
 
 		$content->view = $this;
-		$this->elementsContainers['elements']->appendChild($content);
 
-		return count($this->elementsContainers['elements'])-1;
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	/**

@@ -30,10 +30,9 @@ class TabBarView extends View {
 		if (!$content instanceof Element)
 			$content = new Element('tab', $content);
 
-		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
 
-		return count($this->elementsContainers['elements'])-1;
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	public function getTab($idx) {

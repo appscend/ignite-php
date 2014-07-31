@@ -48,11 +48,15 @@ class WidgetTextLabel extends  Element{
 				$ac = $fresult[0];
 				$ac->setPrefix('a');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'a');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'a');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;
@@ -78,11 +82,15 @@ class WidgetTextLabel extends  Element{
 				$ac = $fresult[0];
 				$ac->setPrefix('d');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'd');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'd');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;
@@ -108,11 +116,15 @@ class WidgetTextLabel extends  Element{
 				$ac = $fresult[0];
 				$ac->setPrefix('swl');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'swl');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'swl');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;
@@ -138,11 +150,15 @@ class WidgetTextLabel extends  Element{
 				$ac = $fresult[0];
 				$ac->setPrefix('swr');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'swr');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'swr');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;

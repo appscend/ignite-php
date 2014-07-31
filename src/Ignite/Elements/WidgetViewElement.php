@@ -32,11 +32,15 @@ class WidgetViewElement extends Element {
 				$ac = $fresult[0];
 				$ac->setPrefix('swl');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'swl');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'swl');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;
@@ -62,11 +66,15 @@ class WidgetViewElement extends Element {
 				$ac = $fresult[0];
 				$ac->setPrefix('swr');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'swr');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'swr');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;

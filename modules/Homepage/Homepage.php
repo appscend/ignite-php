@@ -20,18 +20,22 @@ class Homepage extends Module {
             $view = new Views\CoverflowView($app, "endpage");
 			$view->parseConfiguration(MODULES_DIR.'/Homepage/config/endpage.toml');
 
-			$view->addImage(["image" => "Test section", "name" => "xxx"]);
+			$view->addImage(["image" => "Test section", "name" => "xxx"])->
+				onTap(function() {
+					Actions\Navigation::refresh();
+				})->
+				setFor(["image" => "umadbro"], Element::FOR_ANDROID | Element::FOR_LANDSCAPE);
+
 			$view->addImage([
 				"image" => "asdsjadhsjkdh kashd kajsh dkajshd kjashd kjas dh",
 				"name" => " 239487 329023y4i2h342hg34"
-			]);
-
-			$view->getImage(0)->onTap(function() { Actions\Navigation::refresh();})->setFor(["image" => "umadbro"], Element::FOR_ANDROID | Element::FOR_LANDSCAPE);
-			$view->getImage(1)->onTap(function() {
-				Actions\CoverFlowActions::startSlideshow()->requiresLogin('fb');
-				Actions\CoverFlowActions::flip();
-				Actions\System::alert("bla")->on("test");
-			}, 'test')->setFor(["name" => "this is not what you think"], Element::FOR_LANDSCAPE | Element::FOR_ANDROID | Element::FOR_TABLET);
+			])
+				->onTap(function() {
+					Actions\CoverFlowActions::startSlideshow()->requiresLogin('fb');
+					Actions\CoverFlowActions::flip();
+					Actions\System::alert("bla")->on("test");
+				}, 'test')
+				->setFor(["name" => "this is not what you think"], Element::FOR_LANDSCAPE | Element::FOR_ANDROID | Element::FOR_TABLET);
 
 			$view->addLaunchAction(Actions\Navigation::refresh());
 			$view->addLaunchAction(Actions\CoverFlowActions::scrollTo(10,10), Action::LAUNCH_ACTION_VISIBLE);

@@ -33,10 +33,9 @@ class MapView extends View{
 		if (!$content instanceof Element)
 			$content = new Element('e', $content);
 
-		$this->elementsContainers['elements']->appendChild($content);
 		$content->view = $this;
 
-		return count($this->elementsContainers['elements'])-1;
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	/**

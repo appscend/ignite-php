@@ -32,11 +32,15 @@ class ListElement extends Element{
 				$ac = $fresult[0];
 				$ac->setPrefix('a');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 'a');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 'a');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;
@@ -62,11 +66,15 @@ class ListElement extends Element{
 				$ac = $fresult[0];
 				$ac->setPrefix('s');
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$ac = new Action('pag:', [$name], 's');
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$ac = new Action('pag:', [$index-1], 's');
+				}
 			}
 		} else if ($action instanceof Action) {
 			$ac = $action;

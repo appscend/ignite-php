@@ -2,7 +2,9 @@
 
 namespace Ignite;
 
-abstract class Registry implements \ArrayAccess, \Countable {
+use Traversable;
+
+abstract class Registry implements \ArrayAccess, \Countable, \IteratorAggregate {
 
 	protected $render_cache = [];
 	/**
@@ -30,6 +32,10 @@ abstract class Registry implements \ArrayAccess, \Countable {
 		$this->tag = $tag;
 	}
 
+	public function getChildIndex(Registry $c) {
+		return array_search($c, $this->children, true);
+	}
+
 	public function appendChild(Registry $child) {
 		$this->children[] = $child;
 		$child->setParent($this);
@@ -48,12 +54,17 @@ abstract class Registry implements \ArrayAccess, \Countable {
 		return $child;
 	}
 
+	/**
+	 * @param Registry $child
+	 * @param int $idx
+	 * @return bool|Registry
+	 */
 	public function replaceChild(Registry $child, $idx) {
 		if (isset($this->children[$idx])) {
 			$this->children[$idx] = $child;
 			$child->setParent($this);
 
-			return true;
+			return $child;
 		}
 
 		return false;
@@ -136,5 +147,17 @@ abstract class Registry implements \ArrayAccess, \Countable {
 
 	public function offsetUnset($k) {
 		unset($this->properties[$k]);
+	}
+
+	/**
+	 * (PHP 5 &gt;= 5.0.0)<br/>
+	 * Retrieve an external iterator
+	 *
+	 * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+	 * @return Traversable An instance of an object implementing <b>Iterator</b> or
+	 * <b>Traversable</b>
+	 */
+	public function getIterator() {
+		return new \ArrayIterator($this->children);
 	}
 } 

@@ -31,16 +31,13 @@ class ListView extends View{
 	 * @return int
 	 */
 	public function addSection($content) {
-		if ($content instanceof Element) {
-			$content->view = $this;
-			$this->elementsContainers['elements']->appendChild($content);
-		} else {
-			$el = new Element('es', $content);
-			$el->view = $this;
-			$this->elementsContainers['elements']->appendChild($el);
-		}
+		if (!$content instanceof Element)
+			$content = new Element('es', $content);
 
-		return count($this->elementsContainers['elements'])-1;
+		$content->view = $this;
+
+
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	/**
@@ -56,9 +53,8 @@ class ListView extends View{
 			$section = $this->elementsContainers['elements']->getChild($section);
 
 		$content->view = $this;
-		$section->appendChild($content);
 
-		return count($section);
+		return $section->appendChild($content);
 	}
 
 	public function removeSection($idx) {

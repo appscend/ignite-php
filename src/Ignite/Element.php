@@ -42,11 +42,15 @@ class Element extends Registry {
 				$this->action = $fresult[0];
 
 			} else {
-				$index = $this->view->addActionGroup($fresult, $name);
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
 				if ($name !== null)
 					$this->action = new Action('pag:', [$name]);
-				else
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
 					$this->action = new Action('pag:', [$index-1]);
+				}
 			}
 		} else if ($action instanceof Action)
 			$this->action = $action;
@@ -62,7 +66,7 @@ class Element extends Registry {
 	 */
 	public function setFor(array $props, $where) {
 		if (1 > $where || 7 < $where)
-			throw new \InvalidArgumentException("Invalid prefix mask for element.");
+			throw new \InvalidArgumentException("Invalid prefix mask for element '{$this->getTag()}' in view '{$this->view->getID()}' .");
 
 		$this->prefix_properties[$where-1] = array_merge($this->prefix_properties[$where-1], $props);
 
@@ -83,7 +87,10 @@ class Element extends Registry {
 			$result[$name] = $prop;
 		}
 
-		foreach ($this->getChildren() as $c) {
+		/**
+		 * @var Registry $c
+		 */
+		foreach ($this->getIterator() as $c) {
 			if ($c->isEmpty())
 				continue;
 
@@ -99,7 +106,7 @@ class Element extends Registry {
 
 		if ($this->action !== null) {
 			if ($this->view !== null && !$this->view->validateAction($this->action)) {
-				throw new InvalidTypeException("Action '{$this->action->getName()}' is not a valid action.");
+				throw new InvalidTypeException("Action '{$this->action->getName()}' is not a valid action for element '{$this->getTag()}' in view '{$this->view->getID()}' .");
 			} else {
 				$result = array_merge($result, $this->action->render());
 			}

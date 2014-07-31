@@ -103,19 +103,23 @@ abstract class View extends Registry {
 		}
 
 		$action->setTag($wrapperTag);
-		$this->elementsContainers[$where]->appendChild($action);
 		ActionBuffer::getAndClearBuffer();
+
+		return $this->elementsContainers[$where]->appendChild($action);
 	}
 
+	/**
+	 * @param Element $menu
+	 * @return Element
+	 */
 	public function addMenu(Element $menu = null) {
 		if ($menu === null)
 			$menu = new Element('m');
 
 		$menu->setTag('m');
-		$this->elementsContainers['menus']->appendChild($menu);
 		$menu->view = $this;
 
-		return $menu;
+		return $this->elementsContainers['menus']->appendChild($menu);
 	}
 
 	/**
@@ -129,16 +133,15 @@ abstract class View extends Registry {
 		else if (is_array($element))
 			$element = new Element('me', $element);
 
-		$menu->appendChild($element);
 		$element->view = $this;
 
-		return $element;
+		return $menu->appendChild($element);
 	}
 
 	/**
 	 * @param Action[] $actions
 	 * @param null|string $name
-	 * @return int
+	 * @return Element
 	 * @throws InvalidTypeException
 	 */
 	public function addActionGroup(array $actions, $name = null) {
@@ -152,15 +155,12 @@ abstract class View extends Registry {
 				throw new InvalidTypeException("Action '{$a->getName()}' is not a valid action.");
 		}
 
-		$this->elementsContainers['action_groups']->appendChild($actionGroup);
-
-		$idx = count($this->elementsContainers['action_groups']);
 		if (isset($name))
-			$actionGroup['agn'] = $name;
+			$actionGroup['action_group_name'] = $name;
 
 		$actionGroup->view = $this;
 
-		return $idx;
+		return $this->elementsContainers['action_groups']->appendChild($actionGroup);
 	}
 
 	/**
@@ -207,13 +207,20 @@ abstract class View extends Registry {
 		return isset($this->actionsSpec[$name]);
 	}
 
+	public function getID() {
+		return $this->viewID;
+	}
+
 	public function render($update = false) {
 		if ($this->render_cache !== [] && $update == false)
 			return $this->render_cache;
 
 		$result = [];
 
-		foreach ($this->getChildren() as $c) {
+		/**
+		 * @var Registry $c
+		 */
+		foreach ($this->getIterator() as $c) {
 			if ($c->isEmpty())
 				continue;
 
@@ -248,6 +255,22 @@ abstract class View extends Registry {
 
 		if (is_array($fresult))
 			$this->addActionGroup($fresult, $k);
+	}
+
+	public function offsetExists($k) {
+		return in_array($k, ['elements', 'action_groups', 'buttons', 'launch_actions', 'visible_launch_actions', 'hidden_launch_actions', 'menus', 'config']);
+	}
+
+	public function offsetGet($k) {
+		return $this->elementsContainers[$k];
+	}
+
+	public function offsetSet($k, $v) {
+		return null;
+	}
+
+	public function offsetUnset($k) {
+		return null;
 	}
 
 } 

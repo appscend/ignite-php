@@ -60,7 +60,10 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 		$child->setProperties($result);
 
-		foreach ($child->getChildren() as $c)
+		/**
+		 * @var Registry $c
+		 */
+		foreach ($child as $c)
 			$this->translateTags($c);
 	}
 
