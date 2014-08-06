@@ -8,10 +8,8 @@ define("MODULES_DIR", ROOT_DIR.'/modules');
 use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
 use Yosymfony\Silex\ConfigServiceProvider\ConfigServiceProvider;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 
 class Application extends SilexApp implements ConfigurationInterface {
 	use SilexApp\UrlGeneratorTrait;
@@ -23,10 +21,6 @@ class Application extends SilexApp implements ConfigurationInterface {
 
 	function __construct(array $values = array()) {
 		parent::__construct($values);
-		
-		$this->register(new SilexProvider\MonologServiceProvider(), array(
-		    'monolog.logfile' => ROOT_DIR.'/logs/development.log',
-		));
 		
 		$this->register(new SilexProvider\UrlGeneratorServiceProvider());
 		
@@ -53,6 +47,11 @@ class Application extends SilexApp implements ConfigurationInterface {
 		try {$appConfigData = $this->scan("app.toml")->validateWith($this);}
 			catch(\InvalidArgumentException $ex) {}		
 		$this['config'] = $appConfigData;
+
+		$this->register(new EnvironmentManager());
+		//$this['env']->setEnvironment('production');
+
+		$this->register(new SilexProvider\MonologServiceProvider(), $this['env']->get('monolog'));
 	}
 	
 	public function getConfigTreeBuilder() {
