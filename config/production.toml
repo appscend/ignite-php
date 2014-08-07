@@ -2,5 +2,7 @@
 assets_path = "assets/"
 static_xml_path = "static/"
 
-[monolog]
-logfile = "logs/production.log"
+[gelf]
+domain = "logging.appscend.net"
+port = 12201
+facility = "default"

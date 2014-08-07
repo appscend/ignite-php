@@ -1,6 +1,7 @@
 <?php
 namespace Ignite;
 
+use Ignite\Providers\Logger;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -68,15 +69,29 @@ class ElementContainer extends Element implements ConfigurationInterface{
 	}
 
 	public function appendChild(Registry $el) {
-		$el->setProperties($this->view->processor->processConfiguration($this, [$el->getProperties()]));
+		try {
+			$result = $this->view->processor->processConfiguration($this, [$el->getProperties()]);
+			$el->setProperties($result);
 
-		return parent::appendChild($el);
+			return parent::appendChild($el);
+		} catch (InvalidConfigurationException $e) {
+			$this->view->getApp()['ignite_logger']->log($e->getMessage(), Logger::LOG_ERROR);
+
+			return false;
+		}
 	}
 
 	public function prependChild(Registry $el) {
-		$el->setProperties($this->view->processor->processConfiguration($this, [$el->getProperties()]));
+		try {
+			$result = $this->view->processor->processConfiguration($this, [$el->getProperties()]);
+			$el->setProperties($result);
 
-		return parent::prependChild($el);
+			return parent::prependChild($el);
+		} catch (InvalidConfigurationException $e) {
+			$this->view->getApp()['logger']->log($e->getMessage(), Logger::LOG_ERROR);
+
+			return false;
+		}
 	}
 
 	public function render($update = false) {

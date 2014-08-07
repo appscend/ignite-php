@@ -5,11 +5,10 @@ namespace Ignite;
 define("ROOT_DIR", dirname(dirname(__DIR__)));
 define("MODULES_DIR", ROOT_DIR.'/modules');
 
+use Ignite\Providers\Logger;
 use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
 use Yosymfony\Silex\ConfigServiceProvider\ConfigServiceProvider;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class Application extends SilexApp {
 	use SilexApp\UrlGeneratorTrait;
@@ -36,17 +35,13 @@ class Application extends SilexApp {
 		$this->register(new Providers\LocatorServiceProvider());
 		$this['locator.directories'] = [ROOT_DIR];
 		
-		$this->register(new Providers\GELFServiceProvider());
-		$this['gelf.domain'] = "logging.appscend.net";
-		
 		$this->register(new \Whoops\Provider\Silex\WhoopsServiceProvider);
 		
 		$this['dispatcher']->addSubscriber(new EventListener\ViewToResponseListener($this));
 
 		$this->register(new EnvironmentManager());
-		//$this['env']->setEnvironment('production');
+		$this->register(new Logger($this));
 
-		$this->register(new SilexProvider\MonologServiceProvider(), $this['env']->get('monolog'));
 	}
 
 	public function getAssetsPath() {

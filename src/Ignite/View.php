@@ -213,6 +213,10 @@ abstract class View extends Registry {
 		return $this->viewID;
 	}
 
+	public function getApp() {
+		return $this->app;
+	}
+
 	public function render($update = false) {
 		if ($this->render_cache !== [] && $update == false)
 			return $this->render_cache;
