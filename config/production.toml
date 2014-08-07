@@ -1,2 +1,6 @@
+[app]
+assets_path = "assets/"
+static_xml_path = "static/"
+
 [monolog]
 logfile = "logs/production.log"

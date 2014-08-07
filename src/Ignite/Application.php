@@ -11,7 +11,7 @@ use Yosymfony\Silex\ConfigServiceProvider\ConfigServiceProvider;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-class Application extends SilexApp implements ConfigurationInterface {
+class Application extends SilexApp {
 	use SilexApp\UrlGeneratorTrait;
 	use SilexApp\MonologTrait;
 	use Application\ConfigTrait;
@@ -42,32 +42,18 @@ class Application extends SilexApp implements ConfigurationInterface {
 		$this->register(new \Whoops\Provider\Silex\WhoopsServiceProvider);
 		
 		$this['dispatcher']->addSubscriber(new EventListener\ViewToResponseListener($this));
-		
-		$appConfigData = array();
-		try {$appConfigData = $this->scan("app.toml")->validateWith($this);}
-			catch(\InvalidArgumentException $ex) {}		
-		$this['config'] = $appConfigData;
 
 		$this->register(new EnvironmentManager());
 		//$this['env']->setEnvironment('production');
 
 		$this->register(new SilexProvider\MonologServiceProvider(), $this['env']->get('monolog'));
 	}
-	
-	public function getConfigTreeBuilder() {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root(0);
-        
-		$rootNode
-			->children()
-				->arrayNode('app')->ignoreExtraKeys()
-					->children()
-						->booleanNode('show_status_bar')->end()
-					->end()
-				->end()
-			->end()
-		->end();
-        	
-        return $treeBuilder;
-    }
+
+	public function getAssetsPath() {
+		return $this['env']['app.assets_path'];
+	}
+
+	public function getStaticXMLPath() {
+		return $this['env']['app.static_xml_path'];
+	}
 }

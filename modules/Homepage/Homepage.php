@@ -27,7 +27,7 @@ class Homepage extends Module {
 				setFor(["image" => "umadbro"], Element::FOR_ANDROID | Element::FOR_LANDSCAPE);
 
 			$view->addImage([
-				"image" => "asdsjadhsjkdh kashd kajsh dkajshd kjashd kjas dh",
+				"image" => "doesn't exist.png",
 				"name" => " 239487 329023y4i2h342hg34"
 			])
 				->onTap(function() {
