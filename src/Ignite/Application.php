@@ -8,6 +8,7 @@ define("MODULES_DIR", ROOT_DIR.'/modules');
 use Ignite\Providers\Logger;
 use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
+use Symfony\Component\HttpFoundation\Request;
 use Yosymfony\Silex\ConfigServiceProvider\ConfigServiceProvider;
 
 class Application extends SilexApp {
@@ -17,6 +18,9 @@ class Application extends SilexApp {
 	use Application\GELFTrait;
 	
 	const IGNITE_VERSION = '0.0.1';
+
+	private $currentRoute = '';
+	private $currentModule = '';
 
 	function __construct(array $values = array()) {
 		parent::__construct($values);
@@ -42,6 +46,26 @@ class Application extends SilexApp {
 		$this->register(new EnvironmentManager());
 		$this->register(new Logger($this));
 
+		$this->before(function(Request $req){
+			$this->setRouteName($req->get('_route'));
+		});
+
+	}
+
+	public function getModuleName() {
+		return $this->currentModule;
+	}
+
+	public function setModuleName($v) {
+		$this->currentModule = $v;
+	}
+
+	public function getRouteName() {
+		return $this->currentRoute;
+	}
+
+	private function setRouteName($v) {
+		$this->currentRoute = $v;
 	}
 
 	public function getAssetsPath() {

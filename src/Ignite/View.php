@@ -9,6 +9,8 @@ abstract class View extends Registry {
 
 	//TODO: update all views to modify resource paths with the base path
 
+	//TODO: add parseConfiguration to all views in constructor
+
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
 	const BUTTON_ELEMENTS_SPEC			= 'button_elements.json';
@@ -36,8 +38,9 @@ abstract class View extends Registry {
 
 	public $processor = null;
 
-	public function __construct(Application $app) {
+	public function __construct(Application $app, $viewID) {
 		parent::__construct('par');
+		$this->viewID = $viewID;
 		$this->processor = new Processor();
 		$this->elementsContainers['action_groups'] = $this->appendChild(new ElementContainer(self::ACTION_GROUP_SPEC, 'ags'));
 		$this->elementsContainers['action_groups']->view = $this;
@@ -57,7 +60,7 @@ abstract class View extends Registry {
 		$this->app = $app;
 	}
 
-	public function parseConfiguration($filepath) {
+	protected function parseConfiguration($filepath) {
 		$config = $this->app->scan($filepath)->getArray();
 		$this->config->setProperties(array_merge($this->config->getProperties(), $config['cfg']));
 
