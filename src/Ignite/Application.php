@@ -4,6 +4,7 @@ namespace Ignite;
 
 define("ROOT_DIR", dirname(dirname(__DIR__)));
 define("MODULES_DIR", ROOT_DIR.'/modules');
+define("ASSETS_DIR", ROOT_DIR.'/assets');
 
 use Ignite\Providers\Logger;
 use Silex\Application as SilexApp;

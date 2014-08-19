@@ -67,7 +67,7 @@ class Logger implements ServiceProviderInterface {
 
 			case self::LOG_ERROR: {
 				if ($this->logger === self::MONOLOG)
-					var_dump($this->app['monolog']->addError($message));
+					$this->app['monolog']->addError($message);
 				else if ($this->logger === self::GELF) {
 					$msg = new Message();
 					$msg->setFullMessage($message);

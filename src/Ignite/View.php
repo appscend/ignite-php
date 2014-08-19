@@ -4,6 +4,7 @@ namespace Ignite;
 use Ignite\Actions\ActionBuffer;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 abstract class View extends Registry {
 
@@ -15,6 +16,7 @@ abstract class View extends Registry {
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
 	const BUTTON_ELEMENTS_SPEC			= 'button_elements.json';
 	const MENU_ELEMENTS_SPEC			= 'menu_elements.json';
+	const JAVASCRIPT_ELEMENTS_SPEC		= 'javascript_elements.json';
 
 	const GENERIC_ACTIONS_SPEC			= 'generic_actions.json';
 
@@ -54,6 +56,8 @@ abstract class View extends Registry {
 		$this->elementsContainers['hidden_launch_actions']->view = $this;
 		$this->elementsContainers['menus'] = $this->appendChild(new ElementContainer(self::MENU_ELEMENTS_SPEC, 'ms'));
 		$this->elementsContainers['menus']->view = $this;
+		$this->elementsContainers['javascript'] = $this->appendChild(new ElementContainer(self::JAVASCRIPT_ELEMENTS_SPEC, 'funcs'));
+		$this->elementsContainers['javascript']->view = $this;
 
 		$this->actionsSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/generic_actions.json'), true);
 
@@ -204,6 +208,55 @@ abstract class View extends Registry {
 		$button->view = $this;
 
 		return $button;
+	}
+
+	public function addJavascriptFile($name) {
+		if (!is_readable(ASSETS_DIR.'/js/'.$name))
+			throw new FileNotFoundException('File \''.ASSETS_DIR.'/js/'.$name.'\' not found or not readable.');
+
+		$functions = [];
+
+		$result = [];
+		$bodyFunc = [];
+		$fileContent = file_get_contents(ASSETS_DIR.'/js/'.$name);
+		preg_match_all("/(?<=function)\\s+[A-Za-z0-9_]+\\s?\\(([a-zA-Z0-9_]+(,\\s? )?)*\\)/", $fileContent, $result);
+		preg_match_all("/({([^{}]|(?R))*})/", $fileContent, $bodyFunc, PREG_OFFSET_CAPTURE);
+
+		$result = $result[0];
+
+		function parseResult($string) {
+			$result = [];
+			$string = trim(preg_replace('/\s+/', '', $string));
+			$endNamePos = strpos($string, "(");
+
+			$result['name'] = substr($string, 0, $endNamePos);
+			$result['args'] = explode(',', substr($string, $endNamePos+1, strlen($string)-2-$endNamePos));
+
+			return $result;
+		}
+
+		foreach ($result as $r) {
+			$functions[] = parseResult($r);
+		}
+
+		$resultBody = [];
+
+		foreach ($bodyFunc[0] as $k => $f) {
+			if (($f[1]+strlen($f[0]) == strlen($fileContent)))
+				$resultBody[] = $f[0];
+			else if ($fileContent[$f[1]+strlen($f[0])] !== ')')
+				$resultBody[] = $f[0];
+			else
+				array_splice($functions, $k, 1);
+		}
+
+		foreach($functions as $k => $f) {
+			$jsContainer = new Element('func', ['fname' => $f['name'], 'fargs' => implode('::', $f['args']),
+				'body' => $resultBody[$k]
+			]);
+
+			$this->elementsContainers['javascript']->appendChild($jsContainer);
+		}
 	}
 
 	public function validateAction(Action $a) {

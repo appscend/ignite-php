@@ -1,0 +1,14 @@
+{
+	"fname": {
+		"tag": "name",
+		"type": "string"
+	},
+	"fargs": {
+		"tag": "args",
+		"type": "string"
+	},
+	"body": {
+		"tag": "content",
+		"type": "string"
+	}
+}
