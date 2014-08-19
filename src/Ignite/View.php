@@ -250,7 +250,7 @@ abstract class View extends Registry {
 
 		foreach($functions as $k => $f) {
 			$jsContainer = new Element('func', ['fname' => $f['name'], 'fargs' => implode('::', $f['args']),
-				'body' => $resultBody[$k]
+				'body' => rtrim(ltrim($resultBody[$k], '{'), '}')
 			]);
 
 			$this->elementsContainers['javascript']->appendChild($jsContainer);
