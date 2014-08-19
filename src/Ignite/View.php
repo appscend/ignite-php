@@ -10,8 +10,6 @@ abstract class View extends Registry {
 
 	//TODO: update all views to modify resource paths with the base path
 
-	//TODO: add parseConfiguration to all views in constructor
-
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
 	const BUTTON_ELEMENTS_SPEC			= 'button_elements.json';

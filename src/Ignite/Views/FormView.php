@@ -13,8 +13,8 @@ class FormView extends View{
 	const ACTIONS_CONFIG_SPEC_FILE = 'Form/actions.json';
 
 	public function __construct($app, $viewID) {
-		parent::__construct($app);
-		$this->viewID = $viewID;
+		parent::__construct($app, $viewID);
+
 		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer(self::ELEMENTS_CONFIG_SPEC_FILE, 'es'));
 		$this->elementsContainers['elements']->view = $this;
 		$this->config = $this->prependChild(new ConfigContainer());
@@ -24,6 +24,7 @@ class FormView extends View{
 		$this->config->view = $this;
 
 		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
+		$this->parseConfiguration(MODULES_DIR.'/'.$app->getModuleName().'/config/'.$app->getRouteName().'/'.$viewID.'.toml');
 	}
 
 	public function insertGroupSeparator($content) {
