@@ -6,6 +6,9 @@ use Ignite\Action;
 
 class Search extends ActionBuffer {
 
+	/**
+	 * @return Action
+	 */
 	public static function display() {
 		$action = new Action('search');
 		self::$actionBuffer[] = $action;

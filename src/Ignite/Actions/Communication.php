@@ -6,6 +6,10 @@ use Ignite\Action;
 
 class Communication extends ActionBuffer{
 
+	/**
+	 * @param integer|string $number
+	 * @return Action
+	 */
 	public static function call($number) {
 		$action = new Action('call:', func_get_args());
 		self::$actionBuffer[] = $action;
@@ -13,6 +17,12 @@ class Communication extends ActionBuffer{
 		return $action;
 	}
 
+	/**
+	 * @param string $address
+	 * @param string $title
+	 * @param string $body
+	 * @return Action
+	 */
 	public static function email($address, $title = null, $body = null) {
 		$actionName = 'e:';
 
@@ -27,6 +37,11 @@ class Communication extends ActionBuffer{
 		return $action;
 	}
 
+	/**
+	 * @param integer|string $number
+	 * @param string $text
+	 * @return Action
+	 */
 	public static function sms($number, $text = null) {
 		$actionName = 'sms:';
 

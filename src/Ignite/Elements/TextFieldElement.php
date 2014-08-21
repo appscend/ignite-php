@@ -12,11 +12,23 @@ class TextFieldElement extends Element{
 	 */
 	private $selectionAction = null;
 
+	/**
+	 * @param null|string $tag
+	 * @param array $properties
+	 */
 	public function __construct($tag, array $properties = []) {
 		parent::__construct($tag, $properties);
 		$this['control_type'] = 'tf';
 	}
 
+	/**
+	 *
+	 * Performs an action after selecting text in the field.
+	 *
+	 * @param \Closure|Action $action Instance of Action or closure which calls static Action class methods
+	 * @param string $name Name of the action in case closure ret
+	 * @throws \InvalidArgumentException
+	 */
 	public function onSelection($action, $name = null) {
 		if ($action instanceof \Closure) {
 			$action();
@@ -46,6 +58,10 @@ class TextFieldElement extends Element{
 		$this->selectionAction = $ac;
 	}
 
+	/**
+	 * @param bool $update
+	 * @return array
+	 */
 	public function render($update = false) {
 		$result = parent::render($update);
 

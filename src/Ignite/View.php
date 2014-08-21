@@ -10,34 +10,68 @@ abstract class View extends Registry {
 
 	//TODO: update all views to modify resource paths with the base path
 
+	/**
+	 *	Config spec for the Action Group element
+	 */
 	const ACTION_GROUP_SPEC				= 'action_group_elements.json';
+	/**
+	 *	Config spec for the Launch Actions element
+	 */
 	const LAUNCH_ACTIONS_SPEC			= 'launch_actions.json';
+	/**
+	 *	Config spec for the Buttons group element
+	 */
 	const BUTTON_ELEMENTS_SPEC			= 'button_elements.json';
+	/**
+	 *	Config spec for the Menu group element
+	 */
 	const MENU_ELEMENTS_SPEC			= 'menu_elements.json';
+	/**
+	 *	Config spec for the javascript functions element
+	 */
 	const JAVASCRIPT_ELEMENTS_SPEC		= 'javascript_elements.json';
 
+	/**
+	 *	Config spec for all generic actions
+	 */
 	const GENERIC_ACTIONS_SPEC			= 'generic_actions.json';
 
 	/**
-	 * @var ElementContainer[]
+	 * @var ElementContainer[] Array containing all the container elements.
 	 */
 	protected $elementsContainers = [];
 
 	/**
-	 * @var ConfigContainer|null
+	 * @var ConfigContainer|null Element which contains the configuration of the view
 	 */
 	protected $config = null;
 
+	/**
+	 * @var array Contains the parsed config spec for the actions
+	 */
 	protected $actionsSpec = [];
 
 	/**
-	 * @var Application
+	 * @var Application The Application instance where this view is contained.
 	 */
 	protected $app;
+	/**
+	 * @var ID of the view (avi)
+	 */
 	protected $viewID;
 
+	/**
+	 * @var Processor Processor used for validating element properties
+	 */
 	public $processor = null;
 
+	/**
+	 *
+	 * Constructs a new view which creates all containers.
+	 *
+	 * @param Application $app
+	 * @param $viewID
+	 */
 	public function __construct(Application $app, $viewID) {
 		parent::__construct('par');
 		$this->viewID = $viewID;
@@ -62,6 +96,12 @@ abstract class View extends Registry {
 		$this->app = $app;
 	}
 
+	/**
+	 *
+	 * Parses the configuration file for the curent module
+	 *
+	 * @param $filepath
+	 */
 	protected function parseConfiguration($filepath) {
 		$config = $this->app->scan($filepath)->getArray();
 		$this->config->setProperties(array_merge($this->config->getProperties(), $config['cfg']));
@@ -89,6 +129,11 @@ abstract class View extends Registry {
 
 	}
 
+	/**
+	 * @param Action $action
+	 * @param string $type Type of the action: visible or hidden. Ommit this param for the default behaviour.
+	 * @return bool|Registry The inserted action or false if action has invalid properties.
+	 */
 	public function addLaunchAction(Action $action, $type = null) {
 		switch($type) {
 			case Action::LAUNCH_ACTION_VISIBLE: {
@@ -110,14 +155,16 @@ abstract class View extends Registry {
 		}
 
 		$action->setTag($wrapperTag);
-		ActionBuffer::getAndClearBuffer();
 
 		return $this->elementsContainers[$where]->appendChild($action);
 	}
 
 	/**
-	 * @param Element $menu
-	 * @return Element
+	 *
+	 * Adds a menu.
+	 *
+	 * @param Element $menu Optional.
+	 * @return Element returns the inserted element.
 	 */
 	public function addMenu(Element $menu = null) {
 		if ($menu === null)
@@ -130,9 +177,13 @@ abstract class View extends Registry {
 	}
 
 	/**
-	 * @param array|Element|null $element
-	 * @param Element $menu
-	 * @return Element
+	 *
+	 * Adds an element to a specific menu.
+	 *
+	 * @param array|Element|null $element Array containing element properties or the element itself or null which
+	 * creates an empty element.
+	 * @param Element $menu The menu where the element will be.
+	 * @return Element Returns the inserted element.
 	 */
 	public function addMenuElement($element = null, Element $menu) {
 		if ($element == null)
@@ -146,13 +197,20 @@ abstract class View extends Registry {
 	}
 
 	/**
+	 *
+	 * Adds an action group. This method is called when adding multiple actions to a view. There's no need to call this
+	 * method explicitily.
+	 *
 	 * @param Action[] $actions
-	 * @param null|string $name
-	 * @return Element
+	 * @param null|string $name If name is not supplied the action group can be called by its index.
+	 * @return Element|boolean Returns the inserted action group or false if it already exists.
 	 * @throws InvalidTypeException
 	 */
 	public function addActionGroup(array $actions, $name = null) {
 		$actionGroup = new Element('ag');
+
+		if (isset($name) && $this->actionGroupExists($name))
+			return false;
 
 		foreach ($actions as $a) {
 			if ($this->validateAction($a)) {
@@ -171,8 +229,25 @@ abstract class View extends Registry {
 	}
 
 	/**
-	 * @param array|Element|null $group
-	 * @return Element
+	 * @param string $name
+	 * @return bool
+	 */
+	public function actionGroupExists($name) {
+		foreach ($this->elementsContainers['action_groups'] as $c) {
+			if ($c['name'] == $name)
+				return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 *
+	 * Adds a button group
+	 *
+	 * @param array|Element|null $group Array containing element properties or the element itself or null which
+	 * creates an empty group.
+	 * @return Element the inserted group.
 	 */
 	public function addButtonGroup($group = null) {
 		if ($group == null)
@@ -189,9 +264,12 @@ abstract class View extends Registry {
 	}
 
 	/**
-	 * @param array|Element $button
-	 * @param Element|null $group
-	 * @return Element
+	 *
+	 * Adds an element to a specific button group or outside groups.
+	 *
+	 * @param array|Element $button Array with element's properties or an element.
+	 * @param Element|null $group The group where to insert. Optional if you don't want to insert it in a group.
+	 * @return Element The inserted element
 	 */
 	public function addButtonElement($button, $group = null) {
 		if (!$button instanceof Element)
@@ -208,6 +286,13 @@ abstract class View extends Registry {
 		return $button;
 	}
 
+	/**
+	 *
+	 * Parses a javascript file to insert javascript function elements.
+	 *
+	 * @param string $name Name of the javascript file
+	 * @throws FileNotFoundException
+	 */
 	public function addJavascriptFile($name) {
 		if (!is_readable(ASSETS_DIR.'/js/'.$name))
 			throw new FileNotFoundException('File \''.ASSETS_DIR.'/js/'.$name.'\' not found or not readable.');
@@ -257,20 +342,43 @@ abstract class View extends Registry {
 		}
 	}
 
+	/**
+	 *
+	 * Checks if the action name exists in the config spec.
+	 *
+	 * @param Action $a
+	 * @return bool
+	 */
 	public function validateAction(Action $a) {
 		$name = $a->getName();
 
 		return isset($this->actionsSpec[$name]);
 	}
 
+	/**
+	 *
+	 * Gets the view ID.
+	 *
+	 * @return mixed
+	 */
 	public function getID() {
 		return $this->viewID;
 	}
 
+	/**
+	 *
+	 * Gets the application in which this view is contained.
+	 *
+	 * @return Application
+	 */
 	public function getApp() {
 		return $this->app;
 	}
 
+	/**
+	 * @param bool $update
+	 * @return array
+	 */
 	public function render($update = false) {
 		if ($this->render_cache !== [] && $update == false)
 			return $this->render_cache;
@@ -304,6 +412,9 @@ abstract class View extends Registry {
 	}
 
 	/**
+	 *
+	 * Used for adding actions and action groups.
+	 *
 	 * @param string $k
 	 * @param \Closure $v
 	 */
@@ -318,7 +429,7 @@ abstract class View extends Registry {
 	}
 
 	public function offsetExists($k) {
-		return in_array($k, ['elements', 'action_groups', 'buttons', 'launch_actions', 'visible_launch_actions', 'hidden_launch_actions', 'menus', 'config']);
+		return in_array($k, ['elements', 'action_groups', 'buttons', 'launch_actions', 'visible_launch_actions', 'hidden_launch_actions', 'menus', 'config', 'javascript']);
 	}
 
 	public function offsetGet($k) {

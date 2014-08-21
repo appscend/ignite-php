@@ -85,6 +85,10 @@ class ListElement extends Element{
 		$this->selectedItemAction = $ac;
 	}
 
+	/**
+	 * @param bool $update
+	 * @return array
+	 */
 	public function render($update = false) {
 		$result = parent::render($update);
 

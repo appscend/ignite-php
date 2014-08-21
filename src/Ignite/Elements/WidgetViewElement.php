@@ -85,6 +85,10 @@ class WidgetViewElement extends Element {
 		$this->swipeRightAction = $ac;
 	}
 
+	/**
+	 * @param bool $update
+	 * @return array
+	 */
 	public function render($update = false) {
 		$result = parent::render($update);
 

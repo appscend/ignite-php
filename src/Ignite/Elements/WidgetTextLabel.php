@@ -28,6 +28,10 @@ class WidgetTextLabel extends  Element{
 	 */
 	private $swipeRightAction = null;
 
+	/**
+	 * @param null|string $tag
+	 * @param array $properties
+	 */
 	public function __construct($tag, array $properties = []) {
 		parent::__construct($tag, $properties);
 		$this['element_type'] = 'label';
@@ -169,6 +173,10 @@ class WidgetTextLabel extends  Element{
 		$this->swipeRightAction = $ac;
 	}
 
+	/**
+	 * @param bool $update
+	 * @return array
+	 */
 	public function render($update = false) {
 		$result = parent::render($update);
 

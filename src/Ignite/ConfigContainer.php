@@ -9,20 +9,45 @@ use Symfony\Component\Config\Definition\Processor;
 
 class ConfigContainer extends Element implements ConfigurationInterface {
 
+	/**
+	 * Relative path to the configuration directory
+	 */
 	const CONFIG_PATH 					= '/src/Ignite/Config';
+	/**
+	 *	Name of the file where the configuration specification is.
+	 */
 	const GENERIC_CONFIG_FILE_SPEC 		= 'generic.json';
 
+	/**
+	 * @var array The parsed spec file
+	 */
 	private $configSpec = [];
 
+	/**
+	 *	Creates a new configuration container which is used to specify parameters for the current view.
+	 */
 	public function __construct() {
 		parent::__construct('cfg');
 		$this->configSpec = json_decode(file_get_contents('/home/razvan/proiecte/ignitephp'.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
 	}
 
+	/**
+	 * Appends a configuration specification. Used for more specific views.
+	 *
+	 * @param string $filepath The file path name relative to the config folder
+	 */
 	public function appendConfigSpec($filepath) {
 		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents('/home/razvan/proiecte/ignitephp'.self::CONFIG_PATH.'/'.$filepath), true));
 	}
 
+	/**
+	 *
+	 * Adds properties with prefix
+	 *
+	 * @param array $props
+	 * @param string $prefix
+	 * @throws InvalidConfigurationException If properties do not exist in the config spec
+	 */
 	public function addPrefixedProperties(array $props, $prefix) {
 		$props = $this->translateTags($props);
 
@@ -40,6 +65,10 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		$this->prefix_properties[$prefix] = $prefixed;
 	}
 
+	/**
+	 * @param bool $update
+	 * @return array
+	 */
 	public function render($update = false) {
 		$this->properties = $this->translateTags($this->properties);
 		$this->properties = (new Processor())->processConfiguration($this, [$this->properties]);
@@ -50,6 +79,14 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		return parent::render($update);
 	}
 
+	/**
+	 *
+	 * Translates long names to short names of properties.
+	 *
+	 * @param array $arr Long name properties
+	 * @return array Translated properties
+	 * @throws InvalidConfigurationException if the property is invalid
+	 */
 	private function translateTags(array $arr) {
 		$result = [];
 
@@ -67,6 +104,9 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		return $result;
 	}
 
+	/**
+	 * @return TreeBuilder
+	 */
 	public function getConfigTreeBuilder() {
 		$methods = [
 			'string' => 'scalarNode',

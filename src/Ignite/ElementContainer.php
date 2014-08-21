@@ -9,15 +9,37 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class ElementContainer extends Element implements ConfigurationInterface{
 
+	/**
+	 * @var array The parsed spec file
+	 */
 	private $configSpec = [];
+	/**
+	 * @var array Keys of this array are long name properties, values are the short ones.
+	 */
 	private $translationTags = [];
+	/**
+	 * @var bool If translation of the properties already occured.
+	 */
 	private $isTranslated = false;
 
+	/**
+	 *
+	 * Creates a new empty Element Container
+	 *
+	 * @param string $specFile The relative file path name of the config spec.
+	 * @param string $tag
+	 */
 	public function __construct($specFile, $tag = null) {
 		parent::__construct($tag);
 		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.$specFile), true);
 	}
 
+	/**
+	 *
+	 * Retrieves the translation tags based on the config spec.
+	 *
+	 * @param array $arr
+	 */
 	private function getTranslation(array $arr) {
 		foreach($arr as $k => $v) {
 			if (!isset($v['tag'])) {
@@ -29,6 +51,12 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		}
 	}
 
+	/**
+	 *
+	 * Translate the tags of an elements and its children recursively.
+	 *
+	 * @param Registry $child
+	 */
 	private function translateTags(Registry $child) {
 		$this->isTranslated = true;
 		$result = [];
@@ -68,6 +96,13 @@ class ElementContainer extends Element implements ConfigurationInterface{
 			$this->translateTags($c);
 	}
 
+	/**
+	 *
+	 * Appends a child to the container, checking if its properties are valid. If not, the element is not added.
+	 *
+	 * @param Registry $el
+	 * @return bool|Registry The inserted element or false if invalid properties are present.
+	 */
 	public function appendChild(Registry $el) {
 		try {
 			$result = $this->view->processor->processConfiguration($this, [$el->getProperties()]);
@@ -81,6 +116,13 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		}
 	}
 
+	/**
+	 *
+	 * Prepends a child to the container, checking if its properties are valid. If not, the element is not added.
+	 *
+	 * @param Registry $el
+	 * @return bool|mixed The inserted element or false if invalid properties are present.
+	 */
 	public function prependChild(Registry $el) {
 		try {
 			$result = $this->view->processor->processConfiguration($this, [$el->getProperties()]);
@@ -94,6 +136,10 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		}
 	}
 
+	/**
+	 * @param bool $update
+	 * @return array
+	 */
 	public function render($update = false) {
 		if (!$this->isTranslated) {
 			$this->getTranslation($this->configSpec);
@@ -103,6 +149,10 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		return parent::render($update);
 	}
 
+	/**
+	 * @return TreeBuilder
+	 * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+	 */
 	public function getConfigTreeBuilder() {
 		$treeBuilder = new TreeBuilder();
 
@@ -163,6 +213,11 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		return $treeBuilder;
 	}
 
+	/**
+	 * @param NodeBuilder $n
+	 * @param $prefix
+	 * @return null|NodeBuilder|\Symfony\Component\Config\Definition\Builder\NodeParentInterface
+	 */
 	private function getActionTree(NodeBuilder $n, $prefix) {
 		$n = $n->scalarNode($prefix.'a')->end();
 		$n = $n->scalarNode($prefix.'pr')->end();
@@ -200,7 +255,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 		$n = $n->scalarNode($prefix.'conf')->end();
 		$n = $n->scalarNode($prefix.'del')->end();
-		//the last element has its end after the switch statement ends
+		//the last element has its end after the switch statement ends in the getConfigTreeBuilder method
 		$n = $n->scalarNode($prefix.'tavi');
 
 		return $n;

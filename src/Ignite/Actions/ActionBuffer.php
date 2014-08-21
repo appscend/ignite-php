@@ -10,6 +10,9 @@ abstract class ActionBuffer {
 	 */
 	protected static $actionBuffer = [];
 
+	/**
+	 * @return \Ignite\Action[]
+	 */
 	public static function getAndClearBuffer() {
 		$copy = self::$actionBuffer;
 		self::$actionBuffer = [];

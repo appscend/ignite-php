@@ -6,6 +6,9 @@ use Ignite\Action;
 
 class MapActions extends ActionBuffer {
 
+	/**
+	 * @return Action
+	 */
 	public static function showUserLocation() {
 		$action = new Action('sloc');
 		self::$actionBuffer[] = $action;
@@ -13,6 +16,9 @@ class MapActions extends ActionBuffer {
 		return $action;
 	}
 
+	/**
+	 * @return Action
+	 */
 	public static function trackUserLocation() {
 		$action = new Action('track');
 		self::$actionBuffer[] = $action;
@@ -20,6 +26,9 @@ class MapActions extends ActionBuffer {
 		return $action;
 	}
 
+	/**
+	 * @return Action
+	 */
 	public static function centerLocation() {
 		$action = new Action('center');
 		self::$actionBuffer[] = $action;
@@ -27,6 +36,10 @@ class MapActions extends ActionBuffer {
 		return $action;
 	}
 
+	/**
+	 * @param string $name
+	 * @return Action
+	 */
 	public static function directionTo($name = null) {
 		$actionName = 'dir';
 
@@ -39,6 +52,10 @@ class MapActions extends ActionBuffer {
 		return $action;
 	}
 
+	/**
+	 * @param string $name
+	 * @return Action
+	 */
 	public static function locationSearch($name = null) {
 		$actionName = 'locsearch';
 

@@ -7,18 +7,34 @@ use Silex\ServiceProviderInterface;
 
 class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 
+	/**
+	 * @var string The current environment.
+	 */
 	private $current = '';
 	/**
-	 * @var SilexApp
+	 * @var SilexApp Application instance which uses this manager
 	 */
 	private $app = null;
 
+	/**
+	 * @var array The environments
+	 */
 	private $envs = [];
 
+	/**
+	 * Instantiates a new environment manager and sets 'devel' as the current one.
+	 */
 	public function __construct() {
 		$this->current = 'devel';
 	}
 
+	/**
+	 *
+	 * Sets an environment as the current one.
+	 *
+	 * @param string $name
+	 * @return bool True if the environment exists, false otherwise.
+	 */
 	public function setEnvironment($name) {
 		if (isset($this->envs[$name]))
 			$this->current = $name;
@@ -28,6 +44,13 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 		return true;
 	}
 
+	/**
+	 *
+	 * Returns the properties of a specific section
+	 *
+	 * @param string $section Section name
+	 * @return array
+	 */
 	public function get($section) {
 		$result = [];
 		array_walk($this->envs[$this->current], function($v, $k) use ($section, &$result) {
@@ -38,6 +61,13 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 		return $result;
 	}
 
+	/**
+	 *
+	 * Processes the parsed configuration in the form [section.property] = value
+	 *
+	 * @param array $arr
+	 * @return array
+	 */
 	private function processConfig(array $arr) {
 		$result = [];
 

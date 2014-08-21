@@ -26,6 +26,9 @@ class Logger implements ServiceProviderInterface {
 	 */
 	private $app = null;
 
+	/**
+	 * @param SilexApp $app
+	 */
 	public function __construct(SilexApp $app) {
 		if (!empty($app['env']->get('monolog')))
 			$this->logger = self::MONOLOG;
@@ -35,6 +38,10 @@ class Logger implements ServiceProviderInterface {
 		$this->app = $app;
 	}
 
+	/**
+	 * @param $message
+	 * @param int $severity
+	 */
 	public function log($message, $severity = self::LOG_INFO) {
 		switch ($severity) {
 			case self::LOG_INFO: {
