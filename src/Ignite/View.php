@@ -61,6 +61,16 @@ abstract class View extends Registry {
 	protected $viewID;
 
 	/**
+	 * @var bool Wether the view xml will
+	 */
+	protected $cacheable = false;
+
+	/**
+	 * @var int Cache expiration in seconds
+	 */
+	protected $cacheExpires = 3600;
+
+	/**
 	 * @var Processor Processor used for validating element properties
 	 */
 	public $processor = null;
@@ -94,6 +104,8 @@ abstract class View extends Registry {
 		$this->actionsSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/generic_actions.json'), true);
 
 		$this->app = $app;
+
+		$this->cacheExpires = $app['env']['memcache.expiration'];
 	}
 
 	/**
@@ -376,10 +388,44 @@ abstract class View extends Registry {
 	}
 
 	/**
+	 *
+	 * Enables or disables the external cache (memcache).
+	 *
+	 * @param boolean $cache
+	 */
+	public function setCache($cache) {
+		$this->cacheable = $cache;
+	}
+
+	/**
+	 *
+	 * Sets the expiration duration for this view in seconds
+	 *
+	 * @param integer $exp
+	 */
+	public function setCacheExpiration($exp) {
+		$this->cacheExpires = $exp;
+	}
+
+	/**
 	 * @param bool $update
 	 * @return array
 	 */
 	public function render($update = false) {
+		if ($this->cacheable) {
+			$key = $this->app->getRouteName().$this->viewID;
+			$extraIgnore = isset($this->app['env']['app.ignore_post']) ? $this->app['env']['app.ignore_post'] : [];
+
+			$data = array_diff($_POST, array_merge(Application::getBlacklistPostKeys(), $extraIgnore));
+			$key .= implode('', $data);
+			$key = 'ignite'.$key;
+
+			$cached = $this->app['memcache']->get(hash('sha1', $key));
+
+			if ($this->app['memcache']->getResultCode() ==  \Memcached::RES_SUCCESS)
+				return $cached;
+		}
+
 		if ($this->render_cache !== [] && $update == false)
 			return $this->render_cache;
 
@@ -407,8 +453,10 @@ abstract class View extends Registry {
 		else
 			$this->render_cache = $result;
 
-		return $this->render_cache;
+		if ($this->cacheable)
+			$this->app['memcache']->set($key, $this->render_cache, $this->cacheExpires);
 
+		return $this->render_cache;
 	}
 
 	/**

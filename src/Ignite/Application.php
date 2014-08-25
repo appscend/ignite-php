@@ -7,6 +7,7 @@ define("MODULES_DIR", ROOT_DIR.'/modules');
 define("ASSETS_DIR", ROOT_DIR.'/assets');
 
 use Ignite\Providers\Logger;
+use Ignite\Providers\MemcachedProvider;
 use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,10 @@ class Application extends SilexApp {
 	use Application\GELFTrait;
 	
 	const IGNITE_VERSION = '0.0.1';
+
+	private static $blacklistPostKeys = [
+		'carrier'
+	];
 
 	private $currentRoute = '';
 	private $currentModule = '';
@@ -47,9 +52,14 @@ class Application extends SilexApp {
 		$this->register(new EnvironmentManager());
 		$this->register(new Logger($this));
 
+		if ($this['env']['memcache.enabled'] == 'true')
+			$this->register(new MemcachedProvider());
+
 		$this->before(function(Request $req){
 			$this->setRouteName($req->get('_route'));
 		});
+
+
 
 	}
 
@@ -67,6 +77,10 @@ class Application extends SilexApp {
 
 	private function setRouteName($v) {
 		$this->currentRoute = $v;
+	}
+
+	public static function getBlacklistPostKeys() {
+		return self::$blacklistPostKeys;
 	}
 
 	public function getAssetsPath() {

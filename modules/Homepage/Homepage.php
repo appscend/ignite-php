@@ -16,8 +16,9 @@ class Homepage extends Module {
             return "Salut ".$name;
         })->bind("homepage");
         
-        $controllers->get('bye', function (Application $app) {
+        $controllers->match('bye', function (Application $app) {
             $view = new Views\CoverflowView($app, "endpage_cf");
+			$view->setCache(true);
 
 			$view->addImage(["image" => "Test section", "name" => "xxx"])->
 				onTap(function() {

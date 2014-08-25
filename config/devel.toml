@@ -4,3 +4,9 @@ static_xml_path = "http://razvan.freshweb.ro/ignitephp/static/"
 
 [monolog]
 logfile = "logs/development.log"
+
+[memcache]
+enabled = "true"
+host = "localhost"
+port = 11211
+expiration = 3600
