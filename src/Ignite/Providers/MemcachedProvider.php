@@ -23,10 +23,15 @@ class MemcachedProvider implements ServiceProviderInterface {
 	 *
 	 * This method is called after all services are registered
 	 * and should be used for "dynamic" configuration (whenever
-	 * a service must be requested).
+	 * a service must be requested).ls
 	 */
 	public function boot(Application $app) {
-		$app['memcache']->addServer($app['env']['memcache.host'], $app['env']['memcache.port']);
+		if ($app['env']['memcache.type'] == 'local')
+			$app['memcache']->addServer($app['env']['memcache.host'], $app['env']['memcache.port']);
+		else if ($app['env']['memcache.type'] == 'elastic') {
+			$app['memcache']->setOption(\Memcached::OPT_CLIENT_MODE, \Memcached::DYNAMIC_CLIENT_MODE);
+			$app['memcache']->addServer($app['env']['memcache.host'], $app['env']['memcache.port']);
+		}
 	}
 
 

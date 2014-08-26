@@ -6,7 +6,8 @@ static_xml_path = "http://razvan.freshweb.ro/ignitephp/static/"
 logfile = "logs/development.log"
 
 [memcache]
+type = "elastic"
 enabled = "true"
-host = "localhost"
+host = "dolphin-api-micro.eat5yi.cfg.euw1.cache.amazonaws.com"
 port = 11211
 expiration = 3600

@@ -22,7 +22,14 @@ class Application extends SilexApp {
 	const IGNITE_VERSION = '0.0.1';
 
 	private static $blacklistPostKeys = [
-		'carrier'
+		'udata',
+		'carrier',
+		'udid',
+		'device',
+		'os',
+		'timestamp',
+		'timezone',
+		'platform'
 	];
 
 	private $currentRoute = '';

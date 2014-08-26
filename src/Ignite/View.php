@@ -412,7 +412,7 @@ abstract class View extends Registry {
 	 * @return array
 	 */
 	public function render($update = false) {
-		if ($this->cacheable) {
+		if ($this->app['env']['memcache.enabled'] == "true" && $this->cacheable) {
 			$key = $this->app->getRouteName().$this->viewID;
 			$extraIgnore = isset($this->app['env']['app.ignore_post']) ? $this->app['env']['app.ignore_post'] : [];
 
@@ -453,7 +453,7 @@ abstract class View extends Registry {
 		else
 			$this->render_cache = $result;
 
-		if ($this->cacheable)
+		if ($this->app['env']['memcache.enabled'] == "true" && $this->cacheable)
 			$this->app['memcache']->set($key, $this->render_cache, $this->cacheExpires);
 
 		return $this->render_cache;
