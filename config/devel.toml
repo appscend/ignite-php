@@ -1,4 +1,5 @@
 [app]
+web_path = "http://razvan.freshweb.ro/ignitephp/"
 assets_path = "http://razvan.freshweb.ro/ignitephp/assets/"
 static_xml_path = "http://razvan.freshweb.ro/ignitephp/static/"
 
@@ -7,7 +8,7 @@ logfile = "logs/development.log"
 
 [memcache]
 type = "elastic"
-enabled = "true"
+enabled = "false"
 host = "dolphin-api-micro.eat5yi.cfg.euw1.cache.amazonaws.com"
 port = 11211
 expiration = 3600

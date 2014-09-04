@@ -97,4 +97,8 @@ class Application extends SilexApp {
 	public function getStaticXMLPath() {
 		return $this['env']['app.static_xml_path'];
 	}
+
+	public function getWebPath() {
+		return$this['env']['app.web_path'];
+	}
 }

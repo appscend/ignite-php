@@ -32,6 +32,9 @@ class WidgetView extends View{
 		if (!$content instanceof WidgetView)
 			$content = new WidgetViewElement('e', $content);
 
+		if (isset($content['target_xml_path']))
+			$content['target_xml_path'] = $this->app->getWebPath().$content['target_xml_path'];
+
 		$content->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($content);
@@ -49,6 +52,9 @@ class WidgetView extends View{
 	public function addImage($content) {
 		if (!$content instanceof WidgetImage)
 			$content = new WidgetImage('e', $content);
+
+		if (isset($content['background_image']))
+			$content['background_image'] = $this->app->getAssetsPath().$content['background_image'];
 
 		$content->view = $this;
 
