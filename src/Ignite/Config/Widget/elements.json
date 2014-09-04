@@ -334,6 +334,9 @@
 	"element_type": {
 		"tag": "type",
 		"type": "enum",
-		"enum": ["label", "image"]
+		"enum": {
+			"label": "label",
+			"image": "image"
+		}
 	}
 }

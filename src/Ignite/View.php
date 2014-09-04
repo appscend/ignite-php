@@ -407,6 +407,10 @@ abstract class View extends Registry {
 		$this->cacheExpires = $exp;
 	}
 
+	public function setViewId($avi) {
+		$this->viewID = $avi;
+	}
+
 	/**
 	 * @param bool $update
 	 * @return array
