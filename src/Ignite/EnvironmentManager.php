@@ -91,8 +91,8 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	public function register(SilexApp $app) {
 		$this->app = $app;
 		$app['env'] = $this;
-		$this->envs['devel'] = $this->processConfig($this->app->scan(ROOT_DIR.'/config/devel.toml')->getArray());
-		$this->envs['production'] = $this->processConfig($this->app->scan(ROOT_DIR.'/config/production.toml')->getArray());
+		$this->envs['devel'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/devel.toml')->getArray());
+		$this->envs['production'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/production.toml')->getArray());
 	}
 
 	/**

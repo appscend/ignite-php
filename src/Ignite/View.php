@@ -101,7 +101,7 @@ abstract class View extends Registry {
 		$this->elementsContainers['javascript'] = $this->appendChild(new ElementContainer(self::JAVASCRIPT_ELEMENTS_SPEC, 'funcs'));
 		$this->elementsContainers['javascript']->view = $this;
 
-		$this->actionsSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/generic_actions.json'), true);
+		$this->actionsSpec = json_decode(file_get_contents(LIB_ROOT_DIR.ConfigContainer::CONFIG_PATH.'/generic_actions.json'), true);
 
 		$this->app = $app;
 

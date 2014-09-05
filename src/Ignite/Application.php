@@ -2,9 +2,11 @@
 
 namespace Ignite;
 
-define("ROOT_DIR", dirname(dirname(__DIR__)));
-define("MODULES_DIR", ROOT_DIR.'/modules');
-define("ASSETS_DIR", ROOT_DIR.'/assets');
+define("LIB_ROOT_DIR", dirname(dirname(__DIR__)));
+define("APP_ROOT_DIR", dirname('../../..'));
+define("MODULES_DIR", APP_ROOT_DIR.'/modules');
+define("ASSETS_DIR", APP_ROOT_DIR.'/assets');
+define("CONFIG_DIR", APP_ROOT_DIR.'/config');
 
 use Ignite\Providers\Logger;
 use Ignite\Providers\MemcachedProvider;
@@ -40,8 +42,8 @@ class Application extends SilexApp {
 		
 		$this->register(new SilexProvider\UrlGeneratorServiceProvider());
 		
-		$configurationPaths = array(ROOT_DIR, ROOT_DIR."/config");
-		$modulePaths = glob(ROOT_DIR . "/modules" . '/*' , GLOB_ONLYDIR);
+		$configurationPaths = [CONFIG_DIR];
+		$modulePaths = glob(MODULES_DIR . "/*" , GLOB_ONLYDIR);
 		foreach ($modulePaths as $modulePath)
 			array_push($configurationPaths, $modulePath, $modulePath."/config");
 		
@@ -50,7 +52,7 @@ class Application extends SilexApp {
 		));
 		
 		$this->register(new Providers\LocatorServiceProvider());
-		$this['locator.directories'] = [ROOT_DIR];
+		$this['locator.directories'] = [LIB_ROOT_DIR, APP_ROOT_DIR];
 		
 		$this->register(new \Whoops\Provider\Silex\WhoopsServiceProvider);
 		

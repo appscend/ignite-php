@@ -1,4 +1,5 @@
 {
+	"minimum-stability": "dev",	
 	"name": "appscend/ignite-php",
     "require": {
         "silex/silex": "~1.2",
@@ -11,9 +12,6 @@
     "autoload": {
         "psr-0": { 
         	"Ignite\\": "src/"
-        },
-        "psr-4": {
-	        "Ignite\\Modules\\": "modules/"
         }
     }
 }

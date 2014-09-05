@@ -28,7 +28,7 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 	 */
 	public function __construct() {
 		parent::__construct('cfg');
-		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
+		$this->configSpec = json_decode(file_get_contents(LIB_ROOT_DIR.self::CONFIG_PATH.'/'.self::GENERIC_CONFIG_FILE_SPEC), true);
 	}
 
 	/**
@@ -37,7 +37,7 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 	 * @param string $filepath The file path name relative to the config folder
 	 */
 	public function appendConfigSpec($filepath) {
-		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents(ROOT_DIR.self::CONFIG_PATH.'/'.$filepath), true));
+		$this->configSpec = array_merge($this->configSpec, json_decode(file_get_contents(LIB_ROOT_DIR.self::CONFIG_PATH.'/'.$filepath), true));
 	}
 
 	/**

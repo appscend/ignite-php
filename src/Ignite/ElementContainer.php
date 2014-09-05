@@ -31,7 +31,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 	 */
 	public function __construct($specFile, $tag = null) {
 		parent::__construct($tag);
-		$this->configSpec = json_decode(file_get_contents(ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.$specFile), true);
+		$this->configSpec = json_decode(file_get_contents(LIB_ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.$specFile), true);
 	}
 
 	/**
