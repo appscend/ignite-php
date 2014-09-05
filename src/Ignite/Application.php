@@ -3,7 +3,7 @@
 namespace Ignite;
 
 define("LIB_ROOT_DIR", dirname(dirname(__DIR__)));
-define("APP_ROOT_DIR", dirname('../../..'));
+define("APP_ROOT_DIR", realpath('../../..'));
 define("MODULES_DIR", APP_ROOT_DIR.'/modules');
 define("ASSETS_DIR", APP_ROOT_DIR.'/assets');
 define("CONFIG_DIR", APP_ROOT_DIR.'/config');
@@ -41,7 +41,7 @@ class Application extends SilexApp {
 		parent::__construct($values);
 		
 		$this->register(new SilexProvider\UrlGeneratorServiceProvider());
-		
+
 		$configurationPaths = [CONFIG_DIR];
 		$modulePaths = glob(MODULES_DIR . "/*" , GLOB_ONLYDIR);
 		foreach ($modulePaths as $modulePath)
