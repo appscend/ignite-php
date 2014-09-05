@@ -33,16 +33,13 @@ class ImageGridView extends View {
 	 * @return int
 	 */
 	public function addImage($content) {
-		if ($content instanceof Element) {
-			$content->view = $this;
-			$this->elementsContainers['elements']->appendChild($content);
-		} else {
-			$el = new Element('e', $content);
-			$el->view = $this;
-			$this->elementsContainers['elements']->appendChild($el);
-		}
+		if (is_array($content))
+			$content = new Element('e', $content);
 
-		return count($this->elementsContainers['elements'])-1;
+		$content->view = $this;
+		$content['image'] = $this->app['env']['app.assets_path'].'/'.$content['image'];
+
+		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
 	public function getImage($idx) {
