@@ -37,7 +37,7 @@ class ImageGridView extends View {
 			$content = new Element('e', $content);
 
 		$content->view = $this;
-		$content['image'] = $this->app['env']['app.assets_path'].'/'.$content['image'];
+		$content['image'] = $this->app['env']['app.assets_path'].$content['image'];
 
 		return $this->elementsContainers['elements']->appendChild($content);
 	}

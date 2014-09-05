@@ -502,7 +502,7 @@
 		"type": "integer"
 	},
 	"detail_view_image_mode": {
-		"tag": "ls",
+		"tag": "dvicm",
 		"type": "enum",
 		"enum": {
 			"scale_to_fill": "stf",
