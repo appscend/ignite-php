@@ -17,6 +17,7 @@
 	},
 	"action": {
 		"tag": "a",
-		"type": "string"
+		"type": "Action",
+		"prefix": ""
 	}
 }

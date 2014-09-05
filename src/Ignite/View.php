@@ -108,6 +108,10 @@ abstract class View extends Registry {
 		$this->cacheExpires = $app['env']['memcache.expiration'];
 	}
 
+	public function setConfigurationValues(array $values) {
+		$this->config->setProperties($values);
+	}
+
 	/**
 	 *
 	 * Parses the configuration file for the curent module
@@ -463,6 +467,10 @@ abstract class View extends Registry {
 		return $this->render_cache;
 	}
 
+	public function getConfigurationValues() {
+		return $this->config->getProperties();
+	}
+
 	/**
 	 *
 	 * Used for adding actions and action groups.
@@ -481,7 +489,7 @@ abstract class View extends Registry {
 	}
 
 	public function offsetExists($k) {
-		return in_array($k, ['elements', 'action_groups', 'buttons', 'launch_actions', 'visible_launch_actions', 'hidden_launch_actions', 'menus', 'config', 'javascript']);
+		return in_array($k, ['elements', 'action_groups', 'buttons', 'launch_actions', 'visible_launch_actions', 'hidden_launch_actions', 'menus', 'javascript']);
 	}
 
 	public function offsetGet($k) {
