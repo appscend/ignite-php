@@ -120,10 +120,6 @@
 		"type": "Action",
 		"prefix": "pg"
 	},
-	"page_by_page_flip_action": {
-		"tag": "pga",
-		"type": "string"
-	},
 	"slideshow_page_start": {
 		"tag": "p",
 		"type": "integer",

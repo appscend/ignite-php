@@ -2,7 +2,7 @@
 	"style": {
 		"tag": "ls",
 		"type": "enum",
-		"enum": ["p", "g"]
+		"enum": {"plain": "p", "grouped": "g"}
 	},
 	"disable_scrolling": {
 		"tag": "lsd",

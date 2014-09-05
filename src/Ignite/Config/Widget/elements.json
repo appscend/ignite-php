@@ -254,7 +254,8 @@
 	},
 	"action": {
 		"tag": "a",
-		"type": "string"
+		"type": "Action",
+		"prefix": ""
 	},
 	"alternate_action": {
 		"tag": "a",
