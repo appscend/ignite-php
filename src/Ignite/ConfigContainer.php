@@ -6,6 +6,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class ConfigContainer extends Element implements ConfigurationInterface {
 
@@ -122,17 +123,7 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		$node = $root->children();
 
 		foreach ($this->configSpec as $fieldName => $field) {
-			if ($field['type'] !== 'ref') {
-				$node = call_user_func_array([$node, $methods[$field['type']]], [$field['tag']]);
-
-				if (isset($field['min']))
-					$node = $node->min($field['min']);
-				if (isset($field['max']))
-					$node = $node->max($field['max']);
-				if (isset($field['enum']))
-					$node = $node->values($field['enum']);
-
-			} else {
+			if ($field['type'] == 'ref') {
 				$node = call_user_func_array([$node, $methods[$this->configSpec[$field['ref']]['type']]], [$this->configSpec[$field['ref']]['tag']]);
 
 				if (isset($this->configSpec[$field['ref']]['min']))
@@ -141,6 +132,18 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 					$node = $node->max($this->configSpec[$field['ref']]['max']);
 				if (isset($this->configSpec[$field['ref']]['enum']))
 					$node = $node->values($this->configSpec[$field['ref']]['enum']);
+
+			} else if ($field['type'] == 'Action') {
+				$node = $this->getActionTree($node, $field['prefix']);
+			} else {
+				$node = call_user_func_array([$node, $methods[$field['type']]], [$field['tag']]);
+
+				if (isset($field['min']))
+					$node = $node->min($field['min']);
+				if (isset($field['max']))
+					$node = $node->max($field['max']);
+				if (isset($field['enum']))
+					$node = $node->values($field['enum']);
 			}
 
 			if ($field['type'] === 'boolean')
@@ -152,6 +155,54 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		$node->end()->end();
 
 		return $treeBuilder;
+	}
+
+	/**
+	 * @param NodeBuilder $n
+	 * @param $prefix
+	 * @return null|NodeBuilder|\Symfony\Component\Config\Definition\Builder\NodeParentInterface
+	 */
+	private function getActionTree(NodeBuilder $n, $prefix) {
+		$n = $n->scalarNode($prefix.'a')->end();
+		$n = $n->scalarNode($prefix.'pr')->end();
+		$n = $n->scalarNode($prefix.'l')->end();
+		$n = $n->scalarNode($prefix.'lp')->end();
+		$n = $n->scalarNode($prefix.'aprod')->end();
+		$n = $n->scalarNode($prefix.'dprod')->end();
+
+		$n = $n->scalarNode('prod'.$prefix.'a')->end();
+		$n = $n->scalarNode('prod'.$prefix.'pr')->end();
+		$n = $n->scalarNode('prod'.$prefix.'l')->end();
+		$n = $n->scalarNode('prod'.$prefix.'lp')->end();
+		$n = $n->scalarNode('prod'.$prefix.'aprod')->end();
+		$n = $n->scalarNode('prod'.$prefix.'dprod')->end();
+		$n = $n->scalarNode('prod'.$prefix.'rsk')->end();
+		$n = $n->scalarNode('prod'.$prefix.'rsv')->end();
+		$n = $n->scalarNode('prod'.$prefix.'conf')->end();
+		$n = $n->scalarNode('prod'.$prefix.'del')->end();
+		$n = $n->scalarNode('prod'.$prefix.'tavi')->end();
+
+		$n = $n->scalarNode($prefix.'rsk')->end();
+		$n = $n->scalarNode($prefix.'rsv')->end();
+
+		$n = $n->scalarNode('rs'.$prefix.'a')->end();
+		$n = $n->scalarNode('rs'.$prefix.'pr')->end();
+		$n = $n->scalarNode('rs'.$prefix.'l')->end();
+		$n = $n->scalarNode('rs'.$prefix.'lp')->end();
+		$n = $n->scalarNode('rs'.$prefix.'aprod')->end();
+		$n = $n->scalarNode('rs'.$prefix.'dprod')->end();
+		$n = $n->scalarNode('rs'.$prefix.'rsk')->end();
+		$n = $n->scalarNode('rs'.$prefix.'rsv')->end();
+		$n = $n->scalarNode('rs'.$prefix.'conf')->end();
+		$n = $n->scalarNode('rs'.$prefix.'del')->end();
+		$n = $n->scalarNode('rs'.$prefix.'tavi')->end();
+
+		$n = $n->scalarNode($prefix.'conf')->end();
+		$n = $n->scalarNode($prefix.'del')->end();
+		//the last element has its end after the switch statement ends in the getConfigTreeBuilder method
+		$n = $n->scalarNode($prefix.'tavi');
+
+		return $n;
 	}
 
 } 
