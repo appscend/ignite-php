@@ -12,6 +12,7 @@ use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Yosymfony\Silex\ConfigServiceProvider\ConfigServiceProvider;
+use Yosymfony\Toml\Toml;
 
 class Application extends SilexApp {
 	use SilexApp\UrlGeneratorTrait;
@@ -40,7 +41,7 @@ class Application extends SilexApp {
 		
 		$this->register(new SilexProvider\UrlGeneratorServiceProvider());
 
-		$appSettings = $this->scan(CONFIG_DIR.'/app.toml')->getArray();
+		$appSettings = Toml::parse(CONFIG_DIR.'/app.toml');
 		if (isset($appSettings['assets_path']))
 			define("ASSETS_DIR", APP_ROOT_DIR.$appSettings['assets_path']);
 		if (isset($appSettings['modules_path']))
