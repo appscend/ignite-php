@@ -4,8 +4,6 @@ namespace Ignite;
 
 define("APP_ROOT_DIR", realpath('.'));
 define("LIB_ROOT_DIR", APP_ROOT_DIR.'/vendor/appscend/ignite-php');
-define("MODULES_DIR", APP_ROOT_DIR.'/modules');
-define("ASSETS_DIR", APP_ROOT_DIR.'/assets');
 define("CONFIG_DIR", APP_ROOT_DIR.'/config');
 
 use Ignite\Providers\Logger;
@@ -68,7 +66,13 @@ class Application extends SilexApp {
 			$this->setRouteName($req->get('_route'));
 		});
 
-
+		$appSettings = $this->scan(CONFIG_DIR.'/app.toml')->getArray();
+		if (isset($appSettings['assets_path']))
+			define("ASSETS_DIR", APP_ROOT_DIR.$appSettings['assets_path']);
+		if (isset($appSettings['modules_path']))
+			define("MODULES_DIR", APP_ROOT_DIR.$appSettings['modules_path']);
+		if (isset($appSettings['logs_path']))
+			define("LOGS_DIR", APP_ROOT_DIR.$appSettings['logs_path']);
 
 	}
 

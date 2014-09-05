@@ -112,6 +112,9 @@ class Logger implements ServiceProviderInterface {
 			case self::MONOLOG: {
 				$app->register(new SilexProvider\MonologServiceProvider(), $app['env']->get('monolog'));
 
+				if (!file_exists(APP_ROOT_DIR.'/'.$app['env']['monolog.logfile']))
+					touch(LOGS_DIR.'/'.$app['env']['monolog.logfile']);
+
 				break;
 			}
 
