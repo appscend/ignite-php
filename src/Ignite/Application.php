@@ -40,6 +40,14 @@ class Application extends SilexApp {
 		
 		$this->register(new SilexProvider\UrlGeneratorServiceProvider());
 
+		$appSettings = $this->scan(CONFIG_DIR.'/app.toml')->getArray();
+		if (isset($appSettings['assets_path']))
+			define("ASSETS_DIR", APP_ROOT_DIR.$appSettings['assets_path']);
+		if (isset($appSettings['modules_path']))
+			define("MODULES_DIR", APP_ROOT_DIR.$appSettings['modules_path']);
+		if (isset($appSettings['logs_path']))
+			define("LOGS_DIR", APP_ROOT_DIR.$appSettings['logs_path']);
+
 		$configurationPaths = [CONFIG_DIR];
 		$modulePaths = glob(MODULES_DIR . "/*" , GLOB_ONLYDIR);
 		foreach ($modulePaths as $modulePath)
@@ -65,14 +73,6 @@ class Application extends SilexApp {
 		$this->before(function(Request $req){
 			$this->setRouteName($req->get('_route'));
 		});
-
-		$appSettings = $this->scan(CONFIG_DIR.'/app.toml')->getArray();
-		if (isset($appSettings['assets_path']))
-			define("ASSETS_DIR", APP_ROOT_DIR.$appSettings['assets_path']);
-		if (isset($appSettings['modules_path']))
-			define("MODULES_DIR", APP_ROOT_DIR.$appSettings['modules_path']);
-		if (isset($appSettings['logs_path']))
-			define("LOGS_DIR", APP_ROOT_DIR.$appSettings['logs_path']);
 
 	}
 
