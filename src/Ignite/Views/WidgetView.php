@@ -1,6 +1,7 @@
 <?php
 
 namespace Ignite\Views;
+use Ignite\Element;
 use Ignite\Elements\WidgetTextLabel;
 use Ignite\Elements\WidgetViewElement;
 use Ignite\Elements\WidgetImage;
@@ -55,6 +56,20 @@ class WidgetView extends View{
 
 		if (isset($content['background_image']))
 			$content['background_image'] = $this->app->getAssetsPath().$content['background_image'];
+
+		$content->view = $this;
+
+		return $this->elementsContainers['elements']->appendChild($content);
+	}
+
+	public function addPagination($content) {
+		if (!($content instanceof Element))
+			$content = new Element('e', $content);
+
+		if (isset($content['selected_image_url']))
+			$content['selected_image_url'] = $this->app->getWebPath().$content['selected_image_url'];
+		if (isset($content['unselected_image_url']))
+			$content['unselected_image_url'] = $this->app->getWebPath().$content['unselected_image_url'];
 
 		$content->view = $this;
 
