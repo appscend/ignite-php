@@ -58,7 +58,8 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|integer $duration
 	 * @return Action
 	 */
-	public static function changePositionAndSize($avi, $coords, $lcoords = [], $padcoords = [], $padlcoords = [], $duration = null) {
+	public static function changePositionAndSize($avi, $coords = [], $lcoords = [], $padcoords = [], $padlcoords = [], $duration = null) {
+		$coords = implode($coords, '::');
 		$lcoords = implode($lcoords, '::');
 		$padcoords = implode($padcoords, '::');
 		$padlcoords = implode($padlcoords, '::');
