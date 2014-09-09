@@ -19,5 +19,9 @@
 		"tag": "a",
 		"type": "Action",
 		"prefix": ""
+	},
+	"name": {
+		"tag": "n",
+		"type": "string"
 	}
 }
