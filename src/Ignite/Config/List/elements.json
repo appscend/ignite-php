@@ -1,11 +1,16 @@
 {
-	"name": {
+	"section_name": {
 		"tag": "sn",
 		"type": "string"
 	},
 
 	"code": {
 		"tag": "ssc",
+		"type": "string"
+	},
+
+	"name": {
+		"tag": "n",
 		"type": "string"
 	},
 
