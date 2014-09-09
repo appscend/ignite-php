@@ -71,6 +71,7 @@ class WidgetView extends View{
 		if (isset($content['unselected_image_url']))
 			$content['unselected_image_url'] = $this->app->getWebPath().$content['unselected_image_url'];
 
+		$content['type'] = 'pagination';
 		$content->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($content);
