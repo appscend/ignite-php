@@ -337,7 +337,20 @@
 		"type": "enum",
 		"enum": {
 			"label": "label",
-			"image": "image"
+			"image": "image",
+			"pagination": "pagination"
 		}
+	},
+	"parent_view": {
+		"tag": "parent",
+		"type": "string"
+	},
+	"selected_image_url": {
+		"tag": "pi",
+		"type": "string"
+	},
+	"unselected_image_url": {
+		"tag": "spi",
+		"type": "string"
 	}
 }
