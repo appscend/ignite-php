@@ -46,8 +46,6 @@ class Application extends SilexApp {
 			define("ASSETS_DIR", APP_ROOT_DIR.$appSettings['assets_path']);
 		if (isset($appSettings['modules_path']))
 			define("MODULES_DIR", APP_ROOT_DIR.$appSettings['modules_path']);
-		if (isset($appSettings['logs_path']))
-			define("LOGS_DIR", APP_ROOT_DIR.$appSettings['logs_path']);
 
 		$configurationPaths = [CONFIG_DIR];
 		$modulePaths = glob(MODULES_DIR . "/*" , GLOB_ONLYDIR);
