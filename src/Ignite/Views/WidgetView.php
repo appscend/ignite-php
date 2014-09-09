@@ -54,7 +54,7 @@ class WidgetView extends View{
 		if (!$content instanceof WidgetImage)
 			$content = new WidgetImage('e', $content);
 
-		if (isset($content['background_image']))
+		if (isset($content['background_image']) && strpos($content['background_image'], 'http') !== 0)
 			$content['background_image'] = $this->app->getAssetsPath().$content['background_image'];
 
 		$content->view = $this;
