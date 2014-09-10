@@ -189,7 +189,7 @@ class ElementContainer extends Element implements ConfigurationInterface{
 
 				case 'boolean': {
 					$node = $node->enumNode($fieldName);
-					$node = $node->values(['true', 'false']);
+					$node = $node->values(['yes', 'no']);
 
 					break;
 				}
