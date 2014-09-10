@@ -38,5 +38,13 @@
 	"sync_vertical_views": {
 		"tag": "syncy",
 		"type": "string"
+	},
+	"scale_vertically": {
+		"tag": "sv",
+		"type": "boolean"
+	},
+	"scale_horizontally": {
+		"tag": "sh",
+		"type": "boolean"
 	}
 }
