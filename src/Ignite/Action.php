@@ -36,7 +36,8 @@ class Action extends Registry {
 		$this->prefix = $prefix;
 
 		if (!empty($params))
-			$this[$prefix.'pr'] = join("::", $params);
+			$this[$prefix.'pr'] = rtrim(join("::", $params), ':');
+
 	}
 
 	/**

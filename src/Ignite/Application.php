@@ -95,15 +95,15 @@ class Application extends SilexApp {
 		return self::$blacklistPostKeys;
 	}
 
+	public function getWebPath() {
+		return isset($this['env']['app.web_path']) ? $this['env']['app.web_path'] : '';
+	}
+
 	public function getAssetsPath() {
-		return $this['env']['app.assets_path'];
+		return $this->getWebPath().$this['env']['app.assets_path'];
 	}
 
 	public function getStaticXMLPath() {
-		return $this['env']['app.static_xml_path'];
-	}
-
-	public function getWebPath() {
-		return$this['env']['app.web_path'];
+		return $this->getWebPath().$this['env']['app.static_xml_path'];
 	}
 }

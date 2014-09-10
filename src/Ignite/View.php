@@ -297,6 +297,9 @@ abstract class View extends Registry {
 		} else
 			$this->elementsContainers['buttons']->appendChild($button);
 
+		if (isset($button['button_image']) && strpos($button['button_image'], 'http') !== 0)
+			$button['button_image'] = $this->app->getWebPath().$button['button_image'];
+
 		$button->view = $this;
 
 		return $button;

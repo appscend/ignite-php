@@ -1,7 +1,7 @@
 [app]
 web_path = "http://razvan.freshweb.ro/ignitephp/"
-assets_path = "http://razvan.freshweb.ro/ignitephp/assets/"
-static_xml_path = "http://razvan.freshweb.ro/ignitephp/static/"
+assets_path = "assets/"
+static_xml_path = "static/"
 
 [monolog]
 logfile = "development.log"

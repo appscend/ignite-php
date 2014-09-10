@@ -40,7 +40,7 @@ class CoverflowView extends View {
 			throw new \InvalidArgumentException("Parameter must be instance of \\Ignite\\Element or array.");
 
 		$content->view = $this;
-		if (isset($content['image']))
+		if (isset($content['image']) && strpos($content['image'], 'http') !== 0)
 			$content['image'] = $this->app->getAssetsPath().$content['image'];
 
 		return $this->elementsContainers['elements']->appendChild($content);
