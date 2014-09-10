@@ -37,7 +37,8 @@ class ImageGridView extends View {
 			$content = new Element('e', $content);
 
 		$content->view = $this;
-		$content['image'] = $this->app['env']['app.assets_path'].$content['image'];
+		if (strpos($content['image'], 'http') !== 0)
+			$content['image'] = $this->app->getAssetsPath().$content['image'];
 
 		return $this->elementsContainers['elements']->appendChild($content);
 	}
