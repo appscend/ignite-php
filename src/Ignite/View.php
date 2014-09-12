@@ -5,6 +5,7 @@ use Ignite\Actions\ActionBuffer;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 abstract class View extends Registry {
 
@@ -35,6 +36,24 @@ abstract class View extends Registry {
 	 *	Config spec for all generic actions
 	 */
 	const GENERIC_ACTIONS_SPEC			= 'generic_actions.json';
+
+	const TYPE_CAMERA_VIEW		=	0;
+	const TYPE_COVERFLOW_VIEW	=	1;
+	const TYPE_FORM_VIEW		=	2;
+	const TYPE_IMAGEGRID_VIEW	=	3;
+	const TYPE_LAYAR_VIEW		=	4;
+	const TYPE_LIST_VIEW		=	5;
+	const TYPE_MAP_VIEW			=	6;
+	const TYPE_MENUBAR_VIEW		=	7;
+	const TYPE_QRCODE_VIEW		=	8;
+	const TYPE_TABBAR_VIEW		=	9;
+	const TYPE_WEBVIEW_VIEW		=	10;
+	const TYPE_WIDGET_VIEW		=	11;
+
+	/**
+	 * @var Element[]
+	 */
+	protected $elementClasses = [];
 
 	/**
 	 * @var ElementContainer[] Array containing all the container elements.
@@ -84,6 +103,11 @@ abstract class View extends Registry {
 	 */
 	public function __construct(Application $app, $viewID) {
 		parent::__construct('par');
+
+		if ($app->getView($viewID) === null) {
+			throw new ResourceNotFoundException("View with ID '$viewID' does not exist.");
+		}
+
 		$this->viewID = $viewID;
 		$this->processor = new Processor();
 		$this->elementsContainers['action_groups'] = $this->appendChild(new ElementContainer(self::ACTION_GROUP_SPEC, 'ags'));
@@ -118,31 +142,47 @@ abstract class View extends Registry {
 	 *
 	 * @param $filepath
 	 */
-	protected function parseConfiguration($filepath) {
-		$config = $this->app->scan($filepath)->getArray();
-		$this->config->setProperties(array_merge($this->config->getProperties(), $config['cfg']));
+	protected function parseConfiguration() {
+		$avi = $this->viewID;
+		$allConfig = $this->array_filter_key($this->app->parsedLayout, function($k) use ($avi){ return strpos($k, $avi) === 0; });
 
-		if (isset($config['landscape']))
-			$this->config->addPrefixedProperties($config['landscape'], Element::$prefixes[Element::FOR_LANDSCAPE -1]);
+		$allConfig[$avi] = array_filter($allConfig[$avi], function($v){ return !is_array($v); });
+		$this->config->setProperties(array_merge($this->config->getProperties(), $allConfig[$avi]));
 
-		if (isset($config['tablet']))
-			$this->config->addPrefixedProperties($config['tablet'], Element::$prefixes[Element::FOR_TABLET -1]);
+		if (isset($allConfig[$avi.'*l'])) {
+			$allConfig[$avi.'*l'] = array_filter($allConfig[$avi.'*l'], function($v){ return !is_array($v); });
+			$this->config->addPrefixedProperties($allConfig[$avi.'*l'], Element::$prefixes[Element::FOR_LANDSCAPE -1]);
+		}
 
-		if (isset($config['android']))
-			$this->config->addPrefixedProperties($config['android'], Element::$prefixes[Element::FOR_ANDROID -1]);
+		if (isset($allConfig[$avi.'*tab'])) {
+			$allConfig[$avi.'*tab'] = array_filter($allConfig[$avi.'*tab'], function($v){ return !is_array($v); });
+			$this->config->addPrefixedProperties($allConfig[$avi.'*tab'], Element::$prefixes[Element::FOR_TABLET -1]);
+		}
 
-		if (isset($config['landscape_tablet']))
-			$this->config->addPrefixedProperties($config['landscape_tablet'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET) -1]);
+		if (isset($allConfig[$avi.'*and'])) {
+			$allConfig[$avi.'*and'] = array_filter($allConfig[$avi.'*and'], function($v){ return !is_array($v); });
+			$this->config->addPrefixedProperties($allConfig[$avi.'*and'], Element::$prefixes[Element::FOR_ANDROID -1]);
+		}
 
-		if (isset($config['landscape_android']))
-			$this->config->addPrefixedProperties($config['landscape_android'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_ANDROID) -1]);
+		if (isset($allConfig[$avi.'*tabl'])) {
+			$allConfig[$avi.'*tabl'] = array_filter($allConfig[$avi.'*tabl'], function($v){ return !is_array($v); });
+			$this->config->addPrefixedProperties($allConfig[$avi.'*tabl'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET) -1]);
+		}
 
-		if (isset($config['tablet_android']))
-			$this->config->addPrefixedProperties($config['tablet_android'], Element::$prefixes[(Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
+		if (isset($allConfig[$avi.'*andl'])) {
+			$allConfig[$avi.'*andl'] = array_filter($allConfig[$avi.'*andl'], function($v){ return !is_array($v); });
+			$this->config->addPrefixedProperties($allConfig[$avi.'*andl'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_ANDROID) -1]);
+		}
 
-		if (isset($config['landscape_tablet_android']))
-			$this->config->addPrefixedProperties($config['landscape_tablet_android'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
+		if (isset($allConfig[$avi.'*andtab'])) {
+			$allConfig[$avi.'*andtab'] = array_filter($allConfig[$avi.'*andtab'], function($v){ return !is_array($v); });
+			$this->config->addPrefixedProperties($allConfig[$avi.'*andtab'], Element::$prefixes[(Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
+		}
 
+		if (isset($allConfig[$avi.'*andtabl'])) {
+			$allConfig[$avi.'*andtabl'] = array_filter($allConfig[$avi.'*andtabl'], function($v){ return !is_array($v); });
+			$this->config->addPrefixedProperties($allConfig[$avi.'*andtabl'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
+		}
 	}
 
 	/**
@@ -468,6 +508,72 @@ abstract class View extends Registry {
 			$this->app['memcache']->set($key, $this->render_cache, $this->cacheExpires);
 
 		return $this->render_cache;
+	}
+
+	protected function getElementsFromConfig() {
+		$classes = array_filter($this->app->parsedLayout[$this->viewID], function($k) { return is_array($k); });
+		$result = [];
+
+		$prefixConstants = array_flip(Element::$prefixes);
+
+		foreach ($classes as $key => $props) {
+			$r = explode('*', $key); // r[0] - keyname; r[1] = prefix (may not exist);
+
+			if (!isset($result[$r[0]]))
+				$result[$r[0]] = [];
+
+			if (!isset($r[1])) {
+				$result[$r[0]][0] = $props;
+			} else {
+				$result[$r[0]][$prefixConstants[$r[1]]+1] = $props;
+			}
+
+		}
+
+		$result = array_merge($result, $this->getGlobalClasses());
+		$this->elementClasses = $result;
+	}
+
+	private function getGlobalClasses() {
+		$globalClasses = $this->array_filter_key($this->app->parsedLayout, function($k) { return strstr($k, '@') !== false; });
+
+		$prefixConstants = array_flip(Element::$prefixes);
+		$result = [];
+
+		foreach ($globalClasses as $key => $props) {
+			$r = explode('@', $key); // r[0] - viewID, not empty if global to the view only; r[1] = keyname*prefix
+			$p = explode('*', $r[1]); // r[0] - keyname; r[1] = prefix (may not exist);
+
+			if (!($r[0] == $this->viewID || $r[0] == ''))
+				continue;
+
+			if (!isset($result[$p[0]]))
+				$result[$p[0]] = [];
+
+			if (!isset($p[1])) {
+				$result[$p[0]][0] = $props;
+			} else {
+				$result[$p[0]][$prefixConstants[$p[1]]+1] = $props;
+			}
+		}
+
+		return $result;
+	}
+
+	protected function applyProperties(Element $el, array $props) {
+		$el->appendProperties($props[0]);
+
+		foreach ($props as $prefix => $pr) {
+			if ($prefix == 0)
+				continue;
+			$el->setFor($pr, $prefix);
+		}
+	}
+
+	protected function array_filter_key(array $a, \Closure $f) {
+		$f = array_filter(array_keys($a), $f);
+
+		return array_intersect_key($a, array_flip($f));
 	}
 
 	public function getConfigurationValues() {

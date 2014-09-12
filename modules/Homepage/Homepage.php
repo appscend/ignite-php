@@ -6,15 +6,22 @@ use Ignite\Element;
 use Ignite\Module;
 use Ignite\Application;
 use Ignite\Views;
+use Ignite\View;
 
 class Homepage extends Module {
 
 	public function views(Application $app) {
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('hello/{name}', function (Application $app, $name) {
-            return "Salut ".$name;
-        })->bind("homepage");
+
+		$app->registerView('homepage', View::TYPE_COVERFLOW_VIEW, 'hello', function(Application $app) {
+			$v = new Views\CoverflowView($app, 'homepage');
+
+			$v->addImage('tq');
+			$v->addImage('orice_element');
+
+			return $v;
+		});
         
         $controllers->match('bye', function (Application $app) {
             $view = new Views\CoverflowView($app, "endpage_cf");

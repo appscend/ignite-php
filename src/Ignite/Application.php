@@ -33,8 +33,12 @@ class Application extends SilexApp {
 		'platform'
 	];
 
+	private $views = [];
+
 	private $currentRoute = '';
 	private $currentModule = '';
+
+	public $parsedLayout = [];
 
 	function __construct(array $values = array()) {
 		parent::__construct($values);
@@ -73,6 +77,18 @@ class Application extends SilexApp {
 			$this->setRouteName($req->get('_route'));
 		});
 
+	}
+
+	public function registerView($id, $type, $r, \Closure $f) {
+		$this->match($r, $f)->bind($id);
+		$this->views[$id] = new ViewStub($id, $type, $r);
+	}
+
+	public function getView($id) {
+		if (isset($this->views[$id]))
+			return $this->views[$id];
+
+		return null;
 	}
 
 	public function getModuleName() {

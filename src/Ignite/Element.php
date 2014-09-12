@@ -92,7 +92,7 @@ class Element extends Registry {
 	 */
 	public function setFor(array $props, $where) {
 		if (1 > $where || 7 < $where)
-			throw new \InvalidArgumentException("Invalid prefix mask for element '{$this->getTag()}' in view '{$this->view->getID()}' .");
+			throw new \InvalidArgumentException("Invalid prefix mask '$where' for element '{$this->getTag()}' in view '{$this->view->getID()}' .");
 
 		$this->prefix_properties[$where-1] = array_merge($this->prefix_properties[$where-1], $props);
 

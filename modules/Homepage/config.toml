@@ -1,0 +1,34 @@
+[homepage]
+background_color = "000000"
+background_image_landscape_mode = "niciuna.jpg"
+
+[homepage*l]
+background_color = "ffffff"
+
+[homepage.tq]
+image = "imagine"
+name = "nume"
+
+[homepage.eq*l]
+image = "imagine_landscape"
+
+[homepage.tq*l]
+name = "nume_landscape"
+
+[@orice_element]
+name = "1"
+
+[homepage@orice_element_din_view]
+image = "x"
+
+[homepage@orice_element_din_view*andpad]
+image = "x"
+
+[@orice_element*andpadl]
+name = "prrrreeea"
+
+[alt_view@element]
+image = "y"
+
+[alt_view]
+tesst = "test"

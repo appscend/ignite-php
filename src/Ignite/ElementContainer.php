@@ -74,7 +74,14 @@ class ElementContainer extends Element implements ConfigurationInterface{
 		foreach ($child->getPrefixedProperties() as $key => &$for) {
 			if (empty($for)) continue;
 
-			$for = $this->view->processor->processConfiguration($this, [$for]);
+
+			try {
+				$for = $this->view->processor->processConfiguration($this, [$for]);
+			} catch (InvalidConfigurationException $e) {
+				$this->getParent()->getApp()['ignite_logger']->log($e->getMessage(), Logger::LOG_ERROR);
+				continue;
+			}
+
 
 			foreach($for as $k => $v) {
 				if (isset($this->translationTags[$k])) {

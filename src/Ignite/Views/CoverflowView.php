@@ -23,22 +23,34 @@ class CoverflowView extends View {
 		$this->config->view = $this;
 
 		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(LIB_ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
-		$this->parseConfiguration(MODULES_DIR.'/'.$app->getModuleName().'/config/'.$app->getRouteName().'/'.$viewID.'.toml');
+		$this->parseConfiguration();
+		$this->getElementsFromConfig();
 	}
 
 	/**
+	 * @param string $key
 	 * @param array|Element $content
 	 * @return Element
 	 * @throws \InvalidArgumentException
 	 */
-	public function addImage($content) {
-		if ($content instanceof Element)
-			$content->setTag('e');
-		else if (is_array($content))
-			$content = new Element('e', $content);
-		else
-			throw new \InvalidArgumentException("Parameter must be instance of \\Ignite\\Element or array.");
+	public function addImage($key = null, $content = []) {
+		$content = new Element('e');
 
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
+
+		//todo this url checking must be done for all prefixed tags !
 		$content->view = $this;
 		if (isset($content['image']) && strpos($content['image'], 'http') !== 0)
 			$content['image'] = $this->app->getAssetsPath().$content['image'];
