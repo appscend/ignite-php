@@ -23,5 +23,9 @@
 	"name": {
 		"tag": "n",
 		"type": "string"
+	},
+	"Key": {
+		"tag": "key",
+		"type": "string"
 	}
 }

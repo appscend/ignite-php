@@ -18,5 +18,9 @@
 	"post_data": {
 		"tag": "data",
 		"type": "string"
+	},
+	"Key": {
+		"tag": "key",
+		"type": "string"
 	}
 }

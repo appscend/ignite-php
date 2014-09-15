@@ -115,5 +115,9 @@
 		"tag": "a",
 		"type": "Action",
 		"prefix": "s"
+	},
+	"Key": {
+		"tag": "key",
+		"type": "string"
 	}
 }

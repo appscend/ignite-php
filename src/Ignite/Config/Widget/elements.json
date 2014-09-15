@@ -352,5 +352,9 @@
 	"unselected_image_url": {
 		"tag": "spi",
 		"type": "string"
+	},
+	"Key": {
+		"tag": "key",
+		"type": "string"
 	}
 }

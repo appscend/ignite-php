@@ -26,5 +26,9 @@
 	"large_image": {
 		"tag": "li",
 		"type": "string"
+	},
+	"Key": {
+		"tag": "key",
+		"type": "string"
 	}
 }

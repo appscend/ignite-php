@@ -310,5 +310,9 @@
 		"tag": "a",
 		"type": "Action",
 		"prefix": ""
+	},
+	"Key": {
+		"tag": "key",
+		"type": "string"
 	}
 }
