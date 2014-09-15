@@ -8,6 +8,7 @@ use Ignite\Elements\WidgetImage;
 use Ignite\View;
 use Ignite\ElementContainer;
 use Ignite\ConfigContainer;
+use Ignite\ViewStub;
 
 class WidgetView extends View{
 
@@ -26,45 +27,95 @@ class WidgetView extends View{
 		$this->config->view = $this;
 
 		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(LIB_ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
-		$this->parseConfiguration(MODULES_DIR.'/'.$app->getModuleName().'/config/'.$app->getRouteName().'/'.$viewID.'.toml');
+		$this->parseConfiguration();
+		$this->getElementsFromConfig();
 	}
 
-	public function addView($content) {
-		if (!$content instanceof WidgetView)
-			$content = new WidgetViewElement('e', $content);
+	public function addView(ViewStub $v, $key = null, $content = null) {
+		$content = new WidgetViewElement('e');
 
-		if (isset($content['target_xml_path']))
-			$content['target_xml_path'] = $this->app->getWebPath().$content['target_xml_path'];
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
+
+		$content['target_xml_path'] = $this->app->getWebPath().'/'.$v->route;
+		$content['view_type'] = $v->type;
 
 		$content->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
-	public function addTextLabel($content) {
-		if (!$content instanceof WidgetTextLabel)
-			$content = new WidgetTextLabel('e', $content);
+	public function addTextLabel($key = null, $content = null) {
+		$content = new WidgetTextLabel('e');
+
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
 
 		$content->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
-	public function addImage($content) {
-		if (!$content instanceof WidgetImage)
-			$content = new WidgetImage('e', $content);
+	public function addImage($key = null, $content = null) {
+		$content = new WidgetImage('e');
 
-		if (isset($content['background_image']) && strpos($content['background_image'], 'http') !== 0)
-			$content['background_image'] = $this->app->getAssetsPath().$content['background_image'];
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
 
 		$content->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
-	public function addPagination($content) {
-		if (!($content instanceof Element))
-			$content = new Element('e', $content);
+	public function addPagination($key = null, $content = null) {
+		$content = new Element('e');
+
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
 
 		if (isset($content['selected_image_url']))
 			$content['selected_image_url'] = $this->app->getWebPath().$content['selected_image_url'];
