@@ -20,16 +20,30 @@ class MenuBarView extends View {
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'mb';
 		$this->config->view = $this;
-		$this->parseConfiguration(MODULES_DIR.'/'.$app->getModuleName().'/config/'.$app->getRouteName().'/'.$viewID.'.toml');
+		$this->parseConfiguration();
+		$this->getElementsFromConfig();
 	}
 
 	/**
 	 * @param array|Element $content
 	 * @return int
 	 */
-	public function addMenu($content) {
-		if (!$content instanceof Element)
-			$content = new Element('e', $content);
+	public function addMenu($key = null, $content = null) {
+		$content = new Element('e');
+
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
 
 		$content->view = $this;
 

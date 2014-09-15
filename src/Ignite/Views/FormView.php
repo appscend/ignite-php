@@ -24,7 +24,8 @@ class FormView extends View{
 		$this->config->view = $this;
 
 		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(LIB_ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
-		$this->parseConfiguration(MODULES_DIR.'/'.$app->getModuleName().'/config/'.$app->getRouteName().'/'.$viewID.'.toml');
+		$this->parseConfiguration();
+		$this->getElementsFromConfig();
 	}
 
 	public function insertGroupSeparator($content) {
@@ -51,33 +52,46 @@ class FormView extends View{
 	 * @param array|TextFieldElement $content
 	 * @return int
 	 */
-	public function insertTextField($content) {
-		if (!$content instanceof TextFieldElement)
-			$content = new Element('e', $content);
+	public function insertTextField($key = null, $content = []) {
+		$content = new TextFieldElement('e');
+
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
 
 		$content->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
-	public function insertTextArea($content) {
-		return $this->insertElement('ta', $content);
+	public function insertTextArea($key = null, $content = []) {
+		return $this->insertElement('ta', $key, $content);
 	}
 
-	public function insertImageUpload($content) {
-		return $this->insertElement('i', $content);
+	public function insertImageUpload($key = null, $content = []) {
+		return $this->insertElement('i', $key, $content);
 	}
 
-	public function insertMapLocation($content) {
-		return $this->insertElement('m', $content);
+	public function insertMapLocation($key = null, $content = []) {
+		return $this->insertElement('m', $key, $content);
 	}
 
-	public function insertDatePicker($content) {
-		return $this->insertElement('dp', $content);
+	public function insertDatePicker($key = null, $content = []) {
+		return $this->insertElement('dp', $key, $content);
 	}
 
-	public function insertButton($content) {
-		return $this->insertElement('b', $content);
+	public function insertButton($key = null, $content = []) {
+		return $this->insertElement('b', $key, $content);
 	}
 
 	public function removeElement($idx) {
@@ -97,9 +111,22 @@ class FormView extends View{
 	 * @param array|Element $content
 	 * @return int
 	 */
-	private function insertElement($type, $content) {
-		if (!$content instanceof Element)
-			$content = new Element('e', $content);
+	private function insertElement($type, $key = null, $content = []) {
+		$content = new Element('e');
+
+		if ($key) {
+			$content['Key'] = $key;
+			if (isset($this->elementClasses[$key])) {
+				$this->applyProperties($content, $this->elementClasses[$key]);
+			} else {
+				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+				return false;
+			}
+
+		} else {
+			$content->appendProperties($content);
+		}
 
 		$content['control_type'] = $type;
 		$content->view = $this;

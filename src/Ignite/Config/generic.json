@@ -39,7 +39,21 @@
 	},
 	"background_image_landscape_mode": {
 		"tag": "bilm",
-		"type": "string"
+		"type": "enum",
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"background_video": {
 		"tag": "bv",
@@ -142,7 +156,16 @@
 	"ad_provider": {
 		"tag": "adn",
 		"type": "enum",
-		"enum": ["admob", "mobclix", "millennial", "iad", "inmobi", "jumptap", "flurry", "none"]
+		"enum": {
+			"admob": "admob",
+			"mobclix": "mobclix",
+			"millennial": "millennial",
+			"iad": "iad",
+			"inmobi": "inmobi",
+			"jumptap": "jumptap",
+			"flurry": "flurry",
+			"none": "none"
+		}
 	},
 	"ad_provider_key": {
 		"tag": "adk",
