@@ -33,14 +33,16 @@ class MenuBarView extends View {
 
 		if ($key) {
 			$content['Key'] = $key;
-			if (isset($this->elementClasses[$key])) {
-				$this->applyProperties($content, $this->elementClasses[$key]);
-			} else {
-				$this->app['ignite_logger']->log("Class '$key' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+			$keys = explode(',', $key);
 
-				return false;
+			foreach ($keys as $k) {
+				if (isset($this->elementClasses[trim($k)])) {
+					$this->applyProperties($content, $this->elementClasses[trim($k)]);
+				} else {
+					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+					continue;
+				}
 			}
-
 		} else {
 			$content->appendProperties($content);
 		}
