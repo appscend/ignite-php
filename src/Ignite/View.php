@@ -541,8 +541,8 @@ abstract class View extends Registry {
 		$result = [];
 
 		foreach ($globalClasses as $key => $props) {
-			$r = explode('@', $key); // r[0] - viewID, not empty if global to the view only; r[1] = keyname*prefix
-			$p = explode('*', $r[1]); // r[0] - keyname; r[1] = prefix (may not exist);
+			$p = explode('*', $key); // p[0] - keyname; p[1] = prefix (may not exist);
+			$r[0] = trim($p[0], '@');
 
 			if (!($r[0] == $this->viewID || $r[0] == ''))
 				continue;
