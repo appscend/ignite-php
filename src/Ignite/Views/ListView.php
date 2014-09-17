@@ -85,8 +85,10 @@ class ListView extends View{
 	 * @param int|Element $section
 	 * @return int
 	 */
-	public function addListElement($section, $key = null, $content = null) {
-		$content = new ListElement('e');
+	public function addListElement($section, $key = null, $content = []) {
+		if (!empty($content))
+			$this->processAssetsPaths($content, $this->paramsElemPath);
+		$content = new ListElement('e', $content);
 
 		if ($key) {
 			$content['Key'] = $key;
@@ -94,14 +96,16 @@ class ListView extends View{
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {
+
+					foreach ($this->elementClasses[trim($k)] as &$prefixed)
+						$this->processAssetsPaths($prefixed, $this->paramsElemPath);
+
 					$this->applyProperties($content, $this->elementClasses[trim($k)]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 					continue;
 				}
 			}
-		} else {
-			$content->appendProperties($content);
 		}
 
 		$content->view = $this;
