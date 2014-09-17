@@ -52,7 +52,7 @@ class WidgetView extends View{
 
 		}
 
-		$content['target_xml_path'] = $this->app->getWebPath().'/'.$v->route;
+		$content['target_xml_path'] = $this->app->getWebPath().$v->route;
 		$content['target_view_type'] = $v->type;
 
 		$content->view = $this;
