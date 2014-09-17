@@ -58,7 +58,7 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|integer $duration
 	 * @return Action
 	 */
-	public static function changePositionAndSize($avi, $coords = [], $lcoords = [], $padcoords = [], $padlcoords = [], $duration = null) {
+	public static function changePositionAndSize($duration = null, $avi, $coords = [], $lcoords = [], $padcoords = [], $padlcoords = []) {
 		$coords = implode($coords, '::');
 		$lcoords = implode($lcoords, '::');
 		$padcoords = implode($padcoords, '::');
@@ -78,7 +78,7 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|string $duration
 	 * @return Action
 	 */
-	public static function changeGroupPositionAndSize($key, $coords, $lcoords = [], $padcoords = [], $padlcoords = [], $duration = null) {
+	public static function changeGroupPositionAndSize($duration = null, $key, $coords, $lcoords = [], $padcoords = [], $padlcoords = []) {
 		$lcoords = implode($lcoords, '::');
 		$padcoords = implode($padcoords, '::');
 		$padlcoords = implode($padlcoords, '::');
