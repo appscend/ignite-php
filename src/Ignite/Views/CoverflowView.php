@@ -11,6 +11,8 @@ class CoverflowView extends View {
 	const ELEMENTS_CONFIG_SPEC_FILE = 'CoverFlow/elements.json';
 	const ACTIONS_CONFIG_SPEC_FILE = 'CoverFlow/actions.json';
 
+	private $paramsElemPath = ['image'];
+
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
 
@@ -34,7 +36,9 @@ class CoverflowView extends View {
 	 * @throws \InvalidArgumentException
 	 */
 	public function addImage($key = null, $content = []) {
-		$content = new Element('e');
+		if (!empty($content))
+			$this->processAssetsPaths($content, $this->paramsElemPath);
+		$content = new Element('e', $content);
 
 		if ($key) {
 			$content['Key'] = $key;
@@ -42,6 +46,10 @@ class CoverflowView extends View {
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {
+
+					foreach ($this->elementClasses[trim($k)] as &$prefixed)
+						$this->processAssetsPaths($prefixed, $this->paramsElemPath);
+
 					$this->applyProperties($content, $this->elementClasses[trim($k)]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
@@ -49,13 +57,9 @@ class CoverflowView extends View {
 				}
 			}
 
-		} else {
-			$content->appendProperties($content);
 		}
 
 		$content->view = $this;
-		if (isset($content['image']) && strpos($content['image'], 'http') !== 0)
-			$content['image'] = $this->app->getAssetsPath().$content['image'];
 
 		return $this->elementsContainers['elements']->appendChild($content);
 	}

@@ -35,6 +35,7 @@ class FormView extends View{
 	}
 
 	public function insertToggleSwitch($content) {
+		$this->processAssetsPaths($content, ['image_true', 'image_true']);
 		return $this->insertElement('ts', $content);
 	}
 

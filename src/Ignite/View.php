@@ -156,48 +156,48 @@ abstract class View extends Registry {
 		$allConfig = $this->array_filter_key($this->app->parsedLayout, function($k) use ($avi){ return strpos($k, $avi) === 0; });
 
 		$allConfig[$avi] = array_filter($allConfig[$avi], function($v){ return !is_array($v); });
-		$this->processAssetsPaths($allConfig[$avi]);
+		$this->processAssetsPaths($allConfig[$avi], $this->pathParameters);
 		$this->config->setProperties(array_merge($this->config->getProperties(), $allConfig[$avi]));
 
 		if (isset($allConfig[$avi.'*l'])) {
 			$allConfig[$avi.'*l'] = array_filter($allConfig[$avi.'*l'], function($v){ return !is_array($v); });
-			$this->processAssetsPaths($allConfig[$avi.'*l']);
+			$this->processAssetsPaths($allConfig[$avi.'*l'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*l'], Element::$prefixes[Element::FOR_LANDSCAPE -1]);
 		}
 
 		if (isset($allConfig[$avi.'*tab'])) {
 			$allConfig[$avi.'*tab'] = array_filter($allConfig[$avi.'*tab'], function($v){ return !is_array($v); });
-			$this->processAssetsPaths($allConfig[$avi.'*tab']);
+			$this->processAssetsPaths($allConfig[$avi.'*tab'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*tab'], Element::$prefixes[Element::FOR_TABLET -1]);
 		}
 
 		if (isset($allConfig[$avi.'*and'])) {
 			$allConfig[$avi.'*and'] = array_filter($allConfig[$avi.'*and'], function($v){ return !is_array($v); });
-			$this->processAssetsPaths($allConfig[$avi.'*and']);
+			$this->processAssetsPaths($allConfig[$avi.'*and'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*and'], Element::$prefixes[Element::FOR_ANDROID -1]);
 		}
 
 		if (isset($allConfig[$avi.'*tabl'])) {
 			$allConfig[$avi.'*tabl'] = array_filter($allConfig[$avi.'*tabl'], function($v){ return !is_array($v); });
-			$this->processAssetsPaths($allConfig[$avi.'*tabl']);
+			$this->processAssetsPaths($allConfig[$avi.'*tabl'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*tabl'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET) -1]);
 		}
 
 		if (isset($allConfig[$avi.'*andl'])) {
 			$allConfig[$avi.'*andl'] = array_filter($allConfig[$avi.'*andl'], function($v){ return !is_array($v); });
-			$this->processAssetsPaths($allConfig[$avi.'*andl']);
+			$this->processAssetsPaths($allConfig[$avi.'*andl'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*andl'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_ANDROID) -1]);
 		}
 
 		if (isset($allConfig[$avi.'*andtab'])) {
 			$allConfig[$avi.'*andtab'] = array_filter($allConfig[$avi.'*andtab'], function($v){ return !is_array($v); });
-			$this->processAssetsPaths($allConfig[$avi.'*andtab']);
+			$this->processAssetsPaths($allConfig[$avi.'*andtab'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*andtab'], Element::$prefixes[(Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
 		}
 
 		if (isset($allConfig[$avi.'*andtabl'])) {
 			$allConfig[$avi.'*andtabl'] = array_filter($allConfig[$avi.'*andtabl'], function($v){ return !is_array($v); });
-			$this->processAssetsPaths($allConfig[$avi.'*andtabl']);
+			$this->processAssetsPaths($allConfig[$avi.'*andtabl'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*andtabl'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
 		}
 	}
@@ -577,8 +577,8 @@ abstract class View extends Registry {
 		return $result;
 	}
 
-	protected function processAssetsPaths(array &$array) {
-		foreach ($this->pathParameters as $p) {
+	protected function processAssetsPaths(array &$array, array $pathParameters) {
+		foreach ($pathParameters as $p) {
 			if (isset($array[$p]) && strpos($array[$p], 'http') !== 0)
 				$array[$p] = $this->app->getAssetsPath().$array[$p];
 		}

@@ -37,8 +37,8 @@ class MenuBarView extends View {
 	 * @param array|Element $content
 	 * @return int
 	 */
-	public function addMenu($key = null, $content = null) {
-		$content = new Element('e');
+	public function addMenu($key = null, $content = []) {
+		$content = new Element('e', $content);
 
 		if ($key) {
 			$content['Key'] = $key;
@@ -52,8 +52,6 @@ class MenuBarView extends View {
 					continue;
 				}
 			}
-		} else {
-			$content->appendProperties($content);
 		}
 
 		$content->view = $this;

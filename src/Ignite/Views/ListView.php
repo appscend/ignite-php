@@ -12,6 +12,14 @@ class ListView extends View{
 	const ELEMENTS_CONFIG_SPEC_FILE = 'List/elements.json';
 	const ACTIONS_CONFIG_SPEC_FILE = 'List/actions.json';
 
+	private $paramsElemPath = [
+		'image_url',
+		'selected_image_url',
+		'selected_alternate_image_url',
+		'detail_view_image_url',
+		'large_image_url'
+	];
+
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
 
@@ -44,8 +52,10 @@ class ListView extends View{
 	 * @param Array|Element $content
 	 * @return int
 	 */
-	public function addSection($key = null, $content = null) {
-		$content = new Element('e');
+	public function addSection($key = null, $content = []) {
+		if (!empty($content))
+			$this->processAssetsPaths($content, $this->paramsElemPath);
+		$content = new Element('e', $content);
 
 		if ($key) {
 			$content['Key'] = $key;
@@ -53,14 +63,16 @@ class ListView extends View{
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {
+
+					foreach ($this->elementClasses[trim($k)] as &$prefixed)
+						$this->processAssetsPaths($prefixed, $this->paramsElemPath);
+
 					$this->applyProperties($content, $this->elementClasses[trim($k)]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 					continue;
 				}
 			}
-		} else {
-			$content->appendProperties($content);
 		}
 
 		$content->view = $this;

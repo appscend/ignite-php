@@ -3,7 +3,7 @@
 namespace Ignite;
 
 define("APP_ROOT_DIR", realpath('.'));
-define("LIB_ROOT_DIR", APP_ROOT_DIR.'/vendor/appscend/ignite-php');
+define("LIB_ROOT_DIR", APP_ROOT_DIR);
 define("CONFIG_DIR", APP_ROOT_DIR.'/config');
 
 use Ignite\Providers\Logger;
