@@ -81,7 +81,7 @@ class Application extends SilexApp {
 
 	public function registerView($id, $type, $r, \Closure $f) {
 		$this->match($r, $f)->bind($id);
-		$this->views[$id] = new ViewStub($id, $type, $r);
+		$this->views[$id] = new ViewStub($id, $type, ltrim($r, '/'));
 	}
 
 	public function getView($id) {
