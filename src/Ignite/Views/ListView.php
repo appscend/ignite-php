@@ -23,6 +23,18 @@ class ListView extends View{
 		$this->config['view_type'] = 'l';
 		$this->config->view = $this;
 
+		$this->pathParameters = array_merge($this->pathParameters, [
+			'drag_to_refresh_image',
+			'table_header_image',
+			'cell_background_image',
+			'cell_selected_background_image',
+			'cell_alternate_background_image',
+			'cell_selected_alternate_background_image',
+			'accessory_image_url',
+			'accessory_selected_image_url',
+			'accessory_alternate_image_url'
+		]);
+
 		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(LIB_ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
 		$this->parseConfiguration();
 		$this->getElementsFromConfig();

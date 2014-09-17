@@ -7,6 +7,32 @@
 		"tag": "stbc",
 		"type": "string"
 	},
+	"more_background_color": {
+		"tag": "bc",
+		"type": "string"
+	},
+	"more_background_image": {
+		"tag": "bi",
+		"type": "string"
+	},
+	"more_background_image_mode": {
+		"tag": "bim",
+		"type": "enum",
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
+	},
 	"more_title": {
 		"tag": "mtitle",
 		"type": "string"

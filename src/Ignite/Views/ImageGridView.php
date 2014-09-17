@@ -24,6 +24,8 @@ class ImageGridView extends View {
 		$this->config['view_type'] = 'p';
 		$this->config->view = $this;
 
+		array_push($this->pathParameters, 'placeholder_image_path');
+
 		$this->actionsSpec = array_merge($this->actionsSpec, json_decode(file_get_contents(LIB_ROOT_DIR.ConfigContainer::CONFIG_PATH.'/'.self::ACTIONS_CONFIG_SPEC_FILE), true));
 		$this->parseConfiguration();
 		$this->getElementsFromConfig();

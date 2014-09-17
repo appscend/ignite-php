@@ -20,6 +20,9 @@ class TabBarView extends View {
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 't';
 		$this->config->view = $this;
+
+		array_push($this->pathParameters, 'more_background_image');
+
 		$this->parseConfiguration();
 		$this->getElementsFromConfig();
 	}

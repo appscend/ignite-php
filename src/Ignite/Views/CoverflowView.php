@@ -53,7 +53,6 @@ class CoverflowView extends View {
 			$content->appendProperties($content);
 		}
 
-		//todo this url checking must be done for all prefixed tags !
 		$content->view = $this;
 		if (isset($content['image']) && strpos($content['image'], 'http') !== 0)
 			$content['image'] = $this->app->getAssetsPath().$content['image'];

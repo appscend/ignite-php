@@ -20,6 +20,15 @@ class MenuBarView extends View {
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'mb';
 		$this->config->view = $this;
+
+		$this->pathParameters = array_merge($this->pathParameters, [
+			'background_image',
+			'selected_element_bg_image',
+			'unselected_element_bg_image',
+			'left_scroll_image',
+			'right_scroll_image'
+		]);
+
 		$this->parseConfiguration();
 		$this->getElementsFromConfig();
 	}
