@@ -89,6 +89,11 @@ class WidgetView extends View{
 		return $this->elementsContainers['elements']->appendChild($content);
 	}
 
+	/**
+	 * @param null $key
+	 * @param array $content
+	 * @return WidgetImage
+	 */
 	public function addImage($key = null, $content = []) {
 		if (!empty($content))
 			$this->processAssetsPaths($content, $this->paramsElemPath);

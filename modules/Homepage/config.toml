@@ -6,8 +6,7 @@ background_image_landscape = "niciuna.jpg"
 background_color = "ffffff"
 
 [homepage.tq]
-image = "imagine"
-name = "nume"
+background_image = "imagine.jpg"
 
 [homepage.eq*l]
 image = "imagine_landscape"

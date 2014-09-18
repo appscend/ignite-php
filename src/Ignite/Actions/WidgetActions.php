@@ -63,7 +63,35 @@ class WidgetActions extends ActionBuffer{
 		$lcoords = implode($lcoords, '::');
 		$padcoords = implode($padcoords, '::');
 		$padlcoords = implode($padlcoords, '::');
-		$action = new Action('ref:', [$avi, $coords, $lcoords, $padcoords, $padlcoords, $duration]);
+
+		$actionParams = [$avi];
+		if ($coords != '')
+			$actionParams[] = $coords;
+		if ($lcoords != '') {
+			if ($coords == '')
+				$actionParams[] = '::::::';
+			$actionParams[] = $lcoords;
+		}
+		if ($padcoords != '') {
+			if ($coords == '')
+				$actionParams[] = '::::::';
+			if ($lcoords == '')
+				$actionParams[] = '::::::';
+			$actionParams[] = $padcoords;
+		}
+		if ($padlcoords != '') {
+			if ($coords == '')
+				$actionParams[] = '::::::';
+			if ($lcoords == '')
+				$actionParams[] = '::::::';
+			if ($padcoords == '')
+				$actionParams[] = '::::::';
+			$actionParams[] = $padlcoords;
+		}
+
+		$actionParams[] = $duration;
+
+		$action = new Action('ref:', $actionParams);
 		self::$actionBuffer[] = $action;
 
 		return $action;
@@ -78,11 +106,40 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|string $duration
 	 * @return Action
 	 */
-	public static function changeGroupPositionAndSize($duration = null, $key, $coords, $lcoords = [], $padcoords = [], $padlcoords = []) {
+	public static function changeGroupPositionAndSize($duration = null, $key, $coords = [], $lcoords = [], $padcoords = [], $padlcoords = []) {
+		$coords = implode($coords, '::');
 		$lcoords = implode($lcoords, '::');
 		$padcoords = implode($padcoords, '::');
 		$padlcoords = implode($padlcoords, '::');
-		$action = new Action('refk:', [$key, $coords, $lcoords, $padcoords, $padlcoords, $duration]);
+
+		$actionParams = [$key];
+		if ($coords != '')
+			$actionParams[] = $coords;
+		if ($lcoords != '') {
+			if ($coords == '')
+				$actionParams[] = '::::::';
+			$actionParams[] = $lcoords;
+		}
+		if ($padcoords != '') {
+			if ($coords == '')
+				$actionParams[] = '::::::';
+			if ($lcoords == '')
+				$actionParams[] = '::::::';
+			$actionParams[] = $padcoords;
+		}
+		if ($padlcoords != '') {
+			if ($coords == '')
+				$actionParams[] = '::::::';
+			if ($lcoords == '')
+				$actionParams[] = '::::::';
+			if ($padcoords == '')
+				$actionParams[] = '::::::';
+			$actionParams[] = $padlcoords;
+		}
+
+		$actionParams[] = $duration;
+
+		$action = new Action('refk:', $actionParams);
 		self::$actionBuffer[] = $action;
 
 		return $action;

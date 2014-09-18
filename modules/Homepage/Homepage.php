@@ -14,11 +14,12 @@ class Homepage extends Module {
         $controllers = $app['controllers_factory'];
 
 
-		$app->registerView('homepage', View::TYPE_COVERFLOW_VIEW, 'hello', function(Application $app) {
-			$v = new Views\CoverflowView($app, 'homepage');
+		$app->registerView('homepage', View::TYPE_WIDGET_VIEW, 'hello', function(Application $app) {
+			$v = new Views\WidgetView($app, 'homepage');
 
-			$v->addImage('tq');
-			$v->addImage('orice_element');
+			$v->addImage('tq')->onTap(function(){
+				Actions\WidgetActions::changePositionAndSize(1.0, 'test', [100, 100, 0, 0]);
+			});
 
 			return $v;
 		});
