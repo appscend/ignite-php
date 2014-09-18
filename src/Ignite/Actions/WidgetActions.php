@@ -159,8 +159,48 @@ class WidgetActions extends ActionBuffer{
 	 * @param string $padlv2
 	 * @return Action
 	 */
-	public static function swapElementLocation($avi, $direction, $v1, $v2, $duration, $lv1 = null, $padv1 = null, $padlv1 = null, $lv2 = null, $padv2 = null, $padlv2 = null) {
-		$action = new Action('toggle:', [$avi, $direction, $v1, $v2, $duration, $lv1, $padv1, $padlv1, $lv2, $padv2, $padlv2]);
+	public static function swapElementLocation($avi, $direction, $v1, $v2, $duration, $lv1 = null, $lv2 = null, $padv1 = null, $padv2 = null, $padlv1 = null, $padlv2 = null) {
+
+		$actionParams = [$avi, $direction, $v1];
+		if ($lv1 != null)
+			$actionParams[] = $lv1;
+
+		if ($padv1 != '') {
+			if ($lv1 == null)
+				$actionParams[] = '::';
+			$actionParams[] = $padv1;
+		}
+
+		if ($padlv1 != '') {
+			if ($lv1 == null)
+				$actionParams[] = '::';
+			if ($padv1 == null)
+				$actionParams[] = '::';
+			$actionParams[] = $padlv1;
+		}
+
+		$actionParams[] = $v2;
+
+		if ($lv2 != null)
+			$actionParams[] = $lv2;
+
+		if ($padv2 != '') {
+			if ($lv2 == null)
+				$actionParams[] = '::';
+			$actionParams[] = $padv2;
+		}
+
+		if ($padlv2 != '') {
+			if ($lv2 == null)
+				$actionParams[] = '::';
+			if ($padv2 == null)
+				$actionParams[] = '::';
+			$actionParams[] = $padlv2;
+		}
+
+		$actionParams[] = $duration;
+
+		$action = new Action('toggle:', $actionParams);
 		self::$actionBuffer[] = $action;
 
 		return $action;

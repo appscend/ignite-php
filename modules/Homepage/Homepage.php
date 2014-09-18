@@ -18,13 +18,13 @@ class Homepage extends Module {
 			$v = new Views\WidgetView($app, 'homepage');
 
 			$v->addImage('tq')->onTap(function(){
-				Actions\WidgetActions::changePositionAndSize(1.0, 'test', [100, 100, 0, 0]);
+				Actions\WidgetActions::swapElementLocation('test', 'x', 0, 40, 0.3, 0, 100);
 			});
 
 			return $v;
 		});
         
-        $controllers->match('bye', function (Application $app) {
+        /*$controllers->match('bye', function (Application $app) {
             $view = new Views\CoverflowView($app, "endpage_cf");
 			$view->setCache(true);
 
@@ -60,7 +60,7 @@ class Homepage extends Module {
 			$view->addJavascriptFile("testfile.js");
 
             return $view;
-        })->bind("endpage");
+        })->bind("endpage");*/
 
         return $controllers;
     }
