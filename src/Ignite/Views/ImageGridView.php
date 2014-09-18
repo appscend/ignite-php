@@ -40,10 +40,10 @@ class ImageGridView extends View {
 	public function addImage($key = null, $content = []) {
 		if (!empty($content))
 			$this->processAssetsPaths($content, $this->paramsElemPath);
-		$content = new Element('e', $content);
+		$element = new Element('e');
 
 		if ($key) {
-			$content['Key'] = $key;
+			$element['Key'] = $key;
 			$keys = explode(',', $key);
 
 			foreach ($keys as $k) {
@@ -52,7 +52,7 @@ class ImageGridView extends View {
 					foreach ($this->elementClasses[trim($k)] as &$prefixed)
 						$this->processAssetsPaths($prefixed, $this->paramsElemPath);
 
-					$this->applyProperties($content, $this->elementClasses[trim($k)]);
+					$this->applyProperties($element, $this->elementClasses[trim($k)]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 					continue;
@@ -60,11 +60,10 @@ class ImageGridView extends View {
 			}
 		}
 
-		$content->view = $this;
-		if (strpos($content['image'], 'http') !== 0)
-			$content['image'] = $this->app->getAssetsPath().$content['image'];
+		$element->appendProperties($content);
+		$element->view = $this;
 
-		return $this->elementsContainers['elements']->appendChild($content);
+		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
 	public function getImage($idx) {

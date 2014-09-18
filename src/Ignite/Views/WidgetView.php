@@ -34,15 +34,15 @@ class WidgetView extends View{
 	}
 
 	public function addView(ViewStub $v, $key = null, $content = []) {
-		$content = new WidgetViewElement('e', $content);
+		$element = new WidgetViewElement('e');
 
 		if ($key) {
-			$content['Key'] = $key;
+			$element['Key'] = $key;
 			$keys = explode(',', $key);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[$k])) {
-					$this->applyProperties($content, $this->elementClasses[$k]);
+					$this->applyProperties($element, $this->elementClasses[$k]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 
@@ -52,21 +52,22 @@ class WidgetView extends View{
 
 		}
 
-		$content['target_xml_path'] = $this->app->getWebPath().$v->route;
-		$content['target_view_type'] = $v->type;
+		$element->appendProperties($content);
+		$element['target_xml_path'] = $this->app->getWebPath().$v->route;
+		$element['target_view_type'] = $v->type;
 
-		$content->view = $this;
+		$element->view = $this;
 
-		return $this->elementsContainers['elements']->appendChild($content);
+		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
 	public function addTextLabel($key = null, $content = []) {
 		if (!empty($content))
 			$this->processAssetsPaths($content, $this->paramsElemPath);
-		$content = new WidgetTextLabel('e', $content);
+		$element = new WidgetTextLabel('e');
 
 		if ($key) {
-			$content['Key'] = $key;
+			$element['Key'] = $key;
 			$keys = explode(',', $key);
 
 			foreach ($keys as $k) {
@@ -75,7 +76,7 @@ class WidgetView extends View{
 					foreach ($this->elementClasses[trim($k)] as &$prefixed)
 						$this->processAssetsPaths($prefixed, $this->paramsElemPath);
 
-					$this->applyProperties($content, $this->elementClasses[$k]);
+					$this->applyProperties($element, $this->elementClasses[$k]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 
@@ -84,9 +85,10 @@ class WidgetView extends View{
 			}
 		}
 
-		$content->view = $this;
+		$element->appendProperties($content);
+		$element->view = $this;
 
-		return $this->elementsContainers['elements']->appendChild($content);
+		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
 	/**
@@ -97,10 +99,10 @@ class WidgetView extends View{
 	public function addImage($key = null, $content = []) {
 		if (!empty($content))
 			$this->processAssetsPaths($content, $this->paramsElemPath);
-		$content = new WidgetImage('e', $content);
+		$element = new WidgetImage('e');
 
 		if ($key) {
-			$content['Key'] = $key;
+			$element['Key'] = $key;
 			$keys = explode(',', $key);
 
 			foreach ($keys as $k) {
@@ -109,7 +111,7 @@ class WidgetView extends View{
 					foreach ($this->elementClasses[trim($k)] as &$prefixed)
 						$this->processAssetsPaths($prefixed, $this->paramsElemPath);
 
-					$this->applyProperties($content, $this->elementClasses[trim($k)]);
+					$this->applyProperties($element, $this->elementClasses[trim($k)]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 					continue;
@@ -117,34 +119,34 @@ class WidgetView extends View{
 			}
 		}
 
-		$content->view = $this;
+		$element->view = $this;
+		$element->appendProperties($content);
 
-		return $this->elementsContainers['elements']->appendChild($content);
+		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
 	public function addPagination($key = null, $content = []) {
-		$content = new Element('e', $content);
+		$element = new Element('e');
 
 		if ($key) {
-			$content['Key'] = $key;
+			$element['Key'] = $key;
 			$keys = explode(',', $key);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {
-					$this->applyProperties($content, $this->elementClasses[trim($k)]);
+					$this->applyProperties($element, $this->elementClasses[trim($k)]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 					continue;
 				}
 			}
-		} else {
-			$content->appendProperties($content);
 		}
 
-		$content['element_type'] = 'pagination';
-		$content->view = $this;
+		$element->appendProperties($content);
+		$element['element_type'] = 'pagination';
+		$element->view = $this;
 
-		return $this->elementsContainers['elements']->appendChild($content);
+		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
 	public function removeElement($idx) {

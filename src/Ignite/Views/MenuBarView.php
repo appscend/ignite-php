@@ -38,15 +38,15 @@ class MenuBarView extends View {
 	 * @return int
 	 */
 	public function addMenu($key = null, $content = []) {
-		$content = new Element('e', $content);
+		$element = new Element('e');
 
 		if ($key) {
-			$content['Key'] = $key;
+			$element['Key'] = $key;
 			$keys = explode(',', $key);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {
-					$this->applyProperties($content, $this->elementClasses[trim($k)]);
+					$this->applyProperties($element, $this->elementClasses[trim($k)]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
 					continue;
@@ -54,9 +54,10 @@ class MenuBarView extends View {
 			}
 		}
 
-		$content->view = $this;
+		$element->appendProperties($content);
+		$element->view = $this;
 
-		return $this->elementsContainers['elements']->appendChild($content);
+		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
 	public function getMenu($idx) {

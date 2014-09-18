@@ -253,17 +253,31 @@ abstract class View extends Registry {
 	 *
 	 * Adds an element to a specific menu.
 	 *
-	 * @param array|Element|null $element Array containing element properties or the element itself or null which
+	 * @param array|null $element Array containing element properties or the element itself or null which
 	 * creates an empty element.
 	 * @param Element $menu The menu where the element will be.
 	 * @return Element Returns the inserted element.
 	 */
-	public function addMenuElement($element = null, Element $menu) {
-		if ($element == null)
-			$element = new Element('me');
-		else if (is_array($element))
-			$element = new Element('me', $element);
+	public function addMenuElement($key, $props = null, Element $menu) {
+		$element = new Element('me');
 
+		if ($key) {
+			$element['Key'] = $key;
+			$keys = explode(',', $key);
+
+			foreach ($keys as $k) {
+				if (isset($this->elementClasses[$k])) {
+					$this->applyProperties($element, $this->elementClasses[$k]);
+				} else {
+					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+
+					return false;
+				}
+			}
+
+		}
+
+		$element->appendProperties($props);
 		$element->view = $this;
 
 		return $menu->appendChild($element);
