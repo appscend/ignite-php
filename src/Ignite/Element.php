@@ -72,7 +72,7 @@ class Element extends Registry {
 					$this->action = new Action('pag:', [$name]);
 				else {
 					$index = $this->view['action_groups']->getChildIndex($el);
-					$this->action = new Action('pag:', [$index-1]);
+					$this->action = new Action('pag:', [$index]);
 				}
 			}
 		} else if ($action instanceof Action)
