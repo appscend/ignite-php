@@ -321,7 +321,7 @@ abstract class View extends Registry {
 	 */
 	public function actionGroupExists($name) {
 		foreach ($this->elementsContainers['action_groups'] as $c) {
-			if ($c['name'] == $name)
+			if (isset($c['image']) && $c['name'] == $name)
 				return true;
 		}
 
