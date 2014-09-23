@@ -315,6 +315,13 @@ abstract class View extends Registry {
 		return $this->elementsContainers['action_groups']->appendChild($actionGroup);
 	}
 
+	public function getActionGroup($name, $prefix = '') {
+		if ($this->actionGroupExists($name))
+			return new Action('pag', [$name], $prefix);
+
+		return null;
+	}
+
 	/**
 	 * @param string $name
 	 * @return bool
