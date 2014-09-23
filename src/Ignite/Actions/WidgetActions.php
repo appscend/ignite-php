@@ -26,8 +26,8 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|integer $duration
 	 * @return Action
 	 */
-	public static function changeElementOpacity($avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration = null) {
-		$action = new Action('rea:', [$avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration]);
+	public static function changeElementOpacity($avi, $alpha, $lalpha, $padalpha, $padlalpha, $ff4alpha, $ff4lalpha, $duration = null) {
+		$action = new Action('rea:', [$avi, $alpha, $lalpha, $padalpha, $padlalpha, $ff4alpha, $ff4lalpha, $duration]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
@@ -42,8 +42,8 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|integer $duration
 	 * @return Action
 	 */
-	public static function changeGroupOpacity($key, $alpha, $lalpha, $padalpha, $padlalpha, $duration = null) {
-		$action = new Action('reak:', [$avi, $alpha, $lalpha, $padalpha, $padlalpha, $duration]);
+	public static function changeGroupOpacity($key, $alpha, $lalpha, $padalpha, $padlalpha, $ff4alpha, $ff4lalpha, $duration = null) {
+		$action = new Action('reak:', [$key, $alpha, $lalpha, $padalpha, $padlalpha, $ff4alpha, $ff4lalpha, $duration]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
