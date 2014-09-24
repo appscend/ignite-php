@@ -311,6 +311,7 @@ abstract class View extends Registry {
 			$actionGroup['action_group_name'] = $name;
 
 		$actionGroup->view = $this;
+		ActionBuffer::clearBuffer();
 
 		return $this->elementsContainers['action_groups']->appendChild($actionGroup);
 	}

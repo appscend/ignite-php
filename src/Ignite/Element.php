@@ -59,7 +59,7 @@ class Element extends Registry {
 	public function onTap($action, $name = null) {
 		if ($action instanceof \Closure) {
 			$action();
-			$fresult = ActionBuffer::getAndClearBuffer();
+			$fresult = ActionBuffer::getBuffer();
 
 			if (!isset($fresult[1])) {
 				$this->action = $fresult[0];
