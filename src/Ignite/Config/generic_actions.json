@@ -223,5 +223,8 @@
 	},
 	"fav": {
 		"name": "addToFavorites"
+	},
+	"pag": {
+		"name": "actionGroup"
 	}
 }
