@@ -224,7 +224,7 @@
 	"fav": {
 		"name": "addToFavorites"
 	},
-	"pag": {
+	"pag:": {
 		"name": "actionGroup"
 	}
 }
