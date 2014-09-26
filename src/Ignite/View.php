@@ -99,6 +99,11 @@ abstract class View extends Registry {
 	];
 
 	/**
+	 * @var \Closure[]
+	 */
+	protected $actionClosures = [];
+
+	/**
 	 * @var Processor Processor used for validating element properties
 	 */
 	public $processor = null;
@@ -521,6 +526,8 @@ abstract class View extends Registry {
 
 		$result = [];
 
+		$this->resolveActionClosures();
+
 		/**
 		 * @var Registry $c
 		 */
@@ -547,6 +554,16 @@ abstract class View extends Registry {
 			$this->app['memcache']->set($key, $this->render_cache, $this->cacheExpires);
 
 		return $this->render_cache;
+	}
+
+	private function resolveActionClosures() {
+		foreach ($this->actionClosures as $name => $c) {
+			if ($this->actionGroupExists($name))
+				continue;
+
+			$c();
+			$this->addActionGroup(ActionBuffer::getBuffer(), $name);
+		}
 	}
 
 	protected function getElementsFromConfig() {
@@ -634,13 +651,23 @@ abstract class View extends Registry {
 	 * @param \Closure $v
 	 */
 	public function __set($k, $v) {
-		$fresult = $v();
+		if ($v instanceof \Closure)
+			$this->actionClosures[$k] = $v;
+	}
 
-		if ($fresult instanceof Action)
-			$fresult = [$fresult];
+	public function __get($k) {
+		if (isset($this->actionClosures[$k]))
+			return $this->actionClosures[$k];
 
-		if (is_array($fresult))
-			$this->addActionGroup($fresult, $k);
+		return null;
+	}
+
+	public function __call($name, $param) {
+		if (isset($this->actionClosures[$name])) {
+			$f = $this->actionClosures[$name];
+
+			return $f();
+		}
 	}
 
 	public function offsetExists($k) {

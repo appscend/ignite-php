@@ -26,7 +26,7 @@ class WidgetViewElement extends Element {
 		if ($action instanceof \Closure) {
 			$action();
 
-			$fresult = ActionBuffer::getAndClearBuffer();
+			$fresult = ActionBuffer::getBuffer();
 
 			if (!isset($fresult[1])) {
 				$ac = $fresult[0];
@@ -60,7 +60,7 @@ class WidgetViewElement extends Element {
 		if ($action instanceof \Closure) {
 			$action();
 
-			$fresult = ActionBuffer::getAndClearBuffer();
+			$fresult = ActionBuffer::getBuffer();
 
 			if (!isset($fresult[1])) {
 				$ac = $fresult[0];
