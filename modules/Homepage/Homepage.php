@@ -7,8 +7,14 @@ use Ignite\Module;
 use Ignite\Application;
 use Ignite\Views;
 use Ignite\View;
+use Yosymfony\Toml\Toml;
 
 class Homepage extends Module {
+
+	public function __construct(Application $app)  {
+		$this->moduleName = (new \ReflectionClass($this))->getShortName();
+		$app->parsedLayout = Toml::parse(MODULES_DIR.'/'.$this->moduleName.'/config.toml');
+	}
 
 	public function views(Application $app) {
         $controllers = $app['controllers_factory'];
