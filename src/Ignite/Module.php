@@ -3,6 +3,7 @@ namespace Ignite;
 
 use Silex\Application as SilexApp;
 use Silex\ControllerProviderInterface;
+use Yosymfony\Toml\Toml;
 
 abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 
@@ -11,7 +12,13 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 
 	abstract public function views(Application $app);
 
-	abstract  public function __construct(Application $app);
+	abstract public function getPackageName();
+
+	public function __construct(Application $app) {
+		$this->moduleName = (new \ReflectionClass($this))->getShortName();
+		$namespace = (new \ReflectionClass($this))->getNamespaceName();
+		$app->parsedLayout = Toml::parse(APP_ROOT_DIR.'/vendor/appscend/'.$this->getPackageName().'/src/'.$namespace.'/'.$this->moduleName.'/config.toml');
+	}
 
     public function connect(SilexApp $app) {
 		$app->setModuleName($this->moduleName);
