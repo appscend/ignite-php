@@ -63,7 +63,10 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 		foreach ($props as $k => $v)
 			$prefixed[$prefix.$k] = $v;
 
-		$this->prefix_properties[$prefix] = $prefixed;
+		if (!isset($this->prefix_properties[$prefix]))
+			$this->prefix_properties[$prefix] = [];
+
+		$this->prefix_properties[$prefix] = array_merge($this->prefix_properties[$prefix], $prefixed);
 	}
 
 	/**

@@ -9,26 +9,45 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 
 	protected $moduleName = '';
 	protected $moduleSettings = [];
+	protected $parsedLayout = [];
 
 	abstract public function views(Application $app);
 
-	abstract public function getPackageName();
-
 	public function __construct(Application $app) {
-		$this->moduleName = (new \ReflectionClass($this))->getShortName();
-		$namespace = (new \ReflectionClass($this))->getNamespaceName();
-		$app->parsedLayout = Toml::parse(APP_ROOT_DIR.'/vendor/appscend/'.$this->getPackageName().'/src/'.$namespace.'/'.$this->moduleName.'/config.toml');
+		$refl = new \ReflectionClass($this);
+		$this->moduleName = $refl->getShortName();
+
+		if (file_exists(MODULES_DIR.'/'.$this->moduleName.'/config.toml'))
+			$this->parsedLayout = Toml::parse(MODULES_DIR.'/'.$this->moduleName.'/config.toml');
+
+		$app->setCurrentModule($this);
+	}
+
+	public function overwritePropsFromFile($path) {
+		$this->parsedLayout = $this->array_merge_recursive_distinct($this->parsedLayout, Toml::parse($path));
+	}
+
+	public function getLayout() {
+		return $this->parsedLayout;
 	}
 
     public function connect(SilexApp $app) {
-		$app->setModuleName($this->moduleName);
-
 		return $this->views($app);
     }
-    
-    public static function configurationDirectory() {
-	    return __DIR__."/config";
-    }
+
+	private function array_merge_recursive_distinct(array &$array1, array &$array2) {
+		$merged = $array1;
+
+		foreach ($array2 as $key => &$value) {
+			if (is_array($value) && isset($merged[$key]) && is_array($merged[$key]) )
+				$merged [$key] = $this->array_merge_recursive_distinct($merged[$key], $value);
+
+			else
+				$merged [$key] = $value;
+		}
+
+		return $merged;
+	}
 
 	/**
 	 * (PHP 5 &gt;= 5.0.0)<br/>

@@ -158,11 +158,12 @@ abstract class View extends Registry {
 	 */
 	protected function parseConfiguration() {
 		$avi = $this->viewID;
-		$allConfig = $this->array_filter_key($this->app->parsedLayout, function($k) use ($avi){ return strpos($k, $avi) === 0; });
+
+		$allConfig = $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) use ($avi){ return strpos($k, $avi) === 0; });
 
 		$allConfig[$avi] = array_filter($allConfig[$avi], function($v){ return !is_array($v); });
 		$this->processAssetsPaths($allConfig[$avi], $this->pathParameters);
-		$this->config->setProperties(array_merge($this->config->getProperties(), $allConfig[$avi]));
+		$this->config->appendProperties($allConfig[$avi]);
 
 		if (isset($allConfig[$avi.'*l'])) {
 			$allConfig[$avi.'*l'] = array_filter($allConfig[$avi.'*l'], function($v){ return !is_array($v); });
@@ -567,7 +568,7 @@ abstract class View extends Registry {
 	}
 
 	protected function getElementsFromConfig() {
-		$classes = array_filter($this->app->parsedLayout[$this->viewID], function($k) { return is_array($k); });
+		$classes = array_filter($this->app->getCurrentModule()->getLayout()[$this->viewID], function($k) { return is_array($k); });
 		$result = [];
 
 		$prefixConstants = array_flip(Element::$prefixes);
@@ -591,7 +592,7 @@ abstract class View extends Registry {
 	}
 
 	private function getGlobalClasses() {
-		$globalClasses = $this->array_filter_key($this->app->parsedLayout, function($k) { return strstr($k, '@') !== false; });
+		$globalClasses = $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) { return strstr($k, '@') !== false; });
 
 		$prefixConstants = array_flip(Element::$prefixes);
 		$result = [];

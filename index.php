@@ -5,7 +5,10 @@ date_default_timezone_set('Europe/Bucharest');
 $app = new Ignite\Application();
 $app['debug'] = true;
 
-$app->mount('/', new Ignite\Modules\Homepage\Homepage($app));
+$m = new Ignite\Modules\Homepage\Homepage($app);
+$m->overwritePropsFromFile(APP_ROOT_DIR.'/test.toml');
+
+$app->mount('/', $m);
 
 $app->run();
 

@@ -12,8 +12,8 @@ use Yosymfony\Toml\Toml;
 class Homepage extends Module {
 
 	public function __construct(Application $app)  {
-		$this->moduleName = (new \ReflectionClass($this))->getShortName();
-		$app->parsedLayout = Toml::parse(MODULES_DIR.'/'.$this->moduleName.'/config.toml');
+		parent::__construct($app);
+		//$this->parsedLayout = Toml::parse(APP_ROOT_DIR.'/vendor/appscend/ignite-module/src/IgniteModule/config.toml');
 	}
 
 	public function views(Application $app) {

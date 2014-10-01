@@ -36,9 +36,10 @@ class Application extends SilexApp {
 	private $views = [];
 
 	private $currentRoute = '';
-	private $currentModule = '';
-
-	public $parsedLayout = [];
+	/**
+	 * @var Module
+	 */
+	private $currentModule = null;
 
 	function __construct(array $values = array()) {
 		parent::__construct($values);
@@ -91,12 +92,12 @@ class Application extends SilexApp {
 		return null;
 	}
 
-	public function getModuleName() {
+	public function getCurrentModule() {
 		return $this->currentModule;
 	}
 
-	public function setModuleName($v) {
-		$this->currentModule = $v;
+	public function setCurrentModule(Module $m) {
+		$this->currentModule = $m;
 	}
 
 	public function getRouteName() {
