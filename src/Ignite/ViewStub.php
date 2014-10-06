@@ -3,6 +3,9 @@
 namespace Ignite;
 
 
+use Ignite\Actions\ActionBuffer;
+use Ignite\Actions\ActionGroup;
+
 class ViewStub {
 
 	private $viewTypes = [
@@ -33,6 +36,17 @@ class ViewStub {
 			return $this->properties[$k];
 
 		return null;
+	}
+
+	/**
+	 *
+	 * These metods are used to generate an action group executed with this view's ID (tavi)
+	 *
+	 * @param $name
+	 * @param $params
+	 */
+	public function __call($name, $params) {
+		$a = ActionGroup::get($name)->on($this->properties['id']);
 	}
 
 } 
