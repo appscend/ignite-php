@@ -20,6 +20,11 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 		if (file_exists(MODULES_DIR.'/'.$this->moduleName.'/config.toml'))
 			$this->parsedLayout = Toml::parse(MODULES_DIR.'/'.$this->moduleName.'/config.toml');
 
+		$includes = $this->parsedLayout['!include'];
+
+		foreach ($includes as $path)
+			$this->overwritePropsFromFile(APP_ROOT_DIR.'/'.$path);
+
 		$app->setCurrentModule($this);
 	}
 
