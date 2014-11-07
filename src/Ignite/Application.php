@@ -83,7 +83,7 @@ class Application extends SilexApp {
 			$this->setRouteName($req->get('_route'));
 		});
 
-		$staticViewsDir = new \DirectoryIterator($this->getStaticXMLPath());
+		$staticViewsDir = new \DirectoryIterator($this['env']['app.static_xml_path']);
 		foreach ($staticViewsDir as $d) {
 			if( $d->getExtension() == 'xml' )
 				$this->staticViewIds[] = $d->getBasename('.xml');
