@@ -6,7 +6,6 @@ $app = new Ignite\Application();
 $app['debug'] = true;
 
 $m = new Ignite\Modules\Homepage\Homepage($app);
-
 $app->mount('/', $m);
 
 $app->run();

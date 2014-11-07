@@ -3,17 +3,21 @@
 namespace Ignite\Actions;
 
 use Ignite\Action;
+use Ignite\ViewStub;
 
 class Navigation extends ActionBuffer{
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
 	 * @return Action
 	 */
 	public static function push($paramxml, $data = null, $form = null, $animation = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('p:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
@@ -21,7 +25,7 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
@@ -29,6 +33,9 @@ class Navigation extends ActionBuffer{
 	 * @return Action
 	 */
 	public static function pushWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('pl:', [$paramxml, $data, $form, $animation, $accuracy]);
 		self::$actionBuffer[] = $action;
 
@@ -36,7 +43,7 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
@@ -45,6 +52,9 @@ class Navigation extends ActionBuffer{
 	 * @return Action
 	 */
 	public static function modalView($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('m:', [$paramxml, $data, $form, $animation, $accuracy, $modalStyle]);
 		self::$actionBuffer[] = $action;
 
@@ -52,7 +62,7 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
@@ -61,6 +71,9 @@ class Navigation extends ActionBuffer{
 	 * @return Action
 	 */
 	public static function modalViewWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('ml:', [$paramxml, $data, $form, $animation, $accuracy, $modalStyle]);
 		self::$actionBuffer[] = $action;
 
@@ -68,13 +81,16 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
 	 * @return Action
 	 */
 	public static function replace($paramxml, $data = null, $form = null, $animation = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('r:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
@@ -82,7 +98,7 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
@@ -90,6 +106,9 @@ class Navigation extends ActionBuffer{
 	 * @return Action
 	 */
 	public static function replaceWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('rl:', [$paramxml, $data, $form, $animation, $accuracy]);
 		self::$actionBuffer[] = $action;
 
@@ -97,13 +116,16 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
 	 * @return Action
 	 */
 	public static function replaceAll($paramxml, $data = null, $form = null, $animation = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('ra:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
@@ -111,7 +133,7 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
@@ -119,6 +141,9 @@ class Navigation extends ActionBuffer{
 	 * @return Action
 	 */
 	public static function replaceAllWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('ral:', [$paramxml, $data, $form, $animation, $accuracy]);
 		self::$actionBuffer[] = $action;
 
@@ -147,10 +172,13 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @return Action
 	 */
 	public static function slideShow($paramxml) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('s:', func_get_args());
 		self::$actionBuffer[] = $action;
 
@@ -158,11 +186,14 @@ class Navigation extends ActionBuffer{
 	}
 
 	/**
-	 * @param string $paramxml
+	 * @param string|ViewStub $paramxml
 	 * @param string $data
 	 * @return Action
 	 */
 	public static function slideShowPostData($paramxml, $data) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
 		$action = new Action('s:d:', func_get_args());
 		self::$actionBuffer[] = $action;
 

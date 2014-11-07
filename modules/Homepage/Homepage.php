@@ -20,12 +20,15 @@ class Homepage extends Module {
         $controllers = $app['controllers_factory'];
 
 
-		$app->registerView('homepage', View::TYPE_WIDGET_VIEW, 'hello', function(Application $app) {
+		$app->registerView('homepage', View::TYPE_WIDGET_VIEW, 'hello', function(Application $app, $args = []) {
 			$v = new Views\WidgetView($app, 'homepage');
 
-			$v->addImage('tq')->onTap(function(){
-				Actions\WidgetActions::swapElementLocation('test', 'x', 0, 40, 0.3, 0, 100);
-			});
+			if (isset($args['eq']))
+				$v->addImage('eq');
+			else if (isset($args['tq']))
+				$v->addImage('tq')->onTap(function(){
+					Actions\WidgetActions::swapElementLocation('test', 'x', 0, 40, 0.3, 0, 100);
+				});
 
 			return $v;
 		});

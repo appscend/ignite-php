@@ -11,7 +11,7 @@
 		"tag": "vt",
 		"type": "string"
 	},
-	"target_xml": {
+	"target_xml_path": {
 		"tag": "px",
 		"type": "string"
 	},

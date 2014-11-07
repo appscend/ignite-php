@@ -1,6 +1,7 @@
 <?php
 namespace Ignite;
 
+use Ignite\Helpers\XmlDomConstruct;
 use Silex\Application as SilexApp;
 use Silex\ControllerProviderInterface;
 use Yosymfony\Toml\Toml;
@@ -11,6 +12,11 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 	protected $moduleSettings = [];
 	protected $parsedLayout = [];
 
+	/**
+	 * @var Application
+	 */
+	protected $app = null;
+
 	abstract public function views(Application $app);
 
 	public function __construct(Application $app) {
@@ -20,12 +26,37 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 		if (file_exists(MODULES_DIR.'/'.$this->moduleName.'/config.toml'))
 			$this->parsedLayout = Toml::parse(MODULES_DIR.'/'.$this->moduleName.'/config.toml');
 
-		$includes = $this->parsedLayout['!include'];
+		if (isset($this->parsedLayout['!include'])) {
+			$includes = $this->parsedLayout['!include'];
 
-		foreach ($includes as $path)
-			$this->overwritePropsFromFile(APP_ROOT_DIR.'/'.$path);
+			foreach ($includes as $path)
+				$this->overwritePropsFromFile(APP_ROOT_DIR.'/'.$path);
+		}
 
 		$app->setCurrentModule($this);
+		$this->app = $app;
+	}
+
+	public function generateStaticViews($path) {
+		$views = Toml::parse(APP_ROOT_DIR.'/'.$path);
+
+		if (!file_exists($this->app->getStaticXMLPath())) {
+			mkdir(APP_ROOT_DIR . '/' . $this->app->getStaticXMLPath());
+			if (!file_exists($this->app->getStaticXMLPath().'/'.$this->moduleName))
+				mkdir(APP_ROOT_DIR . '/' . $this->app->getStaticXMLPath() . '/'.$this->moduleName);
+		}
+
+		foreach ($views as $id => $v) {
+			if ($this->app->getView($id) !== null) {
+				foreach ($v as $target => $data) {
+					$renderedView = $this->app->getView($id)->getFullView($data)->render();
+					$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
+					$xmlConstruct->fromMixed($renderedView);
+
+					file_put_contents($this->app->getStaticXMLPath() . "/".$this->moduleName."/$target.xml", $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG));
+				}
+			}
+		}
 	}
 
 	public function overwritePropsFromFile($path) {
@@ -34,6 +65,10 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 
 	public function getLayout() {
 		return $this->parsedLayout;
+	}
+
+	public function getName() {
+		return $this->moduleName;
 	}
 
     public function connect(SilexApp $app) {

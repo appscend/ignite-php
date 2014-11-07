@@ -10,7 +10,7 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	/**
 	 * @var string The current environment.
 	 */
-	private $current = '';
+	private static $current = 'devel';
 	/**
 	 * @var SilexApp Application instance which uses this manager
 	 */
@@ -19,14 +19,7 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	/**
 	 * @var array The environments
 	 */
-	private $envs = [];
-
-	/**
-	 * Instantiates a new environment manager and sets 'devel' as the current one.
-	 */
-	public function __construct() {
-		$this->current = 'devel';
-	}
+	private static $envs = [];
 
 	/**
 	 *
@@ -35,13 +28,8 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @param string $name
 	 * @return bool True if the environment exists, false otherwise.
 	 */
-	public function setEnvironment($name) {
-		if (isset($this->envs[$name]))
-			$this->current = $name;
-		else
-			return false;
-
-		return true;
+	public static function setEnvironment($name) {
+		self::$current = $name;
 	}
 
 	/**
@@ -51,9 +39,9 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @param string $section Section name
 	 * @return array
 	 */
-	public function get($section) {
+	public static  function get($section) {
 		$result = [];
-		array_walk($this->envs[$this->current], function($v, $k) use ($section, &$result) {
+		array_walk(self::$envs[self::$current], function($v, $k) use ($section, &$result) {
 			if (strpos($k, $section.'.') !== false)
 				$result[$k] = $v;
 		});
@@ -91,8 +79,8 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	public function register(SilexApp $app) {
 		$this->app = $app;
 		$app['env'] = $this;
-		$this->envs['devel'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/devel.toml')->getArray());
-		$this->envs['production'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/production.toml')->getArray());
+		self::$envs['devel'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/devel.toml')->getArray());
+		self::$envs['production'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/production.toml')->getArray());
 	}
 
 	/**
@@ -115,7 +103,7 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @return boolean true on success or false on failure.
 	 */
 	public function offsetExists($offset) {
-		return array_key_exists($offset, $this->envs[$this->current]);
+		return array_key_exists($offset, self::$envs[self::$current]);
 	}
 
 	/**
@@ -127,7 +115,7 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @return mixed Can return all value types.
 	 */
 	public function offsetGet($offset) {
-		return $this->envs[$this->current][$offset];
+		return self::$envs[self::$current][$offset];
 	}
 
 	/**

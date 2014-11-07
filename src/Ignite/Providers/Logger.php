@@ -98,16 +98,7 @@ class Logger implements ServiceProviderInterface {
 	 */
 	public function register(SilexApp $app) {
 		$app['ignite_logger'] = $this;
-	}
 
-	/**
-	 * Bootstraps the application.
-	 *
-	 * This method is called after all services are registered
-	 * and should be used for "dynamic" configuration (whenever
-	 * a service must be requested).
-	 */
-	public function boot(SilexApp $app) {
 		switch ($this->logger) {
 			case self::MONOLOG: {
 				$app->register(new SilexProvider\MonologServiceProvider(), $app['env']->get('monolog'));
@@ -121,9 +112,19 @@ class Logger implements ServiceProviderInterface {
 			case self::GELF: {
 				$app->register(new GELFServiceProvider());
 
-
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Bootstraps the application.
+	 *
+	 * This method is called after all services are registered
+	 * and should be used for "dynamic" configuration (whenever
+	 * a service must be requested).
+	 */
+	public function boot(SilexApp $app) {
+
 	}
 }

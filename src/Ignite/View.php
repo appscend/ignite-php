@@ -9,8 +9,6 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 abstract class View extends Registry {
 
-	//TODO: update all views to modify resource paths with the base path
-
 	/**
 	 *	Config spec for the Action Group element
 	 */
@@ -143,7 +141,8 @@ abstract class View extends Registry {
 
 		$this->app = $app;
 
-		$this->cacheExpires = $app['env']['memcache.expiration'];
+		if ($app['env']['memcache.enabled'])
+			$this->cacheExpires = $app['env']['memcache.expiration'];
 	}
 
 	public function setConfigurationValues(array $values) {
@@ -625,7 +624,8 @@ abstract class View extends Registry {
 	}
 
 	protected function applyProperties(Element $el, array $props) {
-		$el->appendProperties($props[0]);
+		if (isset($props[0]))
+			$el->appendProperties($props[0]);
 
 		foreach ($props as $prefix => $pr) {
 			if ($prefix == 0)

@@ -33,6 +33,9 @@ class Application extends SilexApp {
 		'platform'
 	];
 
+	/**
+	 * @var ViewStub[]
+	 */
 	private $views = [];
 
 	private $currentRoute = '';
@@ -40,6 +43,8 @@ class Application extends SilexApp {
 	 * @var Module
 	 */
 	private $currentModule = null;
+
+	private $staticViewIds = [];
 
 	function __construct(array $values = array()) {
 		parent::__construct($values);
@@ -78,18 +83,46 @@ class Application extends SilexApp {
 			$this->setRouteName($req->get('_route'));
 		});
 
+		$staticViewsDir = new \DirectoryIterator($this->getStaticXMLPath());
+		foreach ($staticViewsDir as $d) {
+			if( $d->getExtension() == 'xml' )
+				$this->staticViewIds[] = $d->getBasename('.xml');
+		}
 	}
 
+	/**
+	 * @param $id
+	 * @param $type
+	 * @param $r
+	 * @param callable $f
+	 * @return \Silex\Controller
+	 */
 	public function registerView($id, $type, $r, \Closure $f) {
-		$this->match($r, $f)->bind($id);
-		$this->views[$id] = new ViewStub($id, $type, ltrim($r, '/'));
+		$this->views[$id] = new ViewStub($id, $type, ltrim($r, '/'), $f);
+		$this->views[$id]->setApp($this);
+
+		if (in_array($id, $this->staticViewIds))
+			$this->views[$id]->setStatic(true);
+
+		return $this->match($r, $f)->bind($id);
 	}
 
+	/**
+	 * @param $id
+	 * @return ViewStub
+	 */
 	public function getView($id) {
 		if (isset($this->views[$id]))
 			return $this->views[$id];
 
 		return null;
+	}
+
+	/**
+	 * @return ViewStub[]
+	 */
+	public function getViews() {
+		return $this->views;
 	}
 
 	public function getCurrentModule() {

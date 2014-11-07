@@ -35,13 +35,17 @@ abstract class Registry implements \ArrayAccess, \Countable, \IteratorAggregate 
 	 * @var array The prefixed ordered according to the mask
 	 */
 	public static $prefixes = [
-		'l',		//001
-		'pad',		//010
-		'padl',		//011
-		'and',		//100
-		'andl',		//101
-		'andpad',	//110
-		'andpadl'	//111
+		'l',		//0001
+		'pad',		//0010
+		'padl',		//0011
+		'and',		//0100
+		'andl',		//0101
+		'andpad',	//0110
+		'andpadl',	//0111
+		'ff4',		//1000
+		'ff4l',		//1001
+		'ff4pad',	//1010
+		'ff4padl'	//1011
 	];
 
 	/**

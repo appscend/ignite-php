@@ -53,9 +53,6 @@ class WidgetView extends View{
 		}
 
 		$element->appendProperties($content);
-		$element['target_xml_path'] = $this->app->getWebPath().$v->route;
-		$element['target_view_type'] = $v->type;
-
 		$element->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($element);
