@@ -76,17 +76,16 @@ class Application extends SilexApp {
 		$this->register(new EnvironmentManager());
 		$this->register(new Logger($this));
 
-		if ($this['env']['memcache.enabled'] == 'true')
+		if (isset($this['env']['memcache.enabled']) && $this['env']['memcache.enabled'] == 'true')
 			$this->register(new MemcachedProvider());
 
 		$this->before(function(Request $req){
 			$this->setRouteName($req->get('_route'));
 		});
 
-		$staticViewsDir = new \DirectoryIterator($this['env']['app.static_xml_path']);
-		foreach ($staticViewsDir as $d) {
-			if( $d->getExtension() == 'xml' )
-				$this->staticViewIds[] = $d->getBasename('.xml');
+		$staticViewIds = \Yosymfony\Toml\Toml::parse(APP_ROOT_DIR.'/config/static.toml');
+		foreach ($staticViewIds as $id => $s) {
+			$this->staticViewIds[] = $id;
 		}
 	}
 

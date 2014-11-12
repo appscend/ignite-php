@@ -45,8 +45,6 @@ class WidgetView extends View{
 					$this->applyProperties($element, $this->elementClasses[$k]);
 				} else {
 					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
-
-					return false;
 				}
 			}
 
@@ -54,6 +52,8 @@ class WidgetView extends View{
 
 		$element->appendProperties($content);
 		$element->view = $this;
+		$element['target_xml_path'] = $v->getPath($key);
+		$element['target_view_type'] = $v['type'];
 
 		return $this->elementsContainers['elements']->appendChild($element);
 	}

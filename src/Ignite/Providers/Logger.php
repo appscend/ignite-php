@@ -50,6 +50,7 @@ class Logger implements ServiceProviderInterface {
 				else if ($this->logger === self::GELF) {
 					$msg = new Message();
 					$msg->setFullMessage($message);
+					$msg->setShortMessage(substr($message, 0, 50).'... ');
 					$msg->setFacility($this->app['env']['gelf.facility']);
 					$msg->setLevel(LogLevel::INFO);
 					$this->app['gelf']->getPublisher()->publish($msg);
@@ -64,6 +65,7 @@ class Logger implements ServiceProviderInterface {
 				else if ($this->logger === self::GELF) {
 					$msg = new Message();
 					$msg->setFullMessage($message);
+					$msg->setShortMessage(substr($message, 0, 50).'... ');
 					$msg->setFacility($this->app['env']['gelf.facility']);
 					$msg->setLevel(LogLevel::WARNING);
 					$this->app['gelf']->getPublisher()->publish($msg);
@@ -78,6 +80,7 @@ class Logger implements ServiceProviderInterface {
 				else if ($this->logger === self::GELF) {
 					$msg = new Message();
 					$msg->setFullMessage($message);
+					$msg->setShortMessage(substr($message, 0, 50).'... ');
 					$msg->setFacility($this->app['env']['gelf.facility']);
 					$msg->setLevel(LogLevel::ERROR);
 					$this->app['gelf']->getPublisher()->publish($msg);

@@ -42,9 +42,9 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 
 		if (!file_exists($this->app->getStaticXMLPath())) {
 			mkdir(APP_ROOT_DIR . '/' . $this->app->getStaticXMLPath());
-			if (!file_exists($this->app->getStaticXMLPath().'/'.$this->moduleName))
-				mkdir(APP_ROOT_DIR . '/' . $this->app->getStaticXMLPath() . '/'.$this->moduleName);
 		}
+		if (!file_exists($this->app->getStaticXMLPath().'/'.$this->moduleName))
+			mkdir(APP_ROOT_DIR . '/' . $this->app->getStaticXMLPath() . '/'.$this->moduleName);
 
 		foreach ($views as $id => $v) {
 			if ($this->app->getView($id) !== null) {
@@ -53,7 +53,7 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 					$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
 					$xmlConstruct->fromMixed($renderedView);
 
-					file_put_contents($this->app->getStaticXMLPath() . "/".$this->moduleName."/$target.xml", $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG));
+					file_put_contents(APP_ROOT_DIR.'/'.$this->app->getStaticXMLPath().$this->moduleName."/$target.xml", $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG));
 				}
 			}
 		}

@@ -2,6 +2,7 @@
 
 namespace Ignite\Providers;
 
+use Gelf\Publisher;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Gelf\Transport\UdpTransport;
@@ -11,7 +12,9 @@ class GELFServiceProvider implements ServiceProviderInterface {
 
 	public function register(Application $app) {
         $app['gelf'] = function($app) {
-        	$publisher = new UdpTransport($app['env']['gelf.domain'], $app['env']['gelf.port'], UdpTransport::CHUNK_SIZE_LAN);
+        	$transport = new UdpTransport($app['env']['gelf.domain'], $app['env']['gelf.port'], UdpTransport::CHUNK_SIZE_LAN);
+			$publisher = new Publisher($transport);
+
             return new Logger($publisher, $app['env']['gelf.facility']);
         };
     }

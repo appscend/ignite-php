@@ -32,6 +32,13 @@ class Homepage extends Module {
 
 			return $v;
 		});
+
+		$app->registerView('alt_view', View::TYPE_WIDGET_VIEW, 'alt_view', function(Application $app) {
+			$v = new Views\WidgetView($app, 'alt_view');
+			$v->addView($app->getView('homepage'), 'id2');
+
+			return $v;
+		});
         
         /*$controllers->match('bye', function (Application $app) {
             $view = new Views\CoverflowView($app, "endpage_cf");

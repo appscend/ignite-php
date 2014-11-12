@@ -5,4 +5,4 @@ static_xml_path = "static/"
 [gelf]
 domain = "logging.appscend.net"
 port = 12201
-facility = "default"
+facility = "ignitephp_dev"
