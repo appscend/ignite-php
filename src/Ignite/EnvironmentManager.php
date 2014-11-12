@@ -10,11 +10,11 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	/**
 	 * @var string The current environment.
 	 */
-	private static $current = 'devel';
+	private static $current;
 	/**
 	 * @var SilexApp Application instance which uses this manager
 	 */
-	private $app = null;
+	private static $app = null;
 
 	/**
 	 * @var array The environments
@@ -30,6 +30,13 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 */
 	public static function setEnvironment($name) {
 		self::$current = $name;
+	}
+
+	public static function init($environment = 'devel') {
+		if (self::$current !== null)
+			return;
+
+		self::setEnvironment($environment);
 	}
 
 	/**
@@ -77,10 +84,14 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @param SilexApp $app An Application instance
 	 */
 	public function register(SilexApp $app) {
-		$this->app = $app;
+		self::$app = $app;
 		$app['env'] = $this;
-		self::$envs['devel'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/devel.toml')->getArray());
-		self::$envs['production'] = $this->processConfig($this->app->scan(APP_ROOT_DIR.'/config/production.toml')->getArray());
+		self::$envs['devel'] = $this->processConfig(self::$app->scan(APP_ROOT_DIR.'/config/devel.toml')->getArray());
+		self::$envs['production'] = $this->processConfig(self::$app->scan(APP_ROOT_DIR.'/config/production.toml')->getArray());
+	}
+
+	public static function app() {
+		return self::$app;
 	}
 
 	/**

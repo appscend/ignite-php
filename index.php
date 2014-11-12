@@ -1,11 +1,17 @@
 <?php
+
+namespace Ignite;
+
 require_once __DIR__.'/vendor/autoload.php';
 date_default_timezone_set('Europe/Bucharest');
 
-$app = new Ignite\Application();
-$app['debug'] = true;
+EnvironmentManager::init();
 
-$m = new Ignite\Modules\Homepage\Homepage($app);
+$app = new Application();
+$app['debug'] = true;
+Localization::setLocale('en_US');
+
+$m = new Modules\Homepage\Homepage($app);
 $app->mount('/', $m);
 
 $app->run();

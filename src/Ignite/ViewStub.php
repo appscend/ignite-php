@@ -4,6 +4,7 @@ namespace Ignite;
 
 use Ignite\Actions\ActionBuffer;
 use Ignite\Actions\ActionGroup;
+use Symfony\Component\HttpFoundation\Request;
 
 class ViewStub implements \ArrayAccess {
 
@@ -48,7 +49,7 @@ class ViewStub implements \ArrayAccess {
 	public function getFullView($args = []) {
 		$c = $this->viewClosure;
 
-		return $c($this->app, $args);
+		return $c($this->app, new Request($args));
 	}
 
 	public function getPath($id = null) {
