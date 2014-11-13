@@ -2,6 +2,7 @@
 
 namespace Ignite;
 
+use Ignite\Providers\Logger;
 use Yosymfony\Toml\Toml;
 
 class Localization {
@@ -21,7 +22,7 @@ class Localization {
 
 	public static function _($string) {
 		if (self::$locale == '') {
-			EnvironmentManager::app()['ignite_logger']->log('Couldn\'t find translation for string "' . $string . '" for locale ' . self::$locale);
+			EnvironmentManager::app()['ignite_logger']->log('Locale not set.', Logger::LOG_ERROR);
 
 			return null;
 		}
@@ -29,7 +30,7 @@ class Localization {
 		if (isset(self::$strings[$string]))
 			return self::$strings[$string];
 
-		EnvironmentManager::app()['ignite_logger']->log('Couldn\'t find translation for string "'.$string.'" for locale '.self::$locale);
+		EnvironmentManager::app()['ignite_logger']->log('Couldn\'t find translation for string "'.$string.'" for locale '.self::$locale, Logger::LOG_ERROR);
 
 		return '';
 	}

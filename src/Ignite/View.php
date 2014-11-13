@@ -2,6 +2,7 @@
 namespace Ignite;
 
 use Ignite\Actions\ActionBuffer;
+use Ignite\Providers\Logger;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -205,6 +206,30 @@ abstract class View extends Registry {
 			$this->processAssetsPaths($allConfig[$avi.'*andtabl'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*andtabl'], Element::$prefixes[(Element::FOR_LANDSCAPE | Element::FOR_TABLET | Element::FOR_ANDROID) -1]);
 		}
+
+		if (isset($allConfig[$avi.'*ff4'])) {
+			$allConfig[$avi.'*ff4'] = array_filter($allConfig[$avi.'*ff4'], function($v){ return !is_array($v); });
+			$this->processAssetsPaths($allConfig[$avi.'*ff4'], $this->pathParameters);
+			$this->config->addPrefixedProperties($allConfig[$avi.'*ff4'], Element::$prefixes[(Element::FOR_FF4) -1]);
+		}
+
+		if (isset($allConfig[$avi.'*ff4l'])) {
+			$allConfig[$avi.'*ff4l'] = array_filter($allConfig[$avi.'*ff4l'], function($v){ return !is_array($v); });
+			$this->processAssetsPaths($allConfig[$avi.'*ff4l'], $this->pathParameters);
+			$this->config->addPrefixedProperties($allConfig[$avi.'*ff4l'], Element::$prefixes[(Element::FOR_FF4 | Element::FOR_LANDSCAPE) -1]);
+		}
+
+		if (isset($allConfig[$avi.'*ff4pad'])) {
+			$allConfig[$avi.'*ff4pad'] = array_filter($allConfig[$avi.'*ff4pad'], function($v){ return !is_array($v); });
+			$this->processAssetsPaths($allConfig[$avi.'*ff4pad'], $this->pathParameters);
+			$this->config->addPrefixedProperties($allConfig[$avi.'*ff4pad'], Element::$prefixes[(Element::FOR_FF4 | Element::FOR_TABLET) -1]);
+		}
+
+		if (isset($allConfig[$avi.'*ff4padl'])) {
+			$allConfig[$avi.'*ff4padl'] = array_filter($allConfig[$avi.'*ff4padl'], function($v){ return !is_array($v); });
+			$this->processAssetsPaths($allConfig[$avi.'*ff4padl'], $this->pathParameters);
+			$this->config->addPrefixedProperties($allConfig[$avi.'*ff4padl'], Element::$prefixes[(Element::FOR_FF4 | Element::FOR_TABLET | Element::FOR_LANDSCAPE) -1]);
+		}
 	}
 
 	/**
@@ -274,7 +299,7 @@ abstract class View extends Registry {
 				if (isset($this->elementClasses[$k])) {
 					$this->applyProperties($element, $this->elementClasses[$k]);
 				} else {
-					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", Logger::LOG_WARN);
 
 					return false;
 				}
@@ -498,10 +523,6 @@ abstract class View extends Registry {
 		$this->cacheExpires = $exp;
 	}
 
-	public function setViewId($avi) {
-		$this->viewID = $avi;
-	}
-
 	/**
 	 * @param bool $update
 	 * @return array
@@ -669,6 +690,8 @@ abstract class View extends Registry {
 
 			return $f();
 		}
+
+		throw new \InvalidArgumentException("View with id '{$this->viewID}' has no group action named '$name'");
 	}
 
 	public function offsetExists($k) {

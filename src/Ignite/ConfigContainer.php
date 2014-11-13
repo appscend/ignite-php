@@ -2,6 +2,7 @@
 
 namespace Ignite;
 
+use Ignite\Providers\Logger;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -102,7 +103,7 @@ class ConfigContainer extends Element implements ConfigurationInterface {
 					$result[$this->configSpec[$name]['tag']] = $v;
 			}
 			else
-				throw new InvalidConfigurationException("Option $name is not recognized.");
+				$this->view->getApp()['ignite_logger']->log("Configuration option $name in view '{$this->view->getID()}' is not recognized.", Logger::LOG_WARN);
 		}
 
 		return $result;

@@ -20,6 +20,8 @@ class Element extends Registry {
 	 */
 	const FOR_ANDROID	= 4;
 
+	const FOR_FF4		= 8;
+
 	/**
 	 * @var Action Element action
 	 */
@@ -32,7 +34,7 @@ class Element extends Registry {
 	/**
 	 * @var View The view instance where this element belongs to.
 	 */
-	public $view = null;
+	protected $view = null;
 
 	/**
 	 *
@@ -44,7 +46,7 @@ class Element extends Registry {
 	public function __construct($tag = null, array $properties = []) {
 		$this->tag = $tag;
 		$this->properties = $properties;
-		$this->prefix_properties = array_fill(0, 7, []);
+		$this->prefix_properties = array_fill(0, 11, []);
 	}
 
 	/**
@@ -77,6 +79,8 @@ class Element extends Registry {
 			}
 		} else if ($action instanceof Action)
 			$this->action = $action;
+		else
+			throw new InvalidTypeException('Invalid argument 1. Must be instance of Action or \Closure');
 
 		return $this;
 	}
@@ -91,7 +95,7 @@ class Element extends Registry {
 	 * @throws \InvalidArgumentException If the mask is invalid.
 	 */
 	public function setFor(array $props, $where) {
-		if (1 > $where || 7 < $where)
+		if (1 > $where || 11 < $where)
 			throw new \InvalidArgumentException("Invalid prefix mask '$where' for element '{$this->getTag()}' in view '{$this->view->getID()}' .");
 
 		$this->prefix_properties[$where-1] = array_merge($this->prefix_properties[$where-1], $props);
