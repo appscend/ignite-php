@@ -54,6 +54,9 @@ class MenuBarView extends View {
 			}
 		}
 
+		if (strpos($content['target_xml_path'], 'http') !== 0)
+			$content['target_xml_path'] = $this->app->getView($content['target_xml_path'])->getPath($key);
+
 		$element->appendProperties($content);
 		$element->view = $this;
 

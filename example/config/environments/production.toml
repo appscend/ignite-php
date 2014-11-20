@@ -1,0 +1,8 @@
+[app]
+assets_path = "assets/"
+static_xml_path = "static/"
+
+[gelf]
+domain = "logging.appscend.net"
+port = 12201
+facility = "ignitephp_dev"

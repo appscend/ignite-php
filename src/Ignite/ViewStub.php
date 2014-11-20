@@ -52,11 +52,11 @@ class ViewStub implements \ArrayAccess {
 		return $c($this->app, new Request($args));
 	}
 
-	public function getPath($id = null) {
+	public function getPath($key = null) {
 		if (!$this->isStatic)
 			return $this->properties['route'];
 
-		return $this->app->getStaticXMLPath().$this->app->getCurrentModule()->getName().'/'.$id.'.xml';
+		return $this->app->getStaticXMLPath().$this->app->getCurrentModule()->getName().'/'.$key.'.xml';
 	}
 
 	public function setApp(Application $app) {

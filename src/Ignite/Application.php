@@ -8,6 +8,7 @@ use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Yosymfony\Silex\ConfigServiceProvider\ConfigServiceProvider;
 use Yosymfony\Toml\Toml;
 
@@ -17,7 +18,7 @@ class Application extends SilexApp {
 	use Application\ConfigTrait;
 	use Application\GELFTrait;
 	
-	const IGNITE_VERSION = '0.0.1';
+	const IGNITE_VERSION = '0.9.0'; //beta 9.0
 
 	private static $blacklistPostKeys = [
 		'udata',
@@ -113,6 +114,8 @@ class Application extends SilexApp {
 	public function getView($id) {
 		if (isset($this->views[$id]))
 			return $this->views[$id];
+
+		throw new InvalidParameterException("View '$id' does not exist.");
 
 		return null;
 	}
