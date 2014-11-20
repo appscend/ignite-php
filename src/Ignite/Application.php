@@ -18,7 +18,7 @@ class Application extends SilexApp {
 	use Application\ConfigTrait;
 	use Application\GELFTrait;
 	
-	const IGNITE_VERSION = '0.9.0'; //beta 9.0
+	const IGNITE_VERSION = '0.9.1'; //beta 9.0
 
 	private static $blacklistPostKeys = [
 		'udata',
