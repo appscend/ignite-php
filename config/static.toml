@@ -1,7 +1,0 @@
-[homepage.id1]
-type = 1
-eq = true
-
-[homepage.id2]
-type = 2
-tq = true
