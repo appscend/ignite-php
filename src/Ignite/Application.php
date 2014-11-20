@@ -2,14 +2,11 @@
 
 namespace Ignite;
 
-define("APP_ROOT_DIR", realpath('.'));
-define("LIB_ROOT_DIR", APP_ROOT_DIR);
-define("CONFIG_DIR", APP_ROOT_DIR.'/config');
-
 use Ignite\Providers\Logger;
 use Ignite\Providers\MemcachedProvider;
 use Silex\Application as SilexApp;
 use Silex\Provider as SilexProvider;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpFoundation\Request;
 use Yosymfony\Silex\ConfigServiceProvider\ConfigServiceProvider;
 use Yosymfony\Toml\Toml;
@@ -49,6 +46,9 @@ class Application extends SilexApp {
 	function __construct(array $values = array()) {
 		parent::__construct($values);
 		
+		if (!defined('APP_ROOT_DIR'))
+			throw new InvalidConfigurationException('No environment has been initialised.');
+
 		$this->register(new SilexProvider\UrlGeneratorServiceProvider());
 
 		$appSettings = Toml::parse(CONFIG_DIR.'/app.toml');

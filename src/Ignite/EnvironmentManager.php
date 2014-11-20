@@ -2,8 +2,13 @@
 
 namespace Ignite;
 
+define("APP_ROOT_DIR", realpath('.'));
+define("LIB_ROOT_DIR", APP_ROOT_DIR.'/vendor/appscend/ignite-php');
+define("CONFIG_DIR", APP_ROOT_DIR.'/config');
+
 use Silex\Application as SilexApp;
 use Silex\ServiceProviderInterface;
+use Symfony\Component\Config\Definition\Processor;
 
 class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 
@@ -29,6 +34,10 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @return bool True if the environment exists, false otherwise.
 	 */
 	public static function setEnvironment($name) {
+		if (!file_exists(CONFIG_DIR.'/environments/'.$name.'.toml'))
+			throw new \InvalidArgumentException("Configuration file for environment '$name' doesn't exist.");
+
+		self::$envs[$name] = self::processConfig(\Yosymfony\Toml\Toml::parse(CONFIG_DIR."/environments/$name.toml"));
 		self::$current = $name;
 	}
 
@@ -46,7 +55,7 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @param string $section Section name
 	 * @return array
 	 */
-	public static  function get($section) {
+	public static function get($section) {
 		$result = [];
 		array_walk(self::$envs[self::$current], function($v, $k) use ($section, &$result) {
 			if (strpos($k, $section.'.') !== false)
@@ -63,7 +72,7 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @param array $arr
 	 * @return array
 	 */
-	private function processConfig(array $arr) {
+	private static function processConfig(array $arr) {
 		$result = [];
 
 		foreach($arr as $sectionName => $section) {
@@ -86,8 +95,8 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	public function register(SilexApp $app) {
 		self::$app = $app;
 		$app['env'] = $this;
-		self::$envs['devel'] = $this->processConfig(self::$app->scan(APP_ROOT_DIR.'/config/devel.toml')->getArray());
-		self::$envs['production'] = $this->processConfig(self::$app->scan(APP_ROOT_DIR.'/config/production.toml')->getArray());
+		self::$envs['devel'] = self::processConfig(self::$app->scan(CONFIG_DIR.'/environments/devel.toml')->getArray());
+		self::$envs['production'] = self::processConfig(self::$app->scan(CONFIG_DIR.'/environments/production.toml')->getArray());
 	}
 
 	public static function app() {
