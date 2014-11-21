@@ -9,6 +9,7 @@ define("CONFIG_DIR", APP_ROOT_DIR.'/config');
 use Silex\Application as SilexApp;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\Config\Definition\Processor;
+use Yosymfony\Toml\Toml;
 
 class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 
@@ -37,7 +38,7 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 		if (!file_exists(CONFIG_DIR.'/environments/'.$name.'.toml'))
 			throw new \InvalidArgumentException("Configuration file for environment '$name' doesn't exist.");
 
-		self::$envs[$name] = self::processConfig(\Yosymfony\Toml\Toml::parse(CONFIG_DIR."/environments/$name.toml"));
+		self::$envs[$name] = self::processConfig(Toml::parse(CONFIG_DIR."/environments/$name.toml"));
 		self::$current = $name;
 	}
 
@@ -95,8 +96,8 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	public function register(SilexApp $app) {
 		self::$app = $app;
 		$app['env'] = $this;
-		self::$envs['devel'] = self::processConfig(self::$app->scan(CONFIG_DIR.'/environments/devel.toml')->getArray());
-		self::$envs['production'] = self::processConfig(self::$app->scan(CONFIG_DIR.'/environments/production.toml')->getArray());
+		self::$envs['devel'] = self::processConfig(Toml::parse(CONFIG_DIR.'/environments/devel.toml'));
+		self::$envs['production'] = self::processConfig(Toml::parse(CONFIG_DIR.'/environments/production.toml'));
 	}
 
 	public static function app() {

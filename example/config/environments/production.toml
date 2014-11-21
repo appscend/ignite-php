@@ -3,6 +3,13 @@ assets_path = "assets/"
 static_xml_path = "static/"
 
 [gelf]
-domain = "logging.appscend.net"
+domain = "example.net"
 port = 12201
 facility = "ignitephp_dev"
+
+[memcache]
+type = "elastic"
+enabled = "false"
+host = "example.com"
+port = 11211
+expiration = 3600

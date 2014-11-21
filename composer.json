@@ -7,7 +7,8 @@
         "graylog2/gelf-php": "dev-master",
         "yosymfony/config-serviceprovider": "1.0.*@dev",
 		"filp/whoops": "1",
-		"symfony/serializer": "v2.5.0"
+		"symfony/serializer": "v2.5.0",
+		"jaz303/phake": "dev-master"
     },
     "autoload": {
         "psr-0": { 

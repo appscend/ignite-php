@@ -2,18 +2,15 @@
 
 namespace Ignite;
 
-require_once __DIR__.'/vendor/autoload.php';
-date_default_timezone_set('Europe/Bucharest');
+require_once 'vendor/autoload.php';
 
+//default environment is devel
 EnvironmentManager::init();
-
-$app = new Application();
-$app['debug'] = true;
 Localization::setLocale('en_US');
 
-$m = new Modules\Homepage\Homepage($app);
+$app = new Application();
+
+$m = new Modules\Sample\Sample($app);
 $app->mount('/', $m);
 
 $app->run();
-
-?>

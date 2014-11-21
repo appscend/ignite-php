@@ -18,7 +18,7 @@ class Application extends SilexApp {
 	use Application\ConfigTrait;
 	use Application\GELFTrait;
 	
-	const IGNITE_VERSION = '0.9.1'; //beta 9.0
+	const IGNITE_VERSION = '0.9.2'; //beta 9.2
 
 	private static $blacklistPostKeys = [
 		'udata',
@@ -50,6 +50,7 @@ class Application extends SilexApp {
 		if (!defined('APP_ROOT_DIR'))
 			throw new InvalidConfigurationException('No environment has been initialised.');
 
+		$this->register(new EnvironmentManager());
 		$this->register(new SilexProvider\UrlGeneratorServiceProvider());
 
 		$appSettings = Toml::parse(CONFIG_DIR.'/app.toml');
@@ -74,7 +75,9 @@ class Application extends SilexApp {
 		
 		$this['dispatcher']->addSubscriber(new EventListener\ViewToResponseListener($this));
 
-		$this->register(new EnvironmentManager());
+		if (isset($this['env']['app.debug']) && $this['env']['app.debug'] == 'true')
+			$this['debug'] = true;
+
 		$this->register(new Logger($this));
 
 		if (isset($this['env']['memcache.enabled']) && $this['env']['memcache.enabled'] == 'true')
@@ -84,7 +87,7 @@ class Application extends SilexApp {
 			$this->setRouteName($req->get('_route'));
 		});
 
-		$staticViewIds = \Yosymfony\Toml\Toml::parse(APP_ROOT_DIR.'/config/static.toml');
+		$staticViewIds = \Yosymfony\Toml\Toml::parse(CONFIG_DIR.'/static.toml');
 		foreach ($staticViewIds as $id => $s) {
 			$this->staticViewIds[] = $id;
 		}

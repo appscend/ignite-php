@@ -1,2 +1,3 @@
-STRING1 = "Bafdssadsaldslal asll asldla"
-STRING_2 = "SDasd sad asd sa"
+#Keys must match between languages for a proper translation
+STRING1 = "This text is in english."
+STRING_2 = "Test strin 2"

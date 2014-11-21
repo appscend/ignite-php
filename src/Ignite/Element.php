@@ -34,7 +34,7 @@ class Element extends Registry {
 	/**
 	 * @var View The view instance where this element belongs to.
 	 */
-	protected $view = null;
+	public $view = null;
 
 	/**
 	 *

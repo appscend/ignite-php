@@ -1,3 +1,6 @@
+[homepage]
+__static = true
+
 [homepage.id1]
 type = 1
 eq = true

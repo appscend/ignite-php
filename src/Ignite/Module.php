@@ -37,23 +37,45 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 		$this->app = $app;
 	}
 
-	public function generateStaticViews($path) {
-		$views = Toml::parse(APP_ROOT_DIR.'/'.$path);
+	public function generateStaticViews() {
+		$views = Toml::parse(CONFIG_DIR.'/static.toml');
 
-		if (!file_exists($this->app->getStaticXMLPath())) {
-			mkdir(APP_ROOT_DIR . '/' . $this->app->getStaticXMLPath());
+		if (!file_exists($this->app['env']['app.static_xml_path'])) {
+			mkdir(APP_ROOT_DIR . '/' . $this->app['env']['app.static_xml_path']);
 		}
-		if (!file_exists($this->app->getStaticXMLPath().'/'.$this->moduleName))
-			mkdir(APP_ROOT_DIR . '/' . $this->app->getStaticXMLPath() . '/'.$this->moduleName);
+		if (!file_exists($this->app['env']['app.static_xml_path'].'/'.$this->moduleName))
+			mkdir(APP_ROOT_DIR . '/' . $this->app['env']['app.static_xml_path'] . '/'.$this->moduleName);
 
 		foreach ($views as $id => $v) {
 			if ($this->app->getView($id) !== null) {
-				foreach ($v as $target => $data) {
-					$renderedView = $this->app->getView($id)->getFullView($data)->render();
+
+				if (empty($v)) {
+					//this is a static view that doesn't have additional parameters (empty array in toml file)
+					$renderedView = $this->app->getView($id)->getFullView()->render();
 					$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
 					$xmlConstruct->fromMixed($renderedView);
 
-					file_put_contents(APP_ROOT_DIR.'/'.$this->app->getStaticXMLPath().$this->moduleName."/$target.xml", $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG));
+					file_put_contents(APP_ROOT_DIR . '/' . $this->app['env']['app.static_xml_path'] . $this->moduleName . "/$id.xml", $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG));
+				} else {
+					//this static view CAN HAVE both additional params OR NO additional params
+					foreach ($v as $target => $data) {
+
+						if ($target == '__static') {
+							$renderedView = $this->app->getView($id)->getFullView()->render();
+							$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
+							$xmlConstruct->fromMixed($renderedView);
+
+							file_put_contents(APP_ROOT_DIR . '/' . $this->app['env']['app.static_xml_path'] . $this->moduleName . "/$id.xml", $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG));
+
+							continue;
+						}
+
+						$renderedView = $this->app->getView($id)->getFullView($data)->render();
+						$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
+						$xmlConstruct->fromMixed($renderedView);
+
+						file_put_contents(APP_ROOT_DIR . '/' . $this->app['env']['app.static_xml_path'] . $this->moduleName . "/$id.$target.xml", $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG));
+					}
 				}
 			}
 		}

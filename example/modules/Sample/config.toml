@@ -1,5 +1,3 @@
-!include = ["test.toml"]
-
 [homepage]
 background_color = "000000"
 background_image_landscape = "niciuna.jpg"
