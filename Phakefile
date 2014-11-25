@@ -4,6 +4,8 @@ namespace Ignite;
 
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 
+require_once '../../autoload.php';
+
 EnvironmentManager::init();
 
 \desc('Copies example files to app root to give a head start.');
