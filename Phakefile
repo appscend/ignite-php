@@ -15,7 +15,7 @@ EnvironmentManager::init();
 	if (isset($args['env']))
 		EnvironmentManager::setEnvironment($args['env']);
 
-	`cp -r -i example/* ../../../`;
+	`cp -r -i vendor/appscend/ignite-php/example/* .`;
 });
 
 \desc('Generates static xml files based on the configuration file.');
