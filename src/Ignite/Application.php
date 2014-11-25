@@ -78,7 +78,8 @@ class Application extends SilexApp {
 		if (isset($this['env']['app.debug']) && $this['env']['app.debug'] == 'true')
 			$this['debug'] = true;
 
-		$this->register(new Logger($this));
+		if (isset($this['env']['monolog.logfile']) || isset($this['env']['gelf.domain']))
+			$this->register(new Logger($this));
 
 		if (isset($this['env']['memcache.enabled']) && $this['env']['memcache.enabled'] == 'true')
 			$this->register(new MemcachedProvider());
