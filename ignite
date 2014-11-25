@@ -1,2 +1,2 @@
 #!/bin/bash
-./vendor/jaz303/phake/bin/phake $@ --trace
+../../jaz303/phake/bin/phake $@ --trace
