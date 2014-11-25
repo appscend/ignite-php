@@ -13,9 +13,6 @@
     "autoload": {
         "psr-0": { 
         	"Ignite\\": "src/"
-        },
-		"psr-4": {
-			"Ignite\\Modules\\": "modules/"
-		}
+        }
     }
 }
