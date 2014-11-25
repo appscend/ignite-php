@@ -35,10 +35,12 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 	 * @return bool True if the environment exists, false otherwise.
 	 */
 	public static function setEnvironment($name) {
-		if (!file_exists(CONFIG_DIR.'/environments/'.$name.'.toml'))
+		$fileName = !file_exists(CONFIG_DIR.'/environments/'.$name.'.toml') ? APP_ROOT_DIR . '/vendor/appscend/ignite-php/example/config/environments/'.$name.'.toml' : CONFIG_DIR.'/environments/'.$name.'.toml';
+
+		if (!file_exists($fileName))
 			throw new \InvalidArgumentException("Configuration file for environment '$name' doesn't exist.");
 
-		self::$envs[$name] = self::processConfig(Toml::parse(CONFIG_DIR."/environments/$name.toml"));
+		self::$envs[$name] = self::processConfig(Toml::parse($fileName));
 		self::$current = $name;
 	}
 
