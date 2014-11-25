@@ -15,7 +15,7 @@ EnvironmentManager::init();
 	if (isset($args['env']))
 		EnvironmentManager::setEnvironment($args['env']);
 
-	`cp -r -i vendor/appscend/ignite-php/example/* .`;
+	`cp -r -i vendor/appscend/ignite-php/example/. .`;
 	chmod('.', 0775);
 });
 
