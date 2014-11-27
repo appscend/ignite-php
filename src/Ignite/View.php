@@ -286,7 +286,7 @@ abstract class View extends Registry {
 	 * @param Element $menu The menu where the element will be.
 	 * @return Element Returns the inserted element.
 	 */
-	public function addMenuElement($key, $props = null, Element $menu) {
+	public function addMenuElement($key, $props = [], Element $menu) {
 		$element = new Element('me');
 
 		if ($key) {
@@ -372,11 +372,26 @@ abstract class View extends Registry {
 	 * creates an empty group.
 	 * @return Element the inserted group.
 	 */
-	public function addButtonGroup($group = null) {
+	public function addButtonGroup($key = null, $group = null) {
 		if ($group == null)
 			$group = new Element('bg');
 		else if (!$group instanceof Element)
 			$group = new Element('bg', $group);
+
+		if ($key) {
+			$group['Key'] = $key;
+			$keys = explode(',', $key);
+
+			foreach ($keys as $k) {
+				if (isset($this->elementClasses[$k])) {
+					$this->applyProperties($group, $this->elementClasses[$k]);
+				} else {
+					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", Logger::LOG_WARN);
+
+					return false;
+				}
+			}
+		}
 
 		$group->setTag('bg');
 		$group->view = $this;
@@ -394,7 +409,7 @@ abstract class View extends Registry {
 	 * @param Element|null $group The group where to insert. Optional if you don't want to insert it in a group.
 	 * @return Element The inserted element
 	 */
-	public function addButtonElement($button, $group = null) {
+	public function addButtonElement($key = null, $button = null, $group = null) {
 		if (!$button instanceof Element)
 			$button = new Element('b', $button);
 
@@ -403,6 +418,21 @@ abstract class View extends Registry {
 			$group->appendChild($button);
 		} else
 			$this->elementsContainers['buttons']->appendChild($button);
+
+		if ($key) {
+			$button['Key'] = $key;
+			$keys = explode(',', $key);
+
+			foreach ($keys as $k) {
+				if (isset($this->elementClasses[$k])) {
+					$this->applyProperties($button, $this->elementClasses[$k]);
+				} else {
+					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", Logger::LOG_WARN);
+
+					return false;
+				}
+			}
+		}
 
 		if (isset($button['button_image']) && strpos($button['button_image'], 'http') !== 0)
 			$button['button_image'] = $this->app->getAssetsPath().$button['button_image'];
