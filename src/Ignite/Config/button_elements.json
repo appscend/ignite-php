@@ -52,5 +52,9 @@
 	"momentary": {
 		"tag": "mom",
 		"type": "boolean"
+	},
+	"Key": {
+		"tag": "key",
+		"type": "string"
 	}
 }
