@@ -108,7 +108,21 @@
 	},
 	"navigation_bar_image_logo_mode": {
 		"tag": "nblcm",
-		"type": "string"
+		"type": "enum",
+		"enum": {
+			"scale_to_fill": "stf",
+			"scale_to_fit": "aft",
+			"scale_to_fill_preserve_ratio": "afl",
+			"top": "t",
+			"bottom": "b",
+			"left": "l",
+			"right": "r",
+			"top_left": "tl",
+			"top_right": "tr",
+			"bottom_left": "bl",
+			"bottom_right": "br",
+			"center": "c"
+		}
 	},
 	"navigation_bar_text_align": {
 		"tag": "nba",
