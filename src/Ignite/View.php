@@ -37,17 +37,15 @@ abstract class View extends Registry {
 	const GENERIC_ACTIONS_SPEC			= 'generic_actions.json';
 
 	const TYPE_CAMERA_VIEW		=	0;
-	const TYPE_COVERFLOW_VIEW	=	1;
+	const TYPE_GRID_VIEW		=	1;
 	const TYPE_FORM_VIEW		=	2;
-	const TYPE_IMAGEGRID_VIEW	=	3;
-	const TYPE_LAYAR_VIEW		=	4;
-	const TYPE_LIST_VIEW		=	5;
-	const TYPE_MAP_VIEW			=	6;
-	const TYPE_MENUBAR_VIEW		=	7;
-	const TYPE_QRCODE_VIEW		=	8;
-	const TYPE_TABBAR_VIEW		=	9;
-	const TYPE_WEBVIEW_VIEW		=	10;
-	const TYPE_WIDGET_VIEW		=	11;
+	const TYPE_LAYAR_VIEW		=	3;
+	const TYPE_MAP_VIEW			=	4;
+	const TYPE_MENUBAR_VIEW		=	5;
+	const TYPE_QRCODE_VIEW		=	6;
+	const TYPE_TABBAR_VIEW		=	7;
+	const TYPE_WEBVIEW_VIEW		=	8;
+	const TYPE_WIDGET_VIEW		=	9;
 
 	/**
 	 * @var Element[]

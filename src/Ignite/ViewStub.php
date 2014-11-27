@@ -10,11 +10,9 @@ class ViewStub implements \ArrayAccess {
 
 	private $viewTypes = [
 		'cam',
-		'c',
+		'g',
 		'fr',
-		'p',
 		'lr',
-		'l',
 		'm',
 		'mb',
 		'cs',
