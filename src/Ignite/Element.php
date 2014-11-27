@@ -43,9 +43,9 @@ class Element extends Registry {
 	 * @param string $tag
 	 * @param array $properties
 	 */
-	public function __construct($tag = null, array $properties = []) {
+	public function __construct($tag = null, $properties = null) {
 		$this->tag = $tag;
-		$this->properties = $properties;
+		$this->properties = empty($properties) ? [] : $properties;
 		$this->prefix_properties = array_fill(0, 11, []);
 	}
 
