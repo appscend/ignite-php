@@ -12,9 +12,10 @@ class GridView extends View {
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
 
-		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer('Widget/elements.json', 'es'));
+		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer('Grid/elements.json', 'es'));
 		$this->elementsContainers['elements']->view = $this;
 		$this->config = $this->prependChild(new ConfigContainer());
+		$this->config->appendConfigSpec('Grid/config.json');
 		$this->config['view_id'] = $viewID;
 		$this->config['view_type'] = 'g';
 		$this->config->view = $this;
