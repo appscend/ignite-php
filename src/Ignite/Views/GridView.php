@@ -12,7 +12,7 @@ class GridView extends View {
 	public function __construct($app, $viewID) {
 		parent::__construct($app, $viewID);
 
-		$this->elementsContainers['elements'] = $this->prependChild(new ElementContainer('Grid/elements.json', 'es'));
+		$this->elementsContainers['elements'] = $this->prependChild(new Element('es'));
 		$this->elementsContainers['elements']->view = $this;
 		$this->config = $this->prependChild(new ConfigContainer());
 		$this->config->appendConfigSpec('Grid/config.json');
@@ -48,8 +48,10 @@ class GridView extends View {
 
 		}
 
-		if (isset($content['template_xml']) && strpos($content['template_xml'], 'http') !== 0)
-			$content['template_xml'] = $this->app->getWebPath().$content['template_xml'];
+		if (isset($content['template_xml']) && strpos($content['template_xml'], 'http') !== 0) {
+			$content['cpx'] = $this->app->getWebPath().$content['template_xml'];
+			unset($content['template_xml']);
+		}
 
 		$element->appendProperties($content);
 		$element->view = $this;
