@@ -3,6 +3,10 @@
 		"tag": "cpx",
 		"type": "string"
 	},
+	"large_template_xml": {
+		"tag": "lpx",
+		"type": "string"
+	},
 	"columns": {
 		"tag": "c",
 		"type": "integer"

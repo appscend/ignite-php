@@ -53,6 +53,11 @@ class GridView extends View {
 			unset($content['template_xml']);
 		}
 
+		if (isset($content['large_template_xml']) && strpos($content['large_template_xml'], 'http') !== 0) {
+			$content['lpx'] = $this->app->getWebPath().$content['large_template_xml'];
+			unset($content['large_template_xml']);
+		}
+
 		$element->appendProperties($content);
 		$element->view = $this;
 
