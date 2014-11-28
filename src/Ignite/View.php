@@ -667,7 +667,7 @@ abstract class View extends Registry {
 
 	protected function processAssetsPaths(array &$array, array $pathParameters) {
 		foreach ($pathParameters as $p) {
-			if (isset($array[$p]) && strpos($array[$p], 'http') !== 0)
+			if (isset($array[$p]) && strpos($array[$p], 'http') !== 0 && $array[$p][0] != '[')
 				$array[$p] = $this->app->getAssetsPath().$array[$p];
 		}
 	}
