@@ -10,5 +10,9 @@
 	"rows": {
 		"tag": "r",
 		"type": "integer"
+	},
+	"cell_height": {
+		"tag": "ch",
+		"type": "integer"
 	}
 }
