@@ -2,5 +2,13 @@
 	"template_xml": {
 		"tag": "cpx",
 		"type": "string"
+	},
+	"columns": {
+		"tag": "c",
+		"type": "integer"
+	},
+	"rows": {
+		"tag": "r",
+		"type": "integer"
 	}
 }
