@@ -2,6 +2,7 @@
 
 namespace Ignite\EventListener;
 
+use Ignite\EnvironmentManager;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,8 +11,7 @@ use Ignite\View;
 use Ignite\Application;
 use Ignite\Helpers\XmlDomConstruct;
 
-class ViewToResponseListener implements EventSubscriberInterface
-{
+class ViewToResponseListener implements EventSubscriberInterface {
 	protected $_app;
 
     public function __construct(Application $app) {
@@ -24,6 +24,12 @@ class ViewToResponseListener implements EventSubscriberInterface
 		
         if ($response instanceof View) {
 			$xmlConstruct = new XmlDomConstruct('1.0', 'UTF-8');
+
+			if (EnvironmentManager::getEnvironmentName() == 'devel') {
+				$xmlConstruct->preserveWhiteSpace = false;
+				$xmlConstruct->formatOutput = true;
+			}
+
 			$xmlConstruct->fromMixed($response->render());
 			$responseContent = $xmlConstruct->saveXML(null, LIBXML_NOEMPTYTAG);
 

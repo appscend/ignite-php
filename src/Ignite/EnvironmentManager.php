@@ -68,6 +68,10 @@ class EnvironmentManager implements ServiceProviderInterface, \ArrayAccess {
 		return $result;
 	}
 
+	public static function getEnvironmentName() {
+		return self::$current;
+	}
+
 	/**
 	 *
 	 * Processes the parsed configuration in the form [section.property] = value
