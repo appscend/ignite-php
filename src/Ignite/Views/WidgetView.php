@@ -37,8 +37,8 @@ class WidgetView extends View{
 		$element = new WidgetViewElement('e');
 
 		if ($key) {
-			$element['Key'] = $key;
 			$keys = explode(',', $key);
+			$element['Key'] = end($keys);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[$k])) {
@@ -64,8 +64,8 @@ class WidgetView extends View{
 		$element = new WidgetTextLabel('e');
 
 		if ($key) {
-			$element['Key'] = $key;
 			$keys = explode(',', $key);
+			$element['Key'] = end($keys);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[$k])) {
@@ -99,8 +99,8 @@ class WidgetView extends View{
 		$element = new WidgetImage('e');
 
 		if ($key) {
-			$element['Key'] = $key;
 			$keys = explode(',', $key);
+			$element['Key'] = end($keys);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {
@@ -126,8 +126,8 @@ class WidgetView extends View{
 		$element = new Element('e');
 
 		if ($key) {
-			$element['Key'] = $key;
 			$keys = explode(',', $key);
+			$element['Key'] = end($keys);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {

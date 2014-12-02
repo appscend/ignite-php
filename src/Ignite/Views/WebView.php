@@ -38,8 +38,8 @@ class WebView extends View{
 		$element = new Element('e');
 
 		if ($key) {
-			$element['Key'] = $key;
 			$keys = explode(',', $key);
+			$element['Key'] = end($keys);
 
 			foreach ($keys as $k) {
 				if (isset($this->elementClasses[trim($k)])) {
