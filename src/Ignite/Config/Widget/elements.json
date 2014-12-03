@@ -338,7 +338,8 @@
 		"enum": {
 			"label": "label",
 			"image": "image",
-			"pagination": "pagination"
+			"pagination": "pagination",
+			"tf": "tf"
 		}
 	},
 	"parent_view": {
@@ -356,5 +357,80 @@
 	"Key": {
 		"tag": "key",
 		"type": "string"
+	},
+	"tf_password_field": {
+		"tag": "sec",
+		"type": "boolean"
+	},
+	"tf_done_button": {
+		"tag": "ut",
+		"type": "boolean"
+	},
+	"tf_keyboard_type": {
+		"tag": "kt",
+		"type": "enum",
+		"enum": {
+			"alphabetic": "alph",
+			"numbers_punct": "nap",
+			"numeric": "nbp",
+			"decimal": "decp",
+			"url": "u",
+			"email": "ea"
+		}
+	},
+	"tf_keyboard_done_type": {
+		"tag": "kdbt",
+		"type": "integer",
+		"min": 0,
+		"max": 6
+	},
+	"tf_autocapitalization_type": {
+		"tag": "at",
+		"type": "enum",
+		"enum": {
+			"none": "no",
+			"sentences": "s",
+			"words": "w",
+			"all": "ac"
+		}
+	},
+	"tf_autocorrection_type": {
+		"tag": "act",
+		"type": "enum",
+		"enum": {
+			"default": "default",
+			"none": "no",
+			"yes": "yes"
+		}
+	},
+	"tf_placeholder_text": {
+		"tag": "plh",
+		"type": "string"
+	},
+	"tf_text_alignment": {
+		"tag": "al",
+		"type": "enum",
+		"enum": {"left": "l", "center": "c", "right": "r"}
+	},
+	"tf_text_left_padding": {
+		"tag": "lpad",
+		"type": "integer"
+	},
+	"tf_text_top_padding": {
+		"tag": "tpad",
+		"type": "integer"
+	},
+	"tf_text_right_padding": {
+		"tag": "rpad",
+		"type": "integer"
+	},
+	"tf_auto_select": {
+		"tag": "kt",
+		"type": "integer"
+	},
+	"tf_select_action": {
+		"tag": "a",
+		"type": "Action",
+		"prefix": "s"
 	}
 }
