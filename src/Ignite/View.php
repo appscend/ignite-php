@@ -635,7 +635,7 @@ abstract class View extends Registry {
 
 		}
 
-		$result = array_merge($result, $this->getGlobalClasses());
+		$result = Module::array_merge_recursive_distinct($result, $this->getGlobalClasses());
 		$this->elementClasses = $result;
 	}
 
