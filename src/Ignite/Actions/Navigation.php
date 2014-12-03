@@ -24,6 +24,16 @@ class Navigation extends ActionBuffer{
 		return $action;
 	}
 
+	public static function quietPush($paramxml, $data = null, $form = null, $animation = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qp:', [$paramxml, $data, $form, $animation]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
 	/**
 	 * @param string|ViewStub $paramxml
 	 * @param string $data
