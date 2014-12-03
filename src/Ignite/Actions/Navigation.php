@@ -213,7 +213,7 @@ class Navigation extends ActionBuffer{
 	/**
 	 * @return Action
 	 */
-	public static function previous() {
+	public static function pop() {
 		$action = new Action('pop');
 		self::$actionBuffer[] = $action;
 

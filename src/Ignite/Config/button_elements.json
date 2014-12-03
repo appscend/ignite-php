@@ -26,11 +26,11 @@
 	},
 	"force_width": {
 		"tag": "w",
-		"type": "string"
+		"type": "boolean"
 	},
 	"force_height": {
 		"tag": "h",
-		"type": "string"
+		"type": "boolean"
 	},
 	"border": {
 		"tag": "br",
