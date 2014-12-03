@@ -31,6 +31,7 @@ class WidgetViewElement extends Element {
 			if (!isset($fresult[1])) {
 				$ac = $fresult[0];
 				$ac->setPrefix('swl');
+				ActionBuffer::clearBuffer();
 			} else {
 
 				$el = $this->view->addActionGroup($fresult, $name);
@@ -65,6 +66,7 @@ class WidgetViewElement extends Element {
 			if (!isset($fresult[1])) {
 				$ac = $fresult[0];
 				$ac->setPrefix('swr');
+				ActionBuffer::clearBuffer();
 			} else {
 
 				$el = $this->view->addActionGroup($fresult, $name);

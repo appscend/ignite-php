@@ -31,6 +31,7 @@ class ListElement extends Element{
 			if (!isset($fresult[1])) {
 				$ac = $fresult[0];
 				$ac->setPrefix('a');
+				ActionBuffer::clearBuffer();
 			} else {
 
 				$el = $this->view->addActionGroup($fresult, $name);
@@ -65,6 +66,7 @@ class ListElement extends Element{
 			if (!isset($fresult[1])) {
 				$ac = $fresult[0];
 				$ac->setPrefix('s');
+				ActionBuffer::clearBuffer();
 			} else {
 
 				$el = $this->view->addActionGroup($fresult, $name);

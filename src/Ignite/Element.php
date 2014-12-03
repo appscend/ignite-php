@@ -65,7 +65,7 @@ class Element extends Registry {
 
 			if (!isset($fresult[1])) {
 				$this->action = $fresult[0];
-
+				ActionBuffer::clearBuffer();
 			} else {
 
 				$el = $this->view->addActionGroup($fresult, $name);

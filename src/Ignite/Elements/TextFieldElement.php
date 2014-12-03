@@ -38,6 +38,7 @@ class TextFieldElement extends Element{
 			if (!isset($fresult[1])) {
 				$ac = $fresult[0];
 				$ac->setPrefix('s');
+				ActionBuffer::clearBuffer();
 			} else {
 
 				$el = $this->view->addActionGroup($fresult, $name);
