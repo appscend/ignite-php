@@ -640,17 +640,14 @@ abstract class View extends Registry {
 	}
 
 	private function getGlobalClasses() {
-		$globalClasses = $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) { return strstr($k, '@') !== false; });
+		$globalClasses = $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) { return $k[0] === '@'; });
 
 		$prefixConstants = array_flip(Element::$prefixes);
 		$result = [];
 
 		foreach ($globalClasses as $key => $props) {
 			$p = explode('*', $key); // p[0] - keyname; p[1] = prefix (may not exist);
-			$r[0] = trim($p[0], '@');
-
-			if (!($r[0] == $this->viewID || $r[0] == ''))
-				continue;
+			$p[0] = trim($p[0], '@');
 
 			if (!isset($result[$p[0]]))
 				$result[$p[0]] = [];
