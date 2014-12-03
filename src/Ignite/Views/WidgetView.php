@@ -164,7 +164,7 @@ class WidgetView extends View{
 		}
 
 		$element->appendProperties($content);
-		$element['element_type'] = 'tf';
+		$element['element_type'] = 'textfield';
 		$element->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($element);
