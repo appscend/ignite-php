@@ -6,7 +6,19 @@
 	"control_type": {
 		"tag": "type",
 		"type": "enum",
-		"enum": ["g", "ts", "mv", "p", "s", "tf", "ta", "i", "m", "dp", "b"]
+		"enum": {
+			"group_separator": "g",
+			"toggle_switch": "ts",
+			"multi_value": "mv",
+			"drop_down_picker": "p",
+			"slider": "s",
+			"text_field": "tf",
+			"text_area": "ta",
+			"image_upload": "i",
+			"map_location": "m",
+			"date_picker": "dp",
+			"button": "b"
+		}
 	},
 	"control_title": {
 		"tag": "title",
