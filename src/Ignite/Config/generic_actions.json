@@ -2,6 +2,9 @@
 	"p:": {
 		"name": "push"
 	},
+	"qp:": {
+		"name": "quietPush"
+	},
 	"pl:": {
 		"name": "pushLocation"
 	},
