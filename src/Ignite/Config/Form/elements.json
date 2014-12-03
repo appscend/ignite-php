@@ -7,17 +7,17 @@
 		"tag": "type",
 		"type": "enum",
 		"enum": {
-			"group_separator": "g",
-			"toggle_switch": "ts",
-			"multi_value": "mv",
-			"drop_down_picker": "p",
-			"slider": "s",
-			"text_field": "tf",
-			"text_area": "ta",
-			"image_upload": "i",
-			"map_location": "m",
-			"date_picker": "dp",
-			"button": "b"
+			"g": "g",
+			"ts": "ts",
+			"mv": "mv",
+			"p": "p",
+			"s": "s",
+			"tf": "tf",
+			"ta": "ta",
+			"i": "i",
+			"m": "m",
+			"dp": "dp",
+			"b": "b"
 		}
 	},
 	"control_title": {
