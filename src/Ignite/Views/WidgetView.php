@@ -33,6 +33,12 @@ class WidgetView extends View{
 		$this->getElementsFromConfig();
 	}
 
+	/**
+	 * @param ViewStub $v
+	 * @param null|string $key
+	 * @param array $content
+	 * @return WidgetViewElement
+	 */
 	public function addView(ViewStub $v, $key = null, $content = []) {
 		$element = new WidgetViewElement('e');
 
@@ -58,6 +64,11 @@ class WidgetView extends View{
 		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
+	/**
+	 * @param null|string $key
+	 * @param array $content
+	 * @return WidgetTextLabel
+	 */
 	public function addTextLabel($key = null, $content = []) {
 		if (!empty($content))
 			$this->processAssetsPaths($content, $this->paramsElemPath);
@@ -89,7 +100,7 @@ class WidgetView extends View{
 	}
 
 	/**
-	 * @param null $key
+	 * @param null|string $key
 	 * @param array $content
 	 * @return WidgetImage
 	 */
@@ -122,6 +133,11 @@ class WidgetView extends View{
 		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
+	/**
+	 * @param null|string $key
+	 * @param array $content
+	 * @return Element
+	 */
 	public function addPagination($key = null, $content = []) {
 		$element = new Element('e');
 

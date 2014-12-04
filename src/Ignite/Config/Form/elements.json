@@ -44,7 +44,7 @@
 		"tag": "dv",
 		"type": "string"
 	},
-	"persistent_key": {
+	"reset_key": {
 		"tag": "res",
 		"type": "boolean"
 	},

@@ -432,5 +432,33 @@
 		"tag": "a",
 		"type": "Action",
 		"prefix": "s"
+	},
+	"control_title": {
+		"tag": "title",
+		"type": "string"
+	},
+	"required": {
+		"tag": "req",
+		"type": "boolean"
+	},
+	"required_failed_text": {
+		"tag": "reqt",
+		"type": "string"
+	},
+	"regex_validation": {
+		"tag": "val",
+		"type": "string"
+	},
+	"regex_fail_text": {
+		"tag": "valt",
+		"type": "string"
+	},
+	"default": {
+		"tag": "dv",
+		"type": "string"
+	},
+	"reset_key": {
+		"tag": "res",
+		"type": "boolean"
 	}
 }
