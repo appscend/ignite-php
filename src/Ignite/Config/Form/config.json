@@ -1,5 +1,5 @@
 {
-	"id": {
+	"form_id": {
 		"tag": "gid",
 		"type": "string"
 	},
