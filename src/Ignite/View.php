@@ -159,6 +159,8 @@ abstract class View extends Registry {
 
 		$allConfig = $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) use ($avi){ return strpos($k, $avi) === 0; });
 
+		$allConfig = Module::array_merge_recursive_distinct($allConfig, $this->processGlobalConfig());
+
 		$allConfig[$avi] = array_filter($allConfig[$avi], function($v){ return !is_array($v); });
 		$this->processAssetsPaths($allConfig[$avi], $this->pathParameters);
 		$this->config->appendProperties($allConfig[$avi]);
@@ -228,6 +230,18 @@ abstract class View extends Registry {
 			$this->processAssetsPaths($allConfig[$avi.'*ff4padl'], $this->pathParameters);
 			$this->config->addPrefixedProperties($allConfig[$avi.'*ff4padl'], Element::$prefixes[(Element::FOR_FF4 | Element::FOR_TABLET | Element::FOR_LANDSCAPE) -1]);
 		}
+	}
+
+	protected function processGlobalConfig() {
+		$cfg = $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) { return $k[0] === '$'; });
+		$result = [];
+
+		foreach ($cfg as $k => $v) {
+			$key = str_replace('$global', $this->viewID, $k);
+			$result[$key] = $v;
+		}
+
+		return $result;
 	}
 
 	/**

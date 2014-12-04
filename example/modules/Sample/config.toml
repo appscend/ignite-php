@@ -22,3 +22,9 @@ name = "prrrreeea"
 
 [alt_view]
 background_image_landscape = "test.jpg"
+
+[$global]
+background_color = "181818"
+
+[$global*and]
+background_color = "000000"

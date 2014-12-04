@@ -82,7 +82,7 @@ abstract class Module implements ControllerProviderInterface, \ArrayAccess {
 	}
 
 	public function overwritePropsFromFile($path) {
-		$this->parsedLayout = $this->array_merge_recursive_distinct($this->parsedLayout, Toml::parse($path));
+		$this->parsedLayout = self::array_merge_recursive_distinct($this->parsedLayout, Toml::parse($path));
 	}
 
 	public function getLayout() {
