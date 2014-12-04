@@ -46,5 +46,9 @@
 	"scale_horizontally": {
 		"tag": "sh",
 		"type": "boolean"
+	},
+	"form_id": {
+		"tag": "gid",
+		"type": "string"
 	}
 }
