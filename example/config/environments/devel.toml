@@ -1,7 +1,8 @@
 [app]
-web_path = "http://example.com"
+dispatch_url = "http://example.com/"
 assets_path = "assets/"
 static_xml_path = "static/"
+devel_env = true
 
 [monolog]
 logfile = "development.log"

@@ -1,6 +1,9 @@
 [app]
+#as assigned in appscend interface including the trailing slash
+dispatch_url = "http://example.com/"
 assets_path = "assets/"
 static_xml_path = "static/"
+devel_env = false
 
 [gelf]
 domain = "example.net"

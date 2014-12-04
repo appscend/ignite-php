@@ -110,12 +110,12 @@ abstract class View extends Registry {
 	 * Constructs a new view which creates all containers.
 	 *
 	 * @param Application $app
-	 * @param $viewID
+	 * @param string|nul $viewID null if it's an empty view (no elements or config containers)
 	 */
-	public function __construct(Application $app, $viewID) {
+	public function __construct(Application $app, $viewID = null) {
 		parent::__construct('par');
 
-		if ($app->getView($viewID) === null) {
+		if ($viewID !== null && $app->getView($viewID) === null) {
 			throw new ResourceNotFoundException("View with ID '$viewID' does not exist.");
 		}
 
@@ -678,6 +678,7 @@ abstract class View extends Registry {
 
 	protected function processAssetsPaths(array &$array, array $pathParameters) {
 		foreach ($pathParameters as $p) {
+			//values that start with '[' are placeholder values
 			if (isset($array[$p]) && strpos($array[$p], 'http') !== 0 && $array[$p][0] != '[')
 				$array[$p] = $this->app->getAssetsPath().$array[$p];
 		}

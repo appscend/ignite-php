@@ -49,12 +49,12 @@ class GridView extends View {
 		}
 
 		if (isset($content['template_xml']) && strpos($content['template_xml'], 'http') !== 0) {
-			$content['cpx'] = $this->app->getWebPath().$content['template_xml'];
+			$content['cpx'] = $this->app->getDispatchUrl().$content['template_xml'];
 			unset($content['template_xml']);
 		}
 
 		if (isset($content['large_template_xml']) && strpos($content['large_template_xml'], 'http') !== 0) {
-			$content['lpx'] = $this->app->getWebPath().$content['large_template_xml'];
+			$content['lpx'] = $this->app->getDispatchUrl().$content['large_template_xml'];
 			unset($content['large_template_xml']);
 		}
 
