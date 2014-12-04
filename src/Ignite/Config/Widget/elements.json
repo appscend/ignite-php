@@ -460,5 +460,13 @@
 	"reset_key": {
 		"tag": "res",
 		"type": "boolean"
+	},
+	"form_id": {
+		"tag": "gid",
+		"type": "string"
+	},
+	"group_key": {
+		"tag": "gkey",
+		"type": "string"
 	}
 }
