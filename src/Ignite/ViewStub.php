@@ -56,7 +56,7 @@ class ViewStub implements \ArrayAccess {
 			preg_match_all('/{(.)*?}/', $this->properties['route'], $placeholders);
 			$route = str_replace($placeholders[0], array_values($args), $this->properties['route']);
 
-			return $this->app->getDispatchUrl().$route;
+			return rtrim($this->app->getDispatchUrl().$route, '/');
 		}
 
 		return $this->app->getStaticXMLPath().$this->app->getCurrentModule()->getName()."/{$this->properties['id']}.$key.xml";
