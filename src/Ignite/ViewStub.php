@@ -50,9 +50,13 @@ class ViewStub implements \ArrayAccess {
 		return $c($this->app, new Request($args));
 	}
 
-	public function getPath($key = null) {
-		if (!$this->isStatic)
-			return $this->app->getDispatchUrl().$this->properties['route'];
+	public function getPath($key = null, $args = []) {
+		if (!$this->isStatic) {
+			$placeholders = array_map(function($v){ return '{'.$v.'}'; }, array_keys($args));
+			$route = str_replace($placeholders, array_values($args), $this->properties['route']);
+
+			return $this->app->getDispatchUrl().$route;
+		}
 
 		return $this->app->getStaticXMLPath().$this->app->getCurrentModule()->getName()."/{$this->properties['id']}.$key.xml";
 	}
