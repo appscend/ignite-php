@@ -3,7 +3,7 @@
 namespace Ignite;
 
 define("APP_ROOT_DIR", realpath('.'));
-define("LIB_ROOT_DIR", APP_ROOT_DIR);
+define("LIB_ROOT_DIR", APP_ROOT_DIR.'/vendor/appscend/ignite-php');
 define("CONFIG_DIR", APP_ROOT_DIR.'/config');
 
 use Silex\Application as SilexApp;

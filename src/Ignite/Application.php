@@ -151,15 +151,15 @@ class Application extends SilexApp {
 		return self::$blacklistPostKeys;
 	}
 
-	public function getWebPath() {
-		return isset($this['env']['app.web_path']) ? $this['env']['app.web_path'] : '';
+	public function getDispatchUrl() {
+		return $this['env']['app.dispatch_url'];
 	}
 
 	public function getAssetsPath() {
-		return $this->getWebPath().$this['env']['app.assets_path'];
+		return $this['env']['app.devel_env'] === false ? $this['env']['app.assets_path'] : $this['env']['app.dispatch_url'].$this['env']['app.assets_path'];
 	}
 
 	public function getStaticXMLPath() {
-		return $this->getWebPath().$this['env']['app.static_xml_path'];
+		return $this['env']['app.devel_env'] === false ? $this['env']['app.static_xml_path'] : $this['env']['app.dispatch_url'].$this['env']['app.static_xml_path'];
 	}
 }
