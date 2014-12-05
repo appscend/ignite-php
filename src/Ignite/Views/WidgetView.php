@@ -39,7 +39,7 @@ class WidgetView extends View{
 	 * @param array $content
 	 * @return WidgetViewElement
 	 */
-	public function addView(ViewStub $v, $key = null, $content = []) {
+	public function addView(ViewStub $v, $key = null, $data = [], $content = []) {
 		$element = new WidgetViewElement('e');
 
 		if ($key) {
@@ -58,7 +58,7 @@ class WidgetView extends View{
 
 		$element->appendProperties($content);
 		$element->view = $this;
-		$element['target_xml_path'] = $v->getPath($key);
+		$element['target_xml_path'] = $v->getPath($key, $data);
 		$element['target_view_type'] = $v['type'];
 
 		return $this->elementsContainers['elements']->appendChild($element);
