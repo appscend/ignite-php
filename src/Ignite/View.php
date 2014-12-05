@@ -765,11 +765,11 @@ abstract class View extends Registry {
 	}
 
 	public function offsetExists($k) {
-		return in_array($k, ['elements', 'action_groups', 'buttons', 'launch_actions', 'visible_launch_actions', 'hidden_launch_actions', 'menus', 'javascript']);
+		return in_array($k, ['elements', 'action_groups', 'buttons', 'launch_actions', 'visible_launch_actions', 'hidden_launch_actions', 'menus', 'javascript', 'config']);
 	}
 
 	public function offsetGet($k) {
-		return $this->elementsContainers[$k];
+		return $k == 'config' ? $this->config : $this->elementsContainers[$k];
 	}
 
 	public function offsetSet($k, $v) {
