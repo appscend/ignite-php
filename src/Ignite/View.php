@@ -245,11 +245,11 @@ abstract class View extends Registry {
 	}
 
 	/**
-	 * @param Action $action
+	 * @param \Closure|Action $action
 	 * @param string $type Type of the action: visible or hidden. Ommit this param for the default behaviour.
 	 * @return bool|Registry The inserted action or false if action has invalid properties.
 	 */
-	public function addLaunchAction(Action $action, $type = null) {
+	public function addLaunchAction($action, $type = null, $name = null) {
 		switch($type) {
 			case Action::LAUNCH_ACTION_VISIBLE: {
 				$wrapperTag = 'va';
@@ -269,9 +269,30 @@ abstract class View extends Registry {
 			}
 		}
 
-		$action->setTag($wrapperTag);
+		if ($action instanceof \Closure) {
+			$action();
+			$fresult = ActionBuffer::getBuffer();
 
-		return $this->elementsContainers[$where]->appendChild($action);
+			if (!isset($fresult[1])) {
+				$fresult[0]->setTag($wrapperTag);
+				$action = $fresult[0];
+				ActionBuffer::clearBuffer();
+
+				return $this->elementsContainers[$where]->appendChild($action);
+			} else {
+				$el = $this->addActionGroup($fresult, $name);
+
+				if ($name !== null)
+					return $this->elementsContainers[$where]->appendChild(new Action('pag:', [$name]));
+				else {
+					$index = $this['action_groups']->getChildIndex($el);
+					return $this->elementsContainers[$where]->appendChild(new Action('pag:', [$index]));
+				}
+			}
+		} else if ($action instanceof Action)
+			return $this->elementsContainers[$where]->appendChild($action);
+		else
+			throw new InvalidTypeException('Invalid argument 1. Must be instance of Action or \Closure');
 	}
 
 	/**
