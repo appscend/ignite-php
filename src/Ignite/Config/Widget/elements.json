@@ -468,5 +468,9 @@
 	"group_key": {
 		"tag": "gkey",
 		"type": "string"
+	},
+	"enable_markdown": {
+		"tag": "nmd",
+		"type": "boolean"
 	}
 }
