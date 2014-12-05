@@ -44,6 +44,8 @@ class Application extends SilexApp {
 
 	private $staticViewIds = [];
 
+	private $userData = [];
+
 	function __construct(array $values = array()) {
 		parent::__construct($values);
 		
@@ -92,6 +94,11 @@ class Application extends SilexApp {
 		foreach ($staticViewIds as $id => $s) {
 			$this->staticViewIds[] = $id;
 		}
+
+		if (isset($_POST['udata'])) {
+			$this->userData = json_decode($_POST['udata'], true);
+		}
+
 	}
 
 	/**
@@ -141,6 +148,10 @@ class Application extends SilexApp {
 
 	public function getRouteName() {
 		return $this->currentRoute;
+	}
+
+	public function getUserData() {
+		return $this->userData;
 	}
 
 	private function setRouteName($v) {
