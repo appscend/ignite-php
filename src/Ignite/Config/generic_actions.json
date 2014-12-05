@@ -26,6 +26,27 @@
 	"ral:": {
 		"name": "replaceAllLocation"
 	},
+	"qpl:": {
+		"name": "quietPushLocation"
+	},
+	"qm:": {
+		"name": "quietModalView"
+	},
+	"qml:": {
+		"name": "quietModalViewLocation"
+	},
+	"qr:": {
+		"name": "quietReplace"
+	},
+	"qrl:": {
+		"name": "quietReplaceLocation"
+	},
+	"qra:": {
+		"name": "quietReplaceAll"
+	},
+	"qral:": {
+		"name": "quietReplaceAllLocation"
+	},
 	"closeModal": {
 		"name": "closeModalView"
 	},
