@@ -282,16 +282,25 @@ abstract class View extends Registry {
 			} else {
 				$el = $this->addActionGroup($fresult, $name);
 
-				if ($name !== null)
-					return $this->elementsContainers[$where]->appendChild(new Action('pag:', [$name]));
+				if ($name !== null) {
+					$action = new Action('pag:', [$name]);
+					$action->setTag($wrapperTag);
+
+					return $this->elementsContainers[$where]->appendChild($action);
+				}
 				else {
 					$index = $this['action_groups']->getChildIndex($el);
-					return $this->elementsContainers[$where]->appendChild(new Action('pag:', [$index]));
+
+					$action = new Action('pag:', [$index]);
+					$action->setTag($wrapperTag);
+
+					return $this->elementsContainers[$where]->appendChild($action);
 				}
 			}
-		} else if ($action instanceof Action)
+		} else if ($action instanceof Action) {
+			$action->setTag($wrapperTag);
 			return $this->elementsContainers[$where]->appendChild($action);
-		else
+		} else
 			throw new InvalidTypeException('Invalid argument 1. Must be instance of Action or \Closure');
 	}
 
