@@ -58,6 +58,24 @@ class Navigation extends ActionBuffer{
 	 * @param string $form
 	 * @param string $animation
 	 * @param string $accuracy
+	 * @return Action
+	 */
+	public static function quietPushWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qpl:', [$paramxml, $data, $form, $animation, $accuracy]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	/**
+	 * @param string|ViewStub $paramxml
+	 * @param string $data
+	 * @param string $form
+	 * @param string $animation
+	 * @param string $accuracy
 	 * @param string $modalStyle
 	 * @return Action
 	 */
@@ -66,6 +84,25 @@ class Navigation extends ActionBuffer{
 			$paramxml = $paramxml->getPath();
 
 		$action = new Action('m:', [$paramxml, $data, $form, $animation, $accuracy, $modalStyle]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	/**
+	 * @param string|ViewStub $paramxml
+	 * @param string $data
+	 * @param string $form
+	 * @param string $animation
+	 * @param string $accuracy
+	 * @param string $modalStyle
+	 * @return Action
+	 */
+	public static function quietModalView($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qm:', [$paramxml, $data, $form, $animation, $accuracy, $modalStyle]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
@@ -95,6 +132,25 @@ class Navigation extends ActionBuffer{
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
+	 * @param string $accuracy
+	 * @param string $modalStyle
+	 * @return Action
+	 */
+	public static function quietModalViewWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null, $modalStyle = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qml:', [$paramxml, $data, $form, $animation, $accuracy, $modalStyle]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	/**
+	 * @param string|ViewStub $paramxml
+	 * @param string $data
+	 * @param string $form
+	 * @param string $animation
 	 * @return Action
 	 */
 	public static function replace($paramxml, $data = null, $form = null, $animation = null) {
@@ -102,6 +158,23 @@ class Navigation extends ActionBuffer{
 			$paramxml = $paramxml->getPath();
 
 		$action = new Action('r:', [$paramxml, $data, $form, $animation]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	/**
+	 * @param string|ViewStub $paramxml
+	 * @param string $data
+	 * @param string $form
+	 * @param string $animation
+	 * @return Action
+	 */
+	public static function quietReplace($paramxml, $data = null, $form = null, $animation = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qr:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
@@ -130,6 +203,24 @@ class Navigation extends ActionBuffer{
 	 * @param string $data
 	 * @param string $form
 	 * @param string $animation
+	 * @param string $accuracy
+	 * @return Action
+	 */
+	public static function quietReplaceWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qrl:', [$paramxml, $data, $form, $animation, $accuracy]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	/**
+	 * @param string|ViewStub $paramxml
+	 * @param string $data
+	 * @param string $form
+	 * @param string $animation
 	 * @return Action
 	 */
 	public static function replaceAll($paramxml, $data = null, $form = null, $animation = null) {
@@ -137,6 +228,23 @@ class Navigation extends ActionBuffer{
 			$paramxml = $paramxml->getPath();
 
 		$action = new Action('ra:', [$paramxml, $data, $form, $animation]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	/**
+	 * @param string|ViewStub $paramxml
+	 * @param string $data
+	 * @param string $form
+	 * @param string $animation
+	 * @return Action
+	 */
+	public static function quietReplaceAll($paramxml, $data = null, $form = null, $animation = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qra:', [$paramxml, $data, $form, $animation]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
@@ -155,6 +263,24 @@ class Navigation extends ActionBuffer{
 			$paramxml = $paramxml->getPath();
 
 		$action = new Action('ral:', [$paramxml, $data, $form, $animation, $accuracy]);
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
+	/**
+	 * @param string|ViewStub $paramxml
+	 * @param string $data
+	 * @param string $form
+	 * @param string $animation
+	 * @param string $accuracy
+	 * @return Action
+	 */
+	public static function quietReplaceAllWithLocation($paramxml, $data = null, $form = null, $animation = null, $accuracy = null) {
+		if ($paramxml instanceof ViewStub)
+			$paramxml = $paramxml->getPath();
+
+		$action = new Action('qral:', [$paramxml, $data, $form, $animation, $accuracy]);
 		self::$actionBuffer[] = $action;
 
 		return $action;
