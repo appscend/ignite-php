@@ -17,10 +17,10 @@
 	"toggle:": {
 		"name": "toggleLocations"
 	},
-	"rps": {
+	"rps:": {
 		"name": "changeProperties"
 	},
-	"rpsk": {
+	"rpsk:": {
 		"name": "changePropertiesByKey"
 	},
 	"snap": {
@@ -29,7 +29,7 @@
 	"snapd": {
 		"name": "saveScreenshotLocalStorage"
 	},
-	"snapto": {
+	"snapto:": {
 		"name": "saveScreenshotToUrl"
 	},
 	"scrollx:y:": {
