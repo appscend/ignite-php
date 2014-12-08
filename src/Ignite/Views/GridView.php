@@ -69,11 +69,11 @@ class GridView extends View {
 	 * @param string $id
 	 * @param null|string $key
 	 */
-	public function setTemplateView($id, $key = null) {
+	public function setTemplateView($id, $key = null, $data = []) {
 		if ($this->app->getView($id)['type'] !== 'wd')
 			throw new \InvalidArgumentException("View with id '$id' is not a Widget View.");
 
-		$this->config['template_xml'] = $this->app->getView($id)->getPath($key);
+		$this->config['template_xml'] = $this->app->getView($id)->getPath($key, $data);
 	}
 
 	public function getPlaceholders() {
