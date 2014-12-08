@@ -746,8 +746,10 @@ abstract class View extends Registry {
 	 * @param \Closure $v
 	 */
 	public function __set($k, $v) {
-		if ($v instanceof \Closure)
-			$this->addActionGroup($v(), $k);
+		if ($v instanceof \Closure) {
+			$res = $v();
+			$this->addActionGroup($res, $k);
+		}
 	}
 
 	public function __get($k) {
