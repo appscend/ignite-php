@@ -42,7 +42,7 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|integer $duration
 	 * @return Action
 	 */
-	public static function changeGroupOpacity($key, $alpha, $lalpha, $padalpha, $padlalpha, $ff4alpha, $ff4lalpha, $duration = null) {
+	public static function changeElementOpacityByKey($key, $alpha, $lalpha, $padalpha, $padlalpha, $ff4alpha, $ff4lalpha, $duration = null) {
 		$action = new Action('reak:', [$key, $alpha, $lalpha, $padalpha, $padlalpha, $ff4alpha, $ff4lalpha, $duration]);
 		self::$actionBuffer[] = $action;
 
@@ -106,7 +106,7 @@ class WidgetActions extends ActionBuffer{
 	 * @param string|string $duration
 	 * @return Action
 	 */
-	public static function changeGroupPositionAndSize($duration = null, $key, $coords = [], $lcoords = [], $padcoords = [], $padlcoords = []) {
+	public static function changePositionAndSizeByKey($duration = null, $key, $coords = [], $lcoords = [], $padcoords = [], $padlcoords = []) {
 		$coords = implode($coords, '::');
 		$lcoords = implode($lcoords, '::');
 		$padcoords = implode($padcoords, '::');
@@ -225,7 +225,7 @@ class WidgetActions extends ActionBuffer{
 	 * @param string $property
 	 * @return Action
 	 */
-	public static function changeGroupProperties($key, $value, $property) {
+	public static function changePropertiesByKey($key, $value, $property) {
 		$action = new Action('rpsk:', func_get_args());
 		self::$actionBuffer[] = $action;
 
