@@ -157,9 +157,9 @@ abstract class View extends Registry {
 	protected function parseConfiguration() {
 		$avi = $this->viewID;
 
-		$allConfig = $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) use ($avi){ return strpos($k, $avi) === 0; });
+		$allConfig = $this->processGlobalConfig();
 
-		$allConfig = Module::array_merge_recursive_distinct($allConfig, $this->processGlobalConfig());
+		$allConfig = Module::array_merge_recursive_distinct($allConfig, $this->array_filter_key($this->app->getCurrentModule()->getLayout(), function($k) use ($avi){ return strpos($k, $avi) === 0; }));
 
 		$allConfig[$avi] = array_filter($allConfig[$avi], function($v){ return !is_array($v); });
 		$this->processAssetsPaths($allConfig[$avi], $this->pathParameters);
