@@ -747,8 +747,8 @@ abstract class View extends Registry {
 	 */
 	public function __set($k, $v) {
 		if ($v instanceof \Closure) {
-			$res = $v();
-			$this->addActionGroup($res, $k);
+			$v();
+			$this->addActionGroup(ActionBuffer::getBuffer(), $k);
 		}
 	}
 
