@@ -400,11 +400,8 @@ abstract class View extends Registry {
 	 * @return bool
 	 */
 	public function actionGroupExists($name) {
-		if (isset($this->actionClosures[$name]))
-			return true;
-
 		foreach ($this->elementsContainers['action_groups'] as $c) {
-			if (isset($c['image']) && $c['name'] == $name)
+			if (isset($c['action_group_name']) && $c['action_group_name'] == $name)
 				return true;
 		}
 
