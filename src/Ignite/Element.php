@@ -59,6 +59,12 @@ class Element extends Registry {
 	 * @return $this This instance useful for chaining methods.
 	 */
 	public function onTap($action, $name = null) {
+		if ($name !== null && $this->view->actionGroupExists($name)) {
+			$this->action = new Action('pag:', [$name]);
+
+			return $this;
+		}
+
 		if ($action instanceof \Closure) {
 			$action();
 			$fresult = ActionBuffer::getBuffer();
@@ -68,7 +74,8 @@ class Element extends Registry {
 				ActionBuffer::clearBuffer();
 			} else {
 
-				$el = $this->view->addActionGroup($fresult, $name);
+				if ($name !== null && !$this->view->actionGroupExists($name))
+					$el = $this->view->addActionGroup($fresult, $name);
 
 				if ($name !== null)
 					$this->action = new Action('pag:', [$name]);
