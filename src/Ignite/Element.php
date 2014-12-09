@@ -74,8 +74,7 @@ class Element extends Registry {
 				ActionBuffer::clearBuffer();
 			} else {
 
-				if ($name !== null && !$this->view->actionGroupExists($name))
-					$el = $this->view->addActionGroup($fresult, $name);
+				$el = $this->view->addActionGroup($fresult, $name);
 
 				if ($name !== null)
 					$this->action = new Action('pag:', [$name]);
