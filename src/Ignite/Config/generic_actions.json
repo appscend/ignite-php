@@ -250,5 +250,11 @@
 	},
 	"pag:": {
 		"name": "actionGroup"
+	},
+	"seligid:k:s:": {
+		"name": "selectFromGallery"
+	},
+	"snapigid:k:s:": {
+		"name": "takeNewPicture"
 	}
 }
