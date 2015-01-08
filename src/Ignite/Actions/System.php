@@ -84,14 +84,14 @@ class System extends ActionBuffer{
 		return $action;
 	}
 
-	public static function selectFromGallery($gid, $formKey) {
+	public static function selectFromGallery($gid, $formKey, $picSize) {
 		$action = new Action('seligid:k:s:', func_get_args());
 		self::$actionBuffer[] = $action;
 
 		return $action;
 	}
 
-	public static function takeNewPicture($gid, $formKey) {
+	public static function takeNewPicture($gid, $formKey, $picSize) {
 		$action = new Action('snapigid:k:s:', func_get_args());
 		self::$actionBuffer[] = $action;
 
