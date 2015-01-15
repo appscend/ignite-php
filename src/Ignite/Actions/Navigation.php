@@ -296,6 +296,13 @@ class Navigation extends ActionBuffer{
 		return $action;
 	}
 
+	public static function closeSpecialModal() {
+		$action = new Action('closeFModal');
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
 	/**
 	 * @param string $url
 	 * @return Action
