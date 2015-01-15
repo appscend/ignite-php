@@ -256,5 +256,8 @@
 	},
 	"snapigid:k:s:": {
 		"name": "takeNewPicture"
+	},
+  	"closeFModal": {
+	  	"name": "closeSpecialModal"
 	}
 }
