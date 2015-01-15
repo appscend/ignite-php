@@ -4,8 +4,6 @@ namespace Ignite;
 
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 
-chdir(realpath('../../../'));
-
 require_once 'vendor/autoload.php';
 
 EnvironmentManager::init();
