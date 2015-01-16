@@ -186,6 +186,30 @@ class WidgetView extends View{
 		return $this->elementsContainers['elements']->appendChild($element);
 	}
 
+	public function addTextArea($key = null, $content = []) {
+		$element = new Element('e');
+
+		if ($key) {
+			$keys = explode(',', $key);
+			$element['Key'] = end($keys);
+
+			foreach ($keys as $k) {
+				if (isset($this->elementClasses[trim($k)])) {
+					$this->applyProperties($element, $this->elementClasses[trim($k)]);
+				} else {
+					$this->app['ignite_logger']->log("Class '$k' is not defined in config file, in view '{$this->viewID}'.", \Ignite\Providers\Logger::LOG_WARN);
+					continue;
+				}
+			}
+		}
+
+		$element->appendProperties($content);
+		$element['element_type'] = 'textarea';
+		$element->view = $this;
+
+		return $this->elementsContainers['elements']->appendChild($element);
+	}
+
 	public function removeElement($idx) {
 		return $this->elementsContainers['elements']->removeChild($idx);
 	}
