@@ -408,6 +408,14 @@
 		"tag": "plh",
 		"type": "string"
 	},
+	"tf_placeholder_text_color": {
+	  "tag": "plhc",
+	  "type": "string"
+	},
+  	"tf_auto_selected": {
+	  "tag": "sel",
+	  "type": "string"
+	},
 	"tf_text_alignment": {
 		"tag": "al",
 		"type": "enum",
