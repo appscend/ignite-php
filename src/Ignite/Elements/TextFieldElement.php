@@ -18,7 +18,7 @@ class TextFieldElement extends Element{
 	 */
 	public function __construct($tag, array $properties = []) {
 		parent::__construct($tag, $properties);
-		$this['control_type'] = 'tf';
+		$this['element_type'] = 'tf';
 	}
 
 	/**

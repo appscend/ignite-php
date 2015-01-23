@@ -339,7 +339,7 @@
 			"label": "label",
 			"image": "image",
 			"pagination": "pagination",
-			"textfield": "textfield",
+			"textfield": "tf",
 		  	"textarea": "ta"
 		}
 	},

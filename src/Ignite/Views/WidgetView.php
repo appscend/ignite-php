@@ -2,6 +2,7 @@
 
 namespace Ignite\Views;
 use Ignite\Element;
+use Ignite\Elements\TextFieldElement;
 use Ignite\Elements\WidgetTextLabel;
 use Ignite\Elements\WidgetViewElement;
 use Ignite\Elements\WidgetImage;
@@ -163,7 +164,7 @@ class WidgetView extends View{
 	}
 
 	public function addTextField($key = null, $content = []) {
-		$element = new Element('e');
+		$element = new TextFieldElement('e');
 
 		if ($key) {
 			$keys = explode(',', $key);
@@ -180,7 +181,6 @@ class WidgetView extends View{
 		}
 
 		$element->appendProperties($content);
-		$element['element_type'] = 'textfield';
 		$element->view = $this;
 
 		return $this->elementsContainers['elements']->appendChild($element);
