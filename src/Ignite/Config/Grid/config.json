@@ -18,5 +18,9 @@
 	"cell_height": {
 		"tag": "ch",
 		"type": "integer"
+	},
+	"filter_key": {
+	  "tag": "fkeys",
+	  "type": "string"
 	}
 }

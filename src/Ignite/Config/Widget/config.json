@@ -50,9 +50,5 @@
 	"form_id": {
 		"tag": "gid",
 		"type": "string"
-	},
-  	"filter_key": {
-	  	"tag": "fkeys",
-	  	"type": "string"
 	}
 }
