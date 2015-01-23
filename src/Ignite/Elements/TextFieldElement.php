@@ -13,6 +13,11 @@ class TextFieldElement extends Element{
 	private $selectionAction = null;
 
 	/**
+	 * @var Action
+	 */
+	private $typingAction = null;
+
+	/**
 	 * @param null|string $tag
 	 * @param array $properties
 	 */
@@ -86,7 +91,7 @@ class TextFieldElement extends Element{
 		} else
 			throw new \InvalidArgumentException("Parameter 1 for 'onSelection' must be instance of Action or Closure.");
 
-		$this->selectionAction = $ac;
+		$this->typingAction = $ac;
 	}
 
 	/**
@@ -98,6 +103,9 @@ class TextFieldElement extends Element{
 
 		if ($this->selectionAction !== null)
 			$result = array_merge($result, $this->selectionAction->render($update));
+
+		if ($this->typingAction !== null)
+			$result = array_merge($result, $this->typingAction->render($update));
 
 		return $result;
 	}

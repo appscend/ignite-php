@@ -23,6 +23,8 @@ class Action extends Registry {
 	 */
 	protected $name = null;
 
+	protected $params = [];
+
 	/**
 	 * Instatiates a new action. Actions created this way are not automatically added in the Actions Buffer.
 	 * Use the specific static classes for this.
@@ -32,12 +34,9 @@ class Action extends Registry {
 	 * @param string $prefix Action prefix
 	 */
 	public function __construct($name, array $params = [], $prefix = '') {
-		$this->name = $this[$prefix.'a'] = $name;
+		$this->name = $this['a'] = $name;
 		$this->prefix = $prefix;
-
-		if (!empty($params))
-			$this[$prefix.'pr'] = rtrim(join("::", $params), ':');
-
+		$this->params = $params;
 	}
 
 	/**
@@ -48,10 +47,10 @@ class Action extends Registry {
 	 * @return $this This instance useful for chaining methods.
 	 */
 	public function requiresLogin($provider = null) {
-		$this[$this->prefix.'l'] = 'yes';
+		$this['l'] = 'yes';
 
 		if (isset($provider))
-			$this[$this->prefix.'lp'] = $provider;
+			$this['lp'] = $provider;
 
 
 		return $this;
@@ -66,8 +65,8 @@ class Action extends Registry {
 	 * @return $this This instance useful for chaining methods.
 	 */
 	public function requiresPurchase($bundleId, $displayStoreView = false) {
-		$this[$this->prefix.'aprod'] = $bundleId;
-		$this[$this->prefix.'dprod'] = $displayStoreView == true ? 'yes' : 'no';
+		$this['aprod'] = $bundleId;
+		$this['dprod'] = $displayStoreView == true ? 'yes' : 'no';
 
 		return $this;
 	}
@@ -81,7 +80,7 @@ class Action extends Registry {
 	 * @return $this This instance useful for chaining methods.
 	 */
 	public function requiresSecureKey($value = null) {
-		$this[$this->prefix.'rsk'] = 'yes';
+		$this['rsk'] = 'yes';
 
 		if (isset($value))
 			$this[$this->prefix.'rsv'] = $value;
@@ -97,7 +96,7 @@ class Action extends Registry {
 	 * @return $this This instance useful for chaining methods.
 	 */
 	public function confirmation($text) {
-		$this[$this->prefix.'conf'] = $text;
+		$this['conf'] = $text;
 
 		return $this;
 	}
@@ -110,7 +109,7 @@ class Action extends Registry {
 	 * @return $this This instance useful for chaining methods.
 	 */
 	public function delay($d) {
-		$this[$this->prefix.'del'] = $d;
+		$this['del'] = $d;
 
 		return $this;
 	}
@@ -123,7 +122,7 @@ class Action extends Registry {
 	 * @return $this This instance useful for chaining methods.
 	 */
 	public function on($viewID) {
-		$this[$this->prefix.'tavi'] = $viewID;
+		$this['tavi'] = $viewID;
 
 		return $this;
 	}
@@ -250,6 +249,20 @@ class Action extends Registry {
 	 * @return array
 	 */
 	public function render($update = false) {
+		if (!empty($this->params))
+			$this['pr'] = rtrim(join("::", $this->params), ':');
+
+		if ($this->prefix !== '') {
+			$props = [];
+
+			foreach ($this->properties as $key => $p) {
+				$props[$this->prefix.$key] = $p;
+			}
+
+			$this->properties = $props;
+		}
+
+
 		return $this->properties;
 	}
 
