@@ -52,7 +52,7 @@
 		"type": "string"
 	},
   	"filter_key": {
-	  	"tag": "fkey",
+	  	"tag": "fkeys",
 	  	"type": "string"
 	}
 }
