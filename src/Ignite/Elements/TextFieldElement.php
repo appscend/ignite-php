@@ -59,6 +59,36 @@ class TextFieldElement extends Element{
 		$this->selectionAction = $ac;
 	}
 
+	public function onType($action, $name = null) {
+		if ($action instanceof \Closure) {
+			$action();
+
+			$fresult = ActionBuffer::getBuffer();
+
+			if (!isset($fresult[1])) {
+				$ac = $fresult[0];
+				$ac->setPrefix('t');
+				ActionBuffer::clearBuffer();
+			} else {
+
+				$el = $this->view->addActionGroup($fresult, $name);
+
+				if ($name !== null)
+					$ac = new Action('pag:', [$name], 't');
+				else {
+					$index = $this->view['action_groups']->getChildIndex($el);
+					$ac = new Action('pag:', [$index-1], 't');
+				}
+			}
+		} else if ($action instanceof Action) {
+			$ac = $action;
+			$ac->setPrefix('t');
+		} else
+			throw new \InvalidArgumentException("Parameter 1 for 'onSelection' must be instance of Action or Closure.");
+
+		$this->selectionAction = $ac;
+	}
+
 	/**
 	 * @param bool $update
 	 * @return array
