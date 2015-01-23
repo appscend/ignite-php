@@ -17,6 +17,13 @@ class WidgetActions extends ActionBuffer{
 		return $action;
 	}
 
+	public static function filter($text) {
+		$action = new Action('filter:', func_get_args());
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
 	/**
 	 * @param string $avi
 	 * @param string $alpha
