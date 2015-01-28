@@ -40,5 +40,11 @@
 	},
 	"scrollpx:py:": {
 		"name": "scrollToPercentage"
+	},
+  	"filter": {
+	  	"name": "filter"
+	},
+  	"unfilter": {
+	  	"name": "unfilter"
 	}
 }

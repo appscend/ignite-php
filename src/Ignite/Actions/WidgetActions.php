@@ -24,6 +24,13 @@ class WidgetActions extends ActionBuffer{
 		return $action;
 	}
 
+	public static function unfilter() {
+		$action = new Action('filter:');
+		self::$actionBuffer[] = $action;
+
+		return $action;
+	}
+
 	/**
 	 * @param string $avi
 	 * @param string $alpha
