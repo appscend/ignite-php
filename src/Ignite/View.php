@@ -2,6 +2,7 @@
 namespace Ignite;
 
 use Ignite\Actions\ActionBuffer;
+use Ignite\Helpers\XmlDomConstruct;
 use Ignite\Providers\Logger;
 use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
@@ -610,7 +611,7 @@ abstract class View extends Registry {
 
 			$cached = $this->app['memcache']->get(hash('sha1', $key));
 
-			if ($this->app['memcache']->getResultCode() ==  \Memcached::RES_SUCCESS)
+			if ($this->app['memcache']->getResultCode() ==  \Memcached::RES_SUCCESS && $cached !== false)
 				return $cached;
 		}
 
@@ -643,8 +644,12 @@ abstract class View extends Registry {
 		else
 			$this->render_cache = $result;
 
-		if (isset($this->app['env']['memcache.enabled']) && $this->app['env']['memcache.enabled'] == "true" && $this->cacheable)
-			$this->app['memcache']->set($key, $this->render_cache, $this->cacheExpires);
+		if (isset($this->app['env']['memcache.enabled']) && $this->app['env']['memcache.enabled'] == "true" && $this->cacheable) {
+			$xml = new XmlDomConstruct('1.0', 'UTF-8');
+			$xml->fromMixed($this->render_cache);
+
+			$this->app['memcache']->set($key, $xml->saveXML(null, LIBXML_NOEMPTYTAG), $this->cacheExpires);
+		}
 
 		return $this->render_cache;
 	}

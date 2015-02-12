@@ -87,7 +87,11 @@ class Application extends SilexApp {
 			$this->register(new MemcachedProvider());
 
 		$this->before(function(Request $req){
-			$this->setRouteName($req->get('_route'));
+			$placeholders = [];
+			preg_match_all('/{(.)*?}/', $req->get('_route'), $placeholders);
+			$route = str_replace($placeholders[0], array_values($req->query->all()), $req->get('_route'));
+
+			$this->setRouteName($route);
 		});
 
 		$staticViewIds = \Yosymfony\Toml\Toml::parse(CONFIG_DIR.'/static.toml');
