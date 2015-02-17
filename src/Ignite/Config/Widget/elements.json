@@ -433,10 +433,6 @@
 		"tag": "rpad",
 		"type": "integer"
 	},
-	"tf_auto_select": {
-		"tag": "kt",
-		"type": "integer"
-	},
 	"tf_select_action": {
 		"tag": "a",
 		"type": "Action",
