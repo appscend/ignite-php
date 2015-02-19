@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['elements_5fconfig_5fspec_5ffile',['ELEMENTS_CONFIG_SPEC_FILE',['../class_ignite_1_1_views_1_1_form_view.html#aeb2dbb9b641dd6f283ca6fbe20820a78',1,'Ignite\Views\FormView\ELEMENTS_CONFIG_SPEC_FILE()'],['../class_ignite_1_1_views_1_1_map_view.html#aeb2dbb9b641dd6f283ca6fbe20820a78',1,'Ignite\Views\MapView\ELEMENTS_CONFIG_SPEC_FILE()'],['../class_ignite_1_1_views_1_1_menu_bar_view.html#aeb2dbb9b641dd6f283ca6fbe20820a78',1,'Ignite\Views\MenuBarView\ELEMENTS_CONFIG_SPEC_FILE()'],['../class_ignite_1_1_views_1_1_tab_bar_view.html#aeb2dbb9b641dd6f283ca6fbe20820a78',1,'Ignite\Views\TabBarView\ELEMENTS_CONFIG_SPEC_FILE()'],['../class_ignite_1_1_views_1_1_web_view.html#aeb2dbb9b641dd6f283ca6fbe20820a78',1,'Ignite\Views\WebView\ELEMENTS_CONFIG_SPEC_FILE()'],['../class_ignite_1_1_views_1_1_widget_view.html#aeb2dbb9b641dd6f283ca6fbe20820a78',1,'Ignite\Views\WidgetView\ELEMENTS_CONFIG_SPEC_FILE()']]]
+];
