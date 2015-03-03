@@ -1,6 +1,6 @@
 <?php
 
-copy('./vendor/appscend/ignite-php/Phakefile', '.');
+copy('./vendor/appscend/ignite-php/Phakefile', './Phakefile');
 echo `./vendor/appscend/ignite-php/ignite setup`;
 
 chmod('.', 0755);

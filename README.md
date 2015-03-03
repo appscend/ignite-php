@@ -29,9 +29,14 @@ Before we start we must set up the bare minimum for it to work with composer:
 	"require": {
 		"appscend/ignite-php": "dev-develop",
 		"appscend/ignite_sdk": "dev-master"
-	},
+	}
+	
+* Then finally update the package:
 
-Copy the script file 'ignite-build.sh' to your project root directory, then run it:
 
-	$ cp vendor/appscend/ignite-php/ignite-build .
-	$ ./ignite-build
+	$ composer update
+
+Copy the script file 'ignite-build.php' to your project root directory, then run it:
+
+	$ cp vendor/appscend/ignite-php/ignite-build.php .
+	$ php ignite-build.php
