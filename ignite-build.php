@@ -11,6 +11,5 @@ $composerJson = json_decode(file_get_contents('composer.json'), true);
 $composerJson['autoload'] = ['psr-4' => ["Ignite\\Modules\\" => "modules/"]];
 $composerJson['minimum-stability'] = 'dev';
 
-echo `composer dumpautoload`;
-
 file_put_contents('composer.json', json_encode($composerJson));
+echo `composer dumpautoload`;
